@@ -80,6 +80,11 @@ const solutionCopy = {
     contextLabel: "Request details",
     contextPlaceholder: "Describe the current situation, supply preferences, equipment, budget and launch timing.",
     submitLabel: "Get offer",
+    serviceCta: "Select service",
+    catalogEyebrow: "Catalog",
+    catalogTitle: "Products and services behind the experience",
+    catalogIntro: "Core products and service components that can be combined for this business line.",
+    catalogItems: [] as Array<{ category: string; name: string; description: string; imageUrl: string }>,
     serviceDescriptions: {
       "Coffee program": "Coffee, tea and beverages matched to your team's consumption.",
       "Coffee machines": "Selection, installation and maintenance of office equipment.",
@@ -114,14 +119,39 @@ const solutionCopy = {
     proofTitle: "From one point to a location network, we shape the setup around your format.",
     primaryCta: "Build solution",
     packageIntro: "This is a starting point for the offer. Choose a base option, then add the services your locations need.",
-    requestEyebrow: "Your request",
-    requestTitle: "Select services and send context",
-    requestIntro: "Select services below and the preview updates immediately.",
-    servicesTitle: "Services",
-    contextLabel: "Context / request",
-    contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
-    submitLabel: "Send request",
-    serviceDescriptions: {} as Record<string, string>,
+    requestEyebrow: "Solution request",
+    requestTitle: "Build a solution for your point or network",
+    requestIntro: "Select what your location needs. Binova will prepare a solution around the format, traffic and operating model.",
+    servicesTitle: "What to include in the solution",
+    contextLabel: "Request details",
+    contextPlaceholder: "Describe the location format, current supplier, delivery frequency, desired launch timing, budget and important requirements.",
+    submitLabel: "Get offer",
+    serviceCta: "Add",
+    catalogEyebrow: "Catalog",
+    catalogTitle: "Products and services for retail",
+    catalogIntro: "Key components that can be combined around your location or network format.",
+    catalogItems: [
+      {
+        category: "Consumables",
+        name: "Cups and lids for the point",
+        description: "Branded or standard cups, lids, stirrers and sugar for daily beverage sales.",
+        imageUrl: "https://images.unsplash.com/photo-1522992319-0365e5f11656?auto=format&fit=crop&w=900&q=82"
+      },
+      {
+        category: "Retail",
+        name: "Self-service coffee corner",
+        description: "A ready solution for stores, gas stations and traffic locations: equipment, beverages, consumables and replenishment.",
+        imageUrl: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=900&q=82"
+      }
+    ],
+    serviceDescriptions: {
+      "Store consumables": "Cups, lids, sugar, stirrers and other items for daily point operations.",
+      "Shelf equipment": "POS solutions and equipment for convenient beverage sales at the location.",
+      "Coffee corner": "A ready coffee zone for a store, gas station or point with regular traffic.",
+      "POS supplies": "Receipts, paper, stickers and basic materials for point operations.",
+      "Cleaning supplies": "Products and consumables to keep the beverage zone clean.",
+      "Scheduled replenishment": "Regular deliveries of coffee, consumables and related goods by an agreed schedule."
+    },
     presets: [
       {
         name: "Basic retail solution",
@@ -155,6 +185,11 @@ const solutionCopy = {
     contextLabel: "Context / request",
     contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
     submitLabel: "Send request",
+    serviceCta: "Select service",
+    catalogEyebrow: "Catalog",
+    catalogTitle: "Products and services behind the experience",
+    catalogIntro: "Core products and service components that can be combined for this business line.",
+    catalogItems: [] as Array<{ category: string; name: string; description: string; imageUrl: string }>,
     serviceDescriptions: {} as Record<string, string>,
     presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
   }
@@ -523,17 +558,28 @@ const translations: Record<string, Record<string, string>> = {
     "Solution request": "Заявка на решение",
     "Choose services and send the request": "Выберите услуги и отправьте запрос",
     "Select what your office needs. We will build the solution and prepare an offer.": "Отметьте, что нужно вашему офису. Мы соберём решение и подготовим предложение.",
+    "Build a solution for your point or network": "Соберите решение для вашей точки или сети",
+    "Select what your location needs. Binova will prepare a solution around the format, traffic and operating model.": "Отметьте, что нужно вашей локации. Binova подготовит решение под формат, трафик и операционную модель.",
     "Choose the services you need": "Выберите нужные услуги",
+    "What to include in the solution": "Что включить в решение",
     "Request details": "Детали заявки",
     "Describe the current situation, supply preferences, equipment, budget and launch timing.": "Опишите текущую ситуацию, пожелания по поставкам, оборудованию, бюджету и срокам запуска.",
+    "Describe the location format, current supplier, delivery frequency, desired launch timing, budget and important requirements.": "Опишите формат локации, текущего поставщика, частоту поставок, желаемый старт, бюджет и важные требования.",
     "Get offer": "Получить предложение",
     "Select service": "Выбрать услугу",
+    "Add": "Добавить",
     "Coffee, tea and beverages matched to your team's consumption.": "Кофе, чай и напитки под потребление вашей команды.",
     "Selection, installation and maintenance of office equipment.": "Подбор, установка и обслуживание оборудования для офиса.",
     "Water, regular replenishment and service for the consumption point.": "Вода, регулярное пополнение и обслуживание точки потребления.",
     "Consumables for the kitchen, office and daily operations.": "Расходные материалы для кухни, офиса и ежедневной операционки.",
     "Cups, sugar, napkins and other items for regular replenishment.": "Стаканы, сахар, салфетки и другие позиции для регулярного пополнения.",
     "Scheduled maintenance so equipment works without downtime.": "Плановое обслуживание, чтобы оборудование работало без простоев.",
+    "Cups, lids, sugar, stirrers and other items for daily point operations.": "Стаканы, крышки, сахар, мешалки и другие позиции для ежедневной работы точки.",
+    "POS solutions and equipment for convenient beverage sales at the location.": "POS-решения и оборудование для удобной продажи напитков на локации.",
+    "A ready coffee zone for a store, gas station or point with regular traffic.": "Готовая кофейная зона для магазина, АЗС или точки с регулярным трафиком.",
+    "Receipts, paper, stickers and basic materials for point operations.": "Чеки, бумага, стикеры и базовые материалы для операционной работы точки.",
+    "Products and consumables to keep the beverage zone clean.": "Средства и расходные материалы для поддержания чистоты зоны напитков.",
+    "Regular deliveries of coffee, consumables and related goods by an agreed schedule.": "Регулярные поставки кофе, расходников и сопутствующих товаров по согласованному графику.",
     "Pick the service layers. We build the system.": "Выберите слои сервиса. Мы соберем систему.",
     "Service direction": "Направление сервиса",
     "Choose a starting package": "Выберите стартовый пакет",
@@ -595,8 +641,14 @@ const translations: Record<string, Record<string, string>> = {
     "services selected": "сервисов выбрано",
     "Catalog feel": "Каталог",
     "Products and services behind the experience": "Продукты и сервисы за этим опытом",
+    "Products and services for retail": "Продукты и сервисы для ритейла",
     "No public price table. Just a clear view of what can be included in the service.": "Без публичного прайса. Только понятный обзор того, что может войти в сервис.",
     "Core products and service components that can be combined for this business line.": "Ключевые продукты и сервисные компоненты, которые можно комбинировать для этого направления.",
+    "Key components that can be combined around your location or network format.": "Ключевые компоненты, которые можно комбинировать под формат вашей локации или сети.",
+    "Cups and lids for the point": "Стаканы и крышки для точки",
+    "Branded or standard cups, lids, stirrers and sugar for daily beverage sales.": "Брендированные или стандартные стаканы, крышки, мешалки и сахар для ежедневной продажи напитков.",
+    "Self-service coffee corner": "Кофейный уголок self-service",
+    "A ready solution for stores, gas stations and traffic locations: equipment, beverages, consumables and replenishment.": "Готовое решение для магазинов, АЗС и локаций с трафиком: оборудование, напитки, расходники и пополнение.",
     "Can be combined with catalog items, equipment, replenishment rhythm and service support.": "Можно комбинировать с товарами каталога, оборудованием, ритмом пополнения и сервисной поддержкой.",
     "About Binova Group": "О Binova Group",
     "The operator behind business coffee systems.": "Оператор бизнес-систем для кофе.",
@@ -763,17 +815,28 @@ const translations: Record<string, Record<string, string>> = {
     "Solution request": "Cerere pentru soluție",
     "Choose services and send the request": "Alege serviciile și trimite cererea",
     "Select what your office needs. We will build the solution and prepare an offer.": "Bifează ce are nevoie biroul tău. Vom construi soluția și vom pregăti oferta.",
+    "Build a solution for your point or network": "Construiește soluția pentru punctul sau rețeaua ta",
+    "Select what your location needs. Binova will prepare a solution around the format, traffic and operating model.": "Bifează ce are nevoie locația ta. Binova va pregăti soluția în funcție de format, trafic și model operațional.",
     "Choose the services you need": "Alege serviciile necesare",
+    "What to include in the solution": "Ce să includă soluția",
     "Request details": "Detaliile cererii",
     "Describe the current situation, supply preferences, equipment, budget and launch timing.": "Descrie situația actuală, preferințele de aprovizionare, echipamentele, bugetul și termenul de lansare.",
+    "Describe the location format, current supplier, delivery frequency, desired launch timing, budget and important requirements.": "Descrie formatul locației, furnizorul actual, frecvența livrărilor, data dorită de start, bugetul și cerințele importante.",
     "Get offer": "Primește oferta",
     "Select service": "Alege serviciul",
+    "Add": "Adaugă",
     "Coffee, tea and beverages matched to your team's consumption.": "Cafea, ceai și băuturi adaptate consumului echipei tale.",
     "Selection, installation and maintenance of office equipment.": "Selectarea, instalarea și mentenanța echipamentelor pentru birou.",
     "Water, regular replenishment and service for the consumption point.": "Apă, reaprovizionare regulată și service pentru punctul de consum.",
     "Consumables for the kitchen, office and daily operations.": "Consumabile pentru bucătărie, birou și operațiunile zilnice.",
     "Cups, sugar, napkins and other items for regular replenishment.": "Pahare, zahăr, șervețele și alte poziții pentru reaprovizionare regulată.",
     "Scheduled maintenance so equipment works without downtime.": "Mentenanță planificată pentru ca echipamentele să funcționeze fără întreruperi.",
+    "Cups, lids, sugar, stirrers and other items for daily point operations.": "Pahare, capace, zahăr, palete și alte poziții pentru operarea zilnică a punctului.",
+    "POS solutions and equipment for convenient beverage sales at the location.": "Soluții POS și echipamente pentru vânzarea comodă a băuturilor în locație.",
+    "A ready coffee zone for a store, gas station or point with regular traffic.": "O zonă de cafea gata pentru magazin, benzinărie sau punct cu trafic regulat.",
+    "Receipts, paper, stickers and basic materials for point operations.": "Bonuri, hârtie, stickere și materiale de bază pentru operarea punctului.",
+    "Products and consumables to keep the beverage zone clean.": "Produse și consumabile pentru menținerea curățeniei în zona de băuturi.",
+    "Regular deliveries of coffee, consumables and related goods by an agreed schedule.": "Livrări regulate de cafea, consumabile și produse conexe conform unui program agreat.",
     "Pick the service layers. We build the system.": "Alege straturile de servicii. Noi construim sistemul.",
     "Service direction": "Direcția serviciului",
     "Choose a starting package": "Alege un pachet de pornire",
@@ -835,8 +898,14 @@ const translations: Record<string, Record<string, string>> = {
     "services selected": "servicii selectate",
     "Catalog feel": "Catalog",
     "Products and services behind the experience": "Produsele și serviciile din spatele experienței",
+    "Products and services for retail": "Produse și servicii pentru retail",
     "No public price table. Just a clear view of what can be included in the service.": "Fără tabel public de prețuri. Doar o imagine clară a ceea ce poate fi inclus în serviciu.",
     "Core products and service components that can be combined for this business line.": "Produse cheie și componente de servicii care pot fi combinate pentru această direcție de business.",
+    "Key components that can be combined around your location or network format.": "Componente cheie care pot fi combinate în jurul formatului locației sau rețelei tale.",
+    "Cups and lids for the point": "Pahare și capace pentru punct",
+    "Branded or standard cups, lids, stirrers and sugar for daily beverage sales.": "Pahare branduite sau standard, capace, palete și zahăr pentru vânzarea zilnică a băuturilor.",
+    "Self-service coffee corner": "Colț de cafea self-service",
+    "A ready solution for stores, gas stations and traffic locations: equipment, beverages, consumables and replenishment.": "O soluție gata pentru magazine, benzinării și locații cu trafic: echipamente, băuturi, consumabile și reaprovizionare.",
     "Can be combined with catalog items, equipment, replenishment rhythm and service support.": "Poate fi combinat cu produse din catalog, echipamente, ritm de reaprovizionare și suport de service.",
     "About Binova Group": "Despre Binova Group",
     "The operator behind business coffee systems.": "Operatorul din spatele sistemelor de cafea pentru business.",
@@ -1722,7 +1791,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
   const line = businessLines[segment];
   const copy = solutionCopy[segment];
   const packages = activePackages(segment);
-  const items = catalogItems(segment);
+  const items = copy.catalogItems.length ? copy.catalogItems : catalogItems(segment);
   const serviceDescriptions: Record<string, string> = copy.serviceDescriptions;
   const packageCards = copy.presets.length
     ? copy.presets.map((preset) => `
@@ -1810,7 +1879,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
             <label>Locations<input required type="number" min="1" name="locationsCount" value="1"></label>
             <label>${escapeHtml(copy.servicesTitle)}</label>
             <div class="service-grid">
-              ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>${escapeHtml(serviceDescriptions[service] ?? "Tap to add this layer to the request.")}</span><em>Select service</em></span></label>`).join("")}
+              ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>${escapeHtml(serviceDescriptions[service] ?? "Tap to add this layer to the request.")}</span><em>${escapeHtml(copy.serviceCta)}</em></span></label>`).join("")}
             </div>
             <label>${escapeHtml(copy.contextLabel)}<textarea name="message" placeholder="${escapeHtml(copy.contextPlaceholder)}"></textarea></label>
             <button type="submit">${escapeHtml(copy.submitLabel)}</button>
@@ -1822,8 +1891,8 @@ const solutionPage = (segment: keyof typeof businessLines) => {
       </section>
       <section class="band">
         <div class="section-head">
-          <div><p class="eyebrow">Catalog feel</p><h2>Products and services behind the experience</h2></div>
-          <p>Core products and service components that can be combined for this business line.</p>
+          <div><p class="eyebrow">${escapeHtml(copy.catalogEyebrow)}</p><h2>${escapeHtml(copy.catalogTitle)}</h2></div>
+          <p>${escapeHtml(copy.catalogIntro)}</p>
         </div>
         <div class="grid-3">
           ${items.map((item) => `
