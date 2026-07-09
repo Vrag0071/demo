@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int                 @id @default(autoincrement())
+  telegramId          String              @unique
+  username            String?
+  firstName           String?
+  role                String              @default("EMPLOYEE")
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  submissions         ProductSubmission[] @relation("SubmittedBy")
+  reviewedSubmissions ProductSubmission[] @relation("ReviewedBy")
+  historyItems        SubmissionHistory[]
+}
+
+model ProductSubmission {
+  id                Int                 @id @default(autoincrement())
+  submissionType    String
+  status            String
+  submittedById     Int
+  reviewedById      Int?
+  reviewedAt        DateTime?
+  productName       String
+  category          String
+  description       String
+  price             String
+  currency          String
+  availability      String
+  segment           String
+  customSegment     String?
+  sku               String?
+  internalComment   String?
+  moderationComment String?
+  exportStatus      String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  submittedBy       User                @relation("SubmittedBy", fields: [submittedById], references: [id])
+  reviewedBy        User?               @relation("ReviewedBy", fields: [reviewedById], references: [id])
+  photos            ProductPhoto[]
+  history           SubmissionHistory[]
+}
+
+model ProductPhoto {
+  id             Int               @id @default(autoincrement())
+  submissionId   Int
+  telegramFileId String
+  localPath      String
+  createdAt      DateTime          @default(now())
+  submission     ProductSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+}
+
+model SubmissionHistory {
+  id           Int              @id @default(autoincrement())
+  submissionId Int
+  fromStatus   String?
+  toStatus     String
+  changedById  Int?
+  comment      String?
+  createdAt    DateTime         @default(now())
+  submission   ProductSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  changedBy    User?            @relation(fields: [changedById], references: [id])
+}
+
+model AdminAccount {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  name         String
+  passwordHash String
+  sessionToken String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ClientLead {
+  id                    Int      @id @default(autoincrement())
+  segment               String
+  companyName           String
+  contactName           String
+  email                 String
+  phone                 String?
+  companySize           String
+  employeeCount         Int      @default(0)
+  locationsCount        Int      @default(1)
+  services              String
+  message               String?
+  estimatedMonthlyPrice Int      @default(0)
+  status                String   @default("NEW")
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+}
+
+model CalculatorRule {
+  id               Int      @id @default(autoincrement())
+  segment          String
+  companySize      String
+  basePrice        Int
+  perEmployeePrice Int
+  perLocationPrice Int
+  active           Int      @default(1)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([segment, companySize])
+}
+
+model ServicePackage {
+  id           Int      @id @default(autoincrement())
+  segment      String
+  name         String
+  description  String
+  items        String
+  monthlyPrice Int      @default(0)
+  source       String   @default("ADMIN")
+  status       String   @default("ACTIVE")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model CatalogItem {
+  id          Int      @id @default(autoincrement())
+  segment     String
+  category    String
+  name        String
+  description String
+  unitPrice   Int      @default(0)
+  currency    String   @default("EUR")
+  status      String   @default("ACTIVE")
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CommercialProposal {
+  id              Int      @id @default(autoincrement())
+  leadId          Int?
+  clientName      String
+  title           String
+  segment         String
+  items           String
+  subtotal        Int      @default(0)
+  discountPercent Int      @default(0)
+  total           Int      @default(0)
+  notes           String?
+  publicToken     String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
