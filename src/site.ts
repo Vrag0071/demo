@@ -39,7 +39,7 @@ const businessLines = {
   },
   horeca: {
     label: "HoReCa",
-    title: "HoReCa Beverage Systems",
+    title: "Stable coffee and service for HoReCa without downtime",
     short: "Professional coffee, equipment, training and service for cafes, hotels and restaurants.",
     hero:
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1800&q=82",
@@ -81,6 +81,10 @@ const solutionCopy = {
     contextPlaceholder: "Describe the current situation, supply preferences, equipment, budget and launch timing.",
     submitLabel: "Get offer",
     serviceCta: "Select service",
+    companySizeLabel: "Company size",
+    companySizeOptions: [] as string[],
+    employeeLabel: "Employees",
+    employeePlaceholder: "",
     catalogEyebrow: "Catalog",
     catalogTitle: "Products and services behind the experience",
     catalogIntro: "Core products and service components that can be combined for this business line.",
@@ -127,6 +131,10 @@ const solutionCopy = {
     contextPlaceholder: "Describe the location format, current supplier, delivery frequency, desired launch timing, budget and important requirements.",
     submitLabel: "Get offer",
     serviceCta: "Add",
+    companySizeLabel: "Company size",
+    companySizeOptions: [] as string[],
+    employeeLabel: "Employees",
+    employeePlaceholder: "",
     catalogEyebrow: "Catalog",
     catalogTitle: "Products and services for retail",
     catalogIntro: "Key components that can be combined around your location or network format.",
@@ -174,24 +182,67 @@ const solutionCopy = {
     ]
   },
   horeca: {
-    heroDescription: "Select what you need and send the request. The Binova team shapes the service around your real operation.",
-    proofTitle: "Pick the service layers. We build the system.",
-    primaryCta: "Select services",
-    packageIntro: "A clean starting point for the conversation with Binova.",
-    requestEyebrow: "Your request",
-    requestTitle: "Select services and send context",
-    requestIntro: "Select services below and the preview updates immediately.",
-    servicesTitle: "Services",
-    contextLabel: "Context / request",
-    contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
-    submitLabel: "Send request",
-    serviceCta: "Select service",
+    heroDescription: "Choose the required services and send the request. Binova will build a solution around your format: coffee, professional equipment, team training, replenishment and technical support.",
+    proofTitle: "Coffee, equipment, training and service in one system for your venue.",
+    primaryCta: "Build solution",
+    packageIntro: "This is a starting point for the offer. Choose a base option, then add the services your venue format needs.",
+    requestEyebrow: "Solution request",
+    requestTitle: "Build a solution for your venue",
+    requestIntro: "Select what your venue needs. Binova will prepare an offer around the format, guest flow, menu and service load.",
+    servicesTitle: "What to include in the solution",
+    contextLabel: "Request details",
+    contextPlaceholder: "Describe the venue format, current supplier, equipment, beverage menu, guest flow, delivery frequency and desired launch timing.",
+    submitLabel: "Get offer",
+    serviceCta: "Add",
+    companySizeLabel: "Venue format",
+    companySizeOptions: ["Cafe", "Restaurant", "Hotel", "Bar", "Coffee shop", "Venue network", "Other"],
+    employeeLabel: "Estimated guest flow / day",
+    employeePlaceholder: "Example: 100-300 guests",
     catalogEyebrow: "Catalog",
-    catalogTitle: "Products and services behind the experience",
-    catalogIntro: "Core products and service components that can be combined for this business line.",
-    catalogItems: [] as Array<{ category: string; name: string; description: string; imageUrl: string }>,
-    serviceDescriptions: {} as Record<string, string>,
-    presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
+    catalogTitle: "Products and services for HoReCa",
+    catalogIntro: "Key components that can be combined around the venue format, menu and service load.",
+    catalogItems: [
+      {
+        category: "Coffee",
+        name: "HoReCa espresso blend",
+        description: "Coffee beans for restaurants, cafes and hotels, built for stable taste and intensive daily service.",
+        imageUrl: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=82"
+      },
+      {
+        category: "Training",
+        name: "Barista launch training",
+        description: "Team training for consistent beverage quality, proper equipment setup and repeatable service.",
+        imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=82"
+      }
+    ],
+    serviceDescriptions: {
+      "Coffee beans": "Coffee selection around menu, taste, flow intensity and venue format.",
+      "Professional machines": "Coffee machines and equipment for stable work during peak hours.",
+      "Machine service": "Technical support, calibration and maintenance of equipment.",
+      "Tabletop supplies": "Sugar, napkins, cups and other items for guest service.",
+      "Kitchen hygiene": "Products and consumables for cleanliness of the coffee zone and equipment.",
+      "Emergency replenishment": "Fast supply of coffee, consumables or related goods when stock is low."
+    },
+    presets: [
+      {
+        name: "HoReCa starter",
+        description: "A base solution for launching or updating the coffee zone: coffee, equipment, service and a hygiene starter set.",
+        items: "Coffee · Professional machine · Service · Kitchen hygiene",
+        services: ["Coffee beans", "Professional machines", "Machine service", "Kitchen hygiene"]
+      },
+      {
+        name: "Coffee beans",
+        description: "Coffee selection around venue format, menu, flow intensity and desired cup taste.",
+        items: "Espresso · Blends · Tasting · Regular replenishment",
+        services: ["Coffee beans", "Emergency replenishment"]
+      },
+      {
+        name: "Professional machines",
+        description: "Selection, installation and maintenance of equipment for stable work during peak hours.",
+        items: "Coffee machines · Grinders · Installation · Calibration · Service",
+        services: ["Professional machines", "Machine service"]
+      }
+    ]
   }
 } as const;
 
@@ -409,6 +460,10 @@ const getBody = (request: http.IncomingMessage): Promise<Record<string, string |
 
 const asString = (value: string | string[] | undefined): string => Array.isArray(value) ? value[0] ?? "" : value ?? "";
 const asArray = (value: string | string[] | undefined): string[] => Array.isArray(value) ? value : value ? [value] : [];
+const asNumber = (value: string | string[] | undefined, fallback = 0): number => {
+  const parsed = Number(asString(value).match(/\d+(?:\.\d+)?/)?.[0] ?? "");
+  return Number.isFinite(parsed) ? parsed : fallback;
+};
 
 const statementAll = (sql: string, ...params: any[]): Row[] => db.prepare(sql).all(...params) as Row[];
 const statementGet = (sql: string, ...params: any[]): Row | undefined => db.prepare(sql).get(...params) as Row | undefined;
@@ -488,6 +543,7 @@ const translations: Record<string, Record<string, string>> = {
     "Standardized beverage systems for stores, networks and high-traffic locations.": "Стандартизированные beverage-системы для магазинов, сетей и точек с высоким трафиком.",
     "Configure retail solution": "Настроить решение для ритейла",
     "HoReCa Beverage Systems": "Beverage-системы для HoReCa",
+    "Stable coffee and service for HoReCa without downtime": "Стабильный кофе и сервис для HoReCa без простоев",
     "Professional coffee, equipment, training and service for cafes, hotels and restaurants.": "Профессиональный кофе, оборудование, обучение и сервис для кафе, отелей и ресторанов.",
     "Request HoReCa setup": "Запросить HoReCa setup",
     "Coffee systems for the way your business works.": "Кофейные системы под то, как работает ваш бизнес.",
@@ -546,6 +602,16 @@ const translations: Record<string, Record<string, string>> = {
     "One service standard for several locations: supply, technical support and equipment performance control.": "Единый стандарт обслуживания для нескольких локаций: поставки, техническая поддержка и контроль работы оборудования.",
     "Multiple points · One standard · Service · Reporting": "Несколько точек · Единый стандарт · Сервис · Отчётность",
     "HoReCa solution": "Решение для HoReCa",
+    "Choose the required services and send the request. Binova will build a solution around your format: coffee, professional equipment, team training, replenishment and technical support.": "Выберите нужные сервисы и отправьте заявку. Binova соберёт решение под ваш формат: кофе, профессиональное оборудование, обучение команды, пополнение и техническую поддержку.",
+    "Coffee, equipment, training and service in one system for your venue.": "Кофе, оборудование, обучение и сервис — в одной системе для вашего заведения.",
+    "This is a starting point for the offer. Choose a base option, then add the services your venue format needs.": "Это отправная точка для предложения. Выберите базовый вариант, а затем добавьте нужные услуги под ваш формат заведения.",
+    "HoReCa starter": "Старт для HoReCa",
+    "A base solution for launching or updating the coffee zone: coffee, equipment, service and a hygiene starter set.": "Базовое решение для запуска или обновления кофейной зоны: кофе, оборудование, сервис и гигиенический стартовый набор.",
+    "Coffee · Professional machine · Service · Kitchen hygiene": "Кофе · Профессиональная машина · Сервис · Гигиена кухни",
+    "Coffee selection around venue format, menu, flow intensity and desired cup taste.": "Подбор кофе под формат заведения, меню, интенсивность потока и желаемый вкус в чашке.",
+    "Espresso · Blends · Tasting · Regular replenishment": "Эспрессо · Бленды · Дегустация · Регулярное пополнение",
+    "Selection, installation and maintenance of equipment for stable work during peak hours.": "Подбор, установка и обслуживание оборудования для стабильной работы в часы нагрузки.",
+    "Coffee machines · Grinders · Installation · Calibration · Service": "Кофемашины · Гриндеры · Установка · Настройка · Сервис",
     "Office operations without daily procurement noise": "Офис без ежедневного закупочного шума",
     "Retail supply packages for stores and networks": "Пакеты снабжения для магазинов и сетей",
     "HoReCa service bundles for hospitality teams": "Сервисные пакеты для HoReCa-команд",
@@ -559,7 +625,9 @@ const translations: Record<string, Record<string, string>> = {
     "Choose services and send the request": "Выберите услуги и отправьте запрос",
     "Select what your office needs. We will build the solution and prepare an offer.": "Отметьте, что нужно вашему офису. Мы соберём решение и подготовим предложение.",
     "Build a solution for your point or network": "Соберите решение для вашей точки или сети",
+    "Build a solution for your venue": "Соберите решение для вашего заведения",
     "Select what your location needs. Binova will prepare a solution around the format, traffic and operating model.": "Отметьте, что нужно вашей локации. Binova подготовит решение под формат, трафик и операционную модель.",
+    "Select what your venue needs. Binova will prepare an offer around the format, guest flow, menu and service load.": "Отметьте, что нужно вашему заведению. Binova подготовит предложение под формат, поток гостей, меню и сервисную нагрузку.",
     "Choose the services you need": "Выберите нужные услуги",
     "What to include in the solution": "Что включить в решение",
     "Request details": "Детали заявки",
@@ -580,6 +648,22 @@ const translations: Record<string, Record<string, string>> = {
     "Receipts, paper, stickers and basic materials for point operations.": "Чеки, бумага, стикеры и базовые материалы для операционной работы точки.",
     "Products and consumables to keep the beverage zone clean.": "Средства и расходные материалы для поддержания чистоты зоны напитков.",
     "Regular deliveries of coffee, consumables and related goods by an agreed schedule.": "Регулярные поставки кофе, расходников и сопутствующих товаров по согласованному графику.",
+    "Venue format": "Формат заведения",
+    "Cafe": "Кафе",
+    "Restaurant": "Ресторан",
+    "Hotel": "Отель",
+    "Bar": "Бар",
+    "Coffee shop": "Кофейня",
+    "Venue network": "Сеть заведений",
+    "Other": "Другое",
+    "Estimated guest flow / day": "Ориентировочный поток гостей / день",
+    "Example: 100-300 guests": "Например: 100–300 гостей",
+    "Coffee selection around menu, taste, flow intensity and venue format.": "Подбор кофе под меню, вкус, интенсивность потока и формат заведения.",
+    "Coffee machines and equipment for stable work during peak hours.": "Кофемашины и оборудование для стабильной работы в часы нагрузки.",
+    "Technical support, calibration and maintenance of equipment.": "Техническая поддержка, настройка и обслуживание оборудования.",
+    "Sugar, napkins, cups and other items for guest service.": "Сахар, салфетки, стаканы и другие позиции для обслуживания гостей.",
+    "Products and consumables for cleanliness of the coffee zone and equipment.": "Средства и расходники для чистоты кофейной зоны и оборудования.",
+    "Fast supply of coffee, consumables or related goods when stock is low.": "Быстрая поставка кофе, расходников или сопутствующих товаров при нехватке.",
     "Pick the service layers. We build the system.": "Выберите слои сервиса. Мы соберем систему.",
     "Service direction": "Направление сервиса",
     "Choose a starting package": "Выберите стартовый пакет",
@@ -642,13 +726,20 @@ const translations: Record<string, Record<string, string>> = {
     "Catalog feel": "Каталог",
     "Products and services behind the experience": "Продукты и сервисы за этим опытом",
     "Products and services for retail": "Продукты и сервисы для ритейла",
+    "Products and services for HoReCa": "Продукты и сервисы для HoReCa",
     "No public price table. Just a clear view of what can be included in the service.": "Без публичного прайса. Только понятный обзор того, что может войти в сервис.",
     "Core products and service components that can be combined for this business line.": "Ключевые продукты и сервисные компоненты, которые можно комбинировать для этого направления.",
     "Key components that can be combined around your location or network format.": "Ключевые компоненты, которые можно комбинировать под формат вашей локации или сети.",
+    "Key components that can be combined around the venue format, menu and service load.": "Ключевые компоненты, которые можно комбинировать под формат заведения, меню и сервисную нагрузку.",
     "Cups and lids for the point": "Стаканы и крышки для точки",
     "Branded or standard cups, lids, stirrers and sugar for daily beverage sales.": "Брендированные или стандартные стаканы, крышки, мешалки и сахар для ежедневной продажи напитков.",
     "Self-service coffee corner": "Кофейный уголок self-service",
     "A ready solution for stores, gas stations and traffic locations: equipment, beverages, consumables and replenishment.": "Готовое решение для магазинов, АЗС и локаций с трафиком: оборудование, напитки, расходники и пополнение.",
+    "HoReCa espresso blend": "Эспрессо-бленд для HoReCa",
+    "Coffee beans for restaurants, cafes and hotels, built for stable taste and intensive daily service.": "Кофейные зёрна для ресторанов, кафе и отелей, рассчитанные на стабильный вкус и интенсивную ежедневную работу.",
+    "Training": "Обучение",
+    "Barista launch training": "Стартовое обучение бариста",
+    "Team training for consistent beverage quality, proper equipment setup and repeatable service.": "Обучение команды для стабильного качества напитков, правильной настройки оборудования и повторяемого сервиса.",
     "Can be combined with catalog items, equipment, replenishment rhythm and service support.": "Можно комбинировать с товарами каталога, оборудованием, ритмом пополнения и сервисной поддержкой.",
     "About Binova Group": "О Binova Group",
     "The operator behind business coffee systems.": "Оператор бизнес-систем для кофе.",
@@ -745,6 +836,7 @@ const translations: Record<string, Record<string, string>> = {
     "Standardized beverage systems for stores, networks and high-traffic locations.": "Sisteme standardizate de băuturi pentru magazine, rețele și locații cu trafic ridicat.",
     "Configure retail solution": "Configurează soluția retail",
     "HoReCa Beverage Systems": "Sisteme de băuturi HoReCa",
+    "Stable coffee and service for HoReCa without downtime": "Cafea stabilă și service pentru HoReCa fără întreruperi",
     "Professional coffee, equipment, training and service for cafes, hotels and restaurants.": "Cafea profesională, echipamente, training și service pentru cafenele, hoteluri și restaurante.",
     "Request HoReCa setup": "Cere setup HoReCa",
     "Coffee systems for the way your business works.": "Sisteme de cafea pentru felul în care funcționează afacerea ta.",
@@ -803,6 +895,16 @@ const translations: Record<string, Record<string, string>> = {
     "One service standard for several locations: supply, technical support and equipment performance control.": "Un standard unic de service pentru mai multe locații: aprovizionare, suport tehnic și controlul funcționării echipamentelor.",
     "Multiple points · One standard · Service · Reporting": "Mai multe puncte · Un standard · Service · Raportare",
     "HoReCa solution": "Soluție pentru HoReCa",
+    "Choose the required services and send the request. Binova will build a solution around your format: coffee, professional equipment, team training, replenishment and technical support.": "Alege serviciile necesare și trimite cererea. Binova va construi o soluție în jurul formatului tău: cafea, echipamente profesionale, training pentru echipă, reaprovizionare și suport tehnic.",
+    "Coffee, equipment, training and service in one system for your venue.": "Cafea, echipamente, training și service într-un singur sistem pentru locația ta.",
+    "This is a starting point for the offer. Choose a base option, then add the services your venue format needs.": "Acesta este punctul de pornire pentru ofertă. Alege o variantă de bază, apoi adaugă serviciile necesare formatului locației tale.",
+    "HoReCa starter": "Start pentru HoReCa",
+    "A base solution for launching or updating the coffee zone: coffee, equipment, service and a hygiene starter set.": "O soluție de bază pentru lansarea sau actualizarea zonei de cafea: cafea, echipamente, service și kit igienic de start.",
+    "Coffee · Professional machine · Service · Kitchen hygiene": "Cafea · Mașină profesională · Service · Igienă bucătărie",
+    "Coffee selection around venue format, menu, flow intensity and desired cup taste.": "Selecție de cafea în funcție de formatul locației, meniu, intensitatea fluxului și gustul dorit în ceașcă.",
+    "Espresso · Blends · Tasting · Regular replenishment": "Espresso · Blenduri · Degustare · Reaprovizionare regulată",
+    "Selection, installation and maintenance of equipment for stable work during peak hours.": "Selectarea, instalarea și mentenanța echipamentelor pentru lucru stabil în orele de vârf.",
+    "Coffee machines · Grinders · Installation · Calibration · Service": "Espressoare · Râșnițe · Instalare · Calibrare · Service",
     "Office operations without daily procurement noise": "Operațiuni de birou fără zgomot zilnic în achiziții",
     "Retail supply packages for stores and networks": "Pachete de aprovizionare pentru magazine și rețele",
     "HoReCa service bundles for hospitality teams": "Pachete de servicii pentru echipe HoReCa",
@@ -816,7 +918,9 @@ const translations: Record<string, Record<string, string>> = {
     "Choose services and send the request": "Alege serviciile și trimite cererea",
     "Select what your office needs. We will build the solution and prepare an offer.": "Bifează ce are nevoie biroul tău. Vom construi soluția și vom pregăti oferta.",
     "Build a solution for your point or network": "Construiește soluția pentru punctul sau rețeaua ta",
+    "Build a solution for your venue": "Construiește soluția pentru locația ta",
     "Select what your location needs. Binova will prepare a solution around the format, traffic and operating model.": "Bifează ce are nevoie locația ta. Binova va pregăti soluția în funcție de format, trafic și model operațional.",
+    "Select what your venue needs. Binova will prepare an offer around the format, guest flow, menu and service load.": "Bifează ce are nevoie locația ta. Binova va pregăti oferta în funcție de format, fluxul de oaspeți, meniu și încărcarea serviciului.",
     "Choose the services you need": "Alege serviciile necesare",
     "What to include in the solution": "Ce să includă soluția",
     "Request details": "Detaliile cererii",
@@ -837,6 +941,22 @@ const translations: Record<string, Record<string, string>> = {
     "Receipts, paper, stickers and basic materials for point operations.": "Bonuri, hârtie, stickere și materiale de bază pentru operarea punctului.",
     "Products and consumables to keep the beverage zone clean.": "Produse și consumabile pentru menținerea curățeniei în zona de băuturi.",
     "Regular deliveries of coffee, consumables and related goods by an agreed schedule.": "Livrări regulate de cafea, consumabile și produse conexe conform unui program agreat.",
+    "Venue format": "Formatul locației",
+    "Cafe": "Cafenea",
+    "Restaurant": "Restaurant",
+    "Hotel": "Hotel",
+    "Bar": "Bar",
+    "Coffee shop": "Coffee shop",
+    "Venue network": "Rețea de locații",
+    "Other": "Altul",
+    "Estimated guest flow / day": "Flux estimativ de oaspeți / zi",
+    "Example: 100-300 guests": "Exemplu: 100-300 oaspeți",
+    "Coffee selection around menu, taste, flow intensity and venue format.": "Selecție de cafea în funcție de meniu, gust, intensitatea fluxului și formatul locației.",
+    "Coffee machines and equipment for stable work during peak hours.": "Espressoare și echipamente pentru lucru stabil în orele de vârf.",
+    "Technical support, calibration and maintenance of equipment.": "Suport tehnic, calibrare și mentenanță pentru echipamente.",
+    "Sugar, napkins, cups and other items for guest service.": "Zahăr, șervețele, pahare și alte poziții pentru servirea oaspeților.",
+    "Products and consumables for cleanliness of the coffee zone and equipment.": "Produse și consumabile pentru curățenia zonei de cafea și a echipamentelor.",
+    "Fast supply of coffee, consumables or related goods when stock is low.": "Livrare rapidă de cafea, consumabile sau produse conexe când stocul este redus.",
     "Pick the service layers. We build the system.": "Alege straturile de servicii. Noi construim sistemul.",
     "Service direction": "Direcția serviciului",
     "Choose a starting package": "Alege un pachet de pornire",
@@ -899,13 +1019,20 @@ const translations: Record<string, Record<string, string>> = {
     "Catalog feel": "Catalog",
     "Products and services behind the experience": "Produsele și serviciile din spatele experienței",
     "Products and services for retail": "Produse și servicii pentru retail",
+    "Products and services for HoReCa": "Produse și servicii pentru HoReCa",
     "No public price table. Just a clear view of what can be included in the service.": "Fără tabel public de prețuri. Doar o imagine clară a ceea ce poate fi inclus în serviciu.",
     "Core products and service components that can be combined for this business line.": "Produse cheie și componente de servicii care pot fi combinate pentru această direcție de business.",
     "Key components that can be combined around your location or network format.": "Componente cheie care pot fi combinate în jurul formatului locației sau rețelei tale.",
+    "Key components that can be combined around the venue format, menu and service load.": "Componente cheie care pot fi combinate în jurul formatului locației, meniului și încărcării de service.",
     "Cups and lids for the point": "Pahare și capace pentru punct",
     "Branded or standard cups, lids, stirrers and sugar for daily beverage sales.": "Pahare branduite sau standard, capace, palete și zahăr pentru vânzarea zilnică a băuturilor.",
     "Self-service coffee corner": "Colț de cafea self-service",
     "A ready solution for stores, gas stations and traffic locations: equipment, beverages, consumables and replenishment.": "O soluție gata pentru magazine, benzinării și locații cu trafic: echipamente, băuturi, consumabile și reaprovizionare.",
+    "HoReCa espresso blend": "Blend espresso pentru HoReCa",
+    "Coffee beans for restaurants, cafes and hotels, built for stable taste and intensive daily service.": "Cafea boabe pentru restaurante, cafenele și hoteluri, construită pentru gust stabil și lucru zilnic intensiv.",
+    "Training": "Training",
+    "Barista launch training": "Training de lansare pentru barista",
+    "Team training for consistent beverage quality, proper equipment setup and repeatable service.": "Training pentru echipă pentru calitate constantă a băuturilor, setarea corectă a echipamentelor și service repetabil.",
     "Can be combined with catalog items, equipment, replenishment rhythm and service support.": "Poate fi combinat cu produse din catalog, echipamente, ritm de reaprovizionare și suport de service.",
     "About Binova Group": "Despre Binova Group",
     "The operator behind business coffee systems.": "Operatorul din spatele sistemelor de cafea pentru business.",
@@ -1793,6 +1920,15 @@ const solutionPage = (segment: keyof typeof businessLines) => {
   const packages = activePackages(segment);
   const items = copy.catalogItems.length ? copy.catalogItems : catalogItems(segment);
   const serviceDescriptions: Record<string, string> = copy.serviceDescriptions;
+  const companySizeControl = copy.companySizeOptions.length
+    ? `<select name="companySize">${copy.companySizeOptions.map((option) => `<option value="${escapeHtml(option)}">${escapeHtml(option)}</option>`).join("")}</select>`
+    : `<select name="companySize">
+                  ${companySizes.map((size) => `<option value="${size.value}">${size.label} - ${size.hint}</option>`).join("")}
+                </select>`;
+  const employeeInputType = copy.employeePlaceholder ? "text" : "number";
+  const employeeInputAttrs = copy.employeePlaceholder
+    ? `name="employeeCount" placeholder="${escapeHtml(copy.employeePlaceholder)}"`
+    : `type="number" min="1" name="employeeCount" value="25"`;
   const packageCards = copy.presets.length
     ? copy.presets.map((preset) => `
             <article class="card package-preset" role="button" tabindex="0" data-services="${escapeHtml(preset.services.join("|"))}">
@@ -1869,12 +2005,10 @@ const solutionPage = (segment: keyof typeof businessLines) => {
             <label>Email<input required type="email" name="email" placeholder="name@company.com"></label>
             <label>Phone<input name="phone" placeholder="+373 ..."></label>
             <div class="grid-2">
-              <label>Company size
-                <select name="companySize">
-                  ${companySizes.map((size) => `<option value="${size.value}">${size.label} - ${size.hint}</option>`).join("")}
-                </select>
+              <label>${escapeHtml(copy.companySizeLabel)}
+                ${companySizeControl}
               </label>
-              <label>Employees<input required type="number" min="1" name="employeeCount" value="25"></label>
+              <label>${escapeHtml(copy.employeeLabel)}<input required type="${employeeInputType}" ${employeeInputAttrs}></label>
             </div>
             <label>Locations<input required type="number" min="1" name="locationsCount" value="1"></label>
             <label>${escapeHtml(copy.servicesTitle)}</label>
@@ -2349,8 +2483,8 @@ const handlePost = async (ctx: RequestContext) => {
   if (ctx.url.pathname === "/lead") {
     const segment = asString(body.segment);
     const companySize = asString(body.companySize);
-    const employeeCount = Number(asString(body.employeeCount) || 0);
-    const locationsCount = Number(asString(body.locationsCount) || 1);
+    const employeeCount = asNumber(body.employeeCount, 0);
+    const locationsCount = asNumber(body.locationsCount, 1);
     const services = asArray(body.services);
     const estimate = calculateEstimate(segment, companySize, employeeCount, locationsCount, services);
     const result = db.prepare(`
