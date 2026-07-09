@@ -73,6 +73,21 @@ const solutionCopy = {
     proofTitle: "From a basic set to a complete coffee system for a large team.",
     primaryCta: "Build package",
     packageIntro: "This is a starting point for the offer. Choose a base option, then add the services you need.",
+    requestEyebrow: "Solution request",
+    requestTitle: "Choose services and send the request",
+    requestIntro: "Select what your office needs. We will build the solution and prepare an offer.",
+    servicesTitle: "Choose the services you need",
+    contextLabel: "Request details",
+    contextPlaceholder: "Describe the current situation, supply preferences, equipment, budget and launch timing.",
+    submitLabel: "Get offer",
+    serviceDescriptions: {
+      "Coffee program": "Coffee, tea and beverages matched to your team's consumption.",
+      "Coffee machines": "Selection, installation and maintenance of office equipment.",
+      "Water service": "Water, regular replenishment and service for the consumption point.",
+      "Cleaning supplies": "Consumables for the kitchen, office and daily operations.",
+      "Office consumables": "Cups, sugar, napkins and other items for regular replenishment.",
+      "Preventive maintenance": "Scheduled maintenance so equipment works without downtime."
+    },
     presets: [
       {
         name: "Basic office package",
@@ -99,6 +114,14 @@ const solutionCopy = {
     proofTitle: "Pick the service layers. We build the system.",
     primaryCta: "Select services",
     packageIntro: "A clean starting point for the conversation with Binova.",
+    requestEyebrow: "Your request",
+    requestTitle: "Select services and send context",
+    requestIntro: "Select services below and the preview updates immediately.",
+    servicesTitle: "Services",
+    contextLabel: "Context / request",
+    contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
+    submitLabel: "Send request",
+    serviceDescriptions: {} as Record<string, string>,
     presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
   },
   horeca: {
@@ -106,6 +129,14 @@ const solutionCopy = {
     proofTitle: "Pick the service layers. We build the system.",
     primaryCta: "Select services",
     packageIntro: "A clean starting point for the conversation with Binova.",
+    requestEyebrow: "Your request",
+    requestTitle: "Select services and send context",
+    requestIntro: "Select services below and the preview updates immediately.",
+    servicesTitle: "Services",
+    contextLabel: "Context / request",
+    contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
+    submitLabel: "Send request",
+    serviceDescriptions: {} as Record<string, string>,
     presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
   }
 } as const;
@@ -456,6 +487,20 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee, equipment, maintenance, hygiene and operational products for hotels, restaurants and cafes.": "Кофе, оборудование, сервис, гигиена и операционные продукты для отелей, ресторанов и кафе.",
     "Select services": "Выбрать сервисы",
     "Back to segments": "Назад к направлениям",
+    "Solution request": "Заявка на решение",
+    "Choose services and send the request": "Выберите услуги и отправьте запрос",
+    "Select what your office needs. We will build the solution and prepare an offer.": "Отметьте, что нужно вашему офису. Мы соберём решение и подготовим предложение.",
+    "Choose the services you need": "Выберите нужные услуги",
+    "Request details": "Детали заявки",
+    "Describe the current situation, supply preferences, equipment, budget and launch timing.": "Опишите текущую ситуацию, пожелания по поставкам, оборудованию, бюджету и срокам запуска.",
+    "Get offer": "Получить предложение",
+    "Select service": "Выбрать услугу",
+    "Coffee, tea and beverages matched to your team's consumption.": "Кофе, чай и напитки под потребление вашей команды.",
+    "Selection, installation and maintenance of office equipment.": "Подбор, установка и обслуживание оборудования для офиса.",
+    "Water, regular replenishment and service for the consumption point.": "Вода, регулярное пополнение и обслуживание точки потребления.",
+    "Consumables for the kitchen, office and daily operations.": "Расходные материалы для кухни, офиса и ежедневной операционки.",
+    "Cups, sugar, napkins and other items for regular replenishment.": "Стаканы, сахар, салфетки и другие позиции для регулярного пополнения.",
+    "Scheduled maintenance so equipment works without downtime.": "Плановое обслуживание, чтобы оборудование работало без простоев.",
     "Pick the service layers. We build the system.": "Выберите слои сервиса. Мы соберем систему.",
     "Service direction": "Направление сервиса",
     "Choose a starting package": "Выберите стартовый пакет",
@@ -472,9 +517,9 @@ const translations: Record<string, Record<string, string>> = {
     "Contact name": "Контактное лицо",
     "Email": "Email",
     "Phone": "Телефон",
-    "Company size": "Размер компании",
-    "Employees": "Сотрудники",
-    "Locations": "Локации",
+    "Company size": "Тип компании / размер",
+    "Employees": "Количество сотрудников",
+    "Locations": "Количество локаций",
     "Services": "Сервисы",
     "Context / request": "Контекст / запрос",
     "Send request": "Отправить заявку",
@@ -668,6 +713,20 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee, equipment, maintenance, hygiene and operational products for hotels, restaurants and cafes.": "Cafea, echipamente, mentenanță, igienă și produse operaționale pentru hoteluri, restaurante și cafenele.",
     "Select services": "Selectează servicii",
     "Back to segments": "Înapoi la segmente",
+    "Solution request": "Cerere pentru soluție",
+    "Choose services and send the request": "Alege serviciile și trimite cererea",
+    "Select what your office needs. We will build the solution and prepare an offer.": "Bifează ce are nevoie biroul tău. Vom construi soluția și vom pregăti oferta.",
+    "Choose the services you need": "Alege serviciile necesare",
+    "Request details": "Detaliile cererii",
+    "Describe the current situation, supply preferences, equipment, budget and launch timing.": "Descrie situația actuală, preferințele de aprovizionare, echipamentele, bugetul și termenul de lansare.",
+    "Get offer": "Primește oferta",
+    "Select service": "Alege serviciul",
+    "Coffee, tea and beverages matched to your team's consumption.": "Cafea, ceai și băuturi adaptate consumului echipei tale.",
+    "Selection, installation and maintenance of office equipment.": "Selectarea, instalarea și mentenanța echipamentelor pentru birou.",
+    "Water, regular replenishment and service for the consumption point.": "Apă, reaprovizionare regulată și service pentru punctul de consum.",
+    "Consumables for the kitchen, office and daily operations.": "Consumabile pentru bucătărie, birou și operațiunile zilnice.",
+    "Cups, sugar, napkins and other items for regular replenishment.": "Pahare, zahăr, șervețele și alte poziții pentru reaprovizionare regulată.",
+    "Scheduled maintenance so equipment works without downtime.": "Mentenanță planificată pentru ca echipamentele să funcționeze fără întreruperi.",
     "Pick the service layers. We build the system.": "Alege straturile de servicii. Noi construim sistemul.",
     "Service direction": "Direcția serviciului",
     "Choose a starting package": "Alege un pachet de pornire",
@@ -684,9 +743,9 @@ const translations: Record<string, Record<string, string>> = {
     "Contact name": "Persoană de contact",
     "Email": "Email",
     "Phone": "Telefon",
-    "Company size": "Mărimea companiei",
-    "Employees": "Angajați",
-    "Locations": "Locații",
+    "Company size": "Tip companie / mărime",
+    "Employees": "Număr de angajați",
+    "Locations": "Număr de locații",
     "Services": "Servicii",
     "Context / request": "Context / cerere",
     "Send request": "Trimite cererea",
@@ -1246,6 +1305,15 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       filter: drop-shadow(0 14px 20px rgba(0,0,0,.36));
     }
     .service-card input:checked + .service-shell span { color: rgba(255,255,255,.72); }
+    .service-shell em {
+      align-self: end;
+      width: fit-content;
+      color: var(--muted);
+      font-style: normal;
+      font-size: 13px;
+      font-weight: 900;
+    }
+    .service-card input:checked + .service-shell em { color: rgba(255,255,255,.9); }
     .request-form-wrap {
       display: grid;
       grid-template-columns: minmax(0, .92fr) minmax(360px, .78fr);
@@ -1608,6 +1676,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
   const copy = solutionCopy[segment];
   const packages = activePackages(segment);
   const items = catalogItems(segment);
+  const serviceDescriptions: Record<string, string> = copy.serviceDescriptions;
   const packageCards = copy.presets.length
     ? copy.presets.map((preset) => `
             <article class="card package-preset" role="button" tabindex="0" data-services="${escapeHtml(preset.services.join("|"))}">
@@ -1673,8 +1742,8 @@ const solutionPage = (segment: keyof typeof businessLines) => {
       </section>
       <section id="request" class="band">
         <div class="section-head">
-          <div><p class="eyebrow">Your request</p><h2>Select services and send context</h2></div>
-          <p>Select services below and the preview updates immediately.</p>
+          <div><p class="eyebrow">${escapeHtml(copy.requestEyebrow)}</p><h2>${escapeHtml(copy.requestTitle)}</h2></div>
+          <p>${escapeHtml(copy.requestIntro)}</p>
         </div>
         <div class="request-form-wrap">
           <form class="card card-body" method="post" action="/lead">
@@ -1692,12 +1761,12 @@ const solutionPage = (segment: keyof typeof businessLines) => {
               <label>Employees<input required type="number" min="1" name="employeeCount" value="25"></label>
             </div>
             <label>Locations<input required type="number" min="1" name="locationsCount" value="1"></label>
-            <label>Services</label>
+            <label>${escapeHtml(copy.servicesTitle)}</label>
             <div class="service-grid">
-              ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>Tap to add this layer to the request.</span></span></label>`).join("")}
+              ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>${escapeHtml(serviceDescriptions[service] ?? "Tap to add this layer to the request.")}</span><em>Select service</em></span></label>`).join("")}
             </div>
-            <label>Context / request<textarea name="message" placeholder="Current supplier, delivery rhythm, expected start date, decision criteria..."></textarea></label>
-            <button type="submit">Send request</button>
+            <label>${escapeHtml(copy.contextLabel)}<textarea name="message" placeholder="${escapeHtml(copy.contextPlaceholder)}"></textarea></label>
+            <button type="submit">${escapeHtml(copy.submitLabel)}</button>
           </form>
           <div class="cup-preview-card">
             ${cupPreview(1)}
