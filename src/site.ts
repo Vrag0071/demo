@@ -1405,6 +1405,98 @@ Object.assign(translations.ro, {
   "Enter item name.": "Introdu denumirea poziției."
 });
 
+Object.assign(translations.en, {
+  "Каталог продуктов и сервисов": "Product and service catalog",
+  "Управляйте кофе, оборудованием, расходниками и сервисами, которые используются на сайте, в пакетах, заявках и коммерческих предложениях.": "Manage coffee, equipment, consumables and services used on the website, in packages, requests and commercial proposals.",
+  "+ Добавить позицию": "+ Add item",
+  "Открыть модерацию": "Open moderation",
+  "Активные позиции": "Active items",
+  "На модерации из бота": "Bot items pending review",
+  "Черновики": "Drafts",
+  "Требуют обновления": "Need updates",
+  "Обновления из Telegram-бота": "Telegram bot updates",
+  "Сотрудники могут отправлять новые продукты и обновления через Telegram. Все отправленные карточки попадают сюда на проверку перед публикацией в каталог.": "Employees can submit new products and updates through Telegram. All submitted cards appear here for review before publication in the catalog.",
+  "На модерации:": "Pending review:",
+  "Все позиции": "All items",
+  "На модерации": "Pending review",
+  "Активные": "Active",
+  "Архив": "Archive",
+  "Из Telegram-бота": "From Telegram bot",
+  "Источник": "Source",
+  "Поиск": "Search",
+  "Обновлено:": "Updated:",
+  "Нет новых отправок из бота": "No new bot submissions",
+  "Когда сотрудник отправит продукт через Telegram-бот, он появится здесь на проверку.": "When an employee submits a product through the Telegram bot, it will appear here for review.",
+  "Каталог пока пуст": "Catalog is empty",
+  "Добавьте позицию вручную или примите первую отправку из Telegram-бота.": "Add an item manually or approve the first Telegram bot submission.",
+  "Выберите позицию для редактирования или создайте новую.": "Select an item to edit or create a new one.",
+  "Редактор позиции": "Item editor",
+  "Новая позиция": "New item",
+  "Название": "Name",
+  "Краткое описание": "Short description",
+  "Полное описание": "Full description",
+  "Цена": "Price",
+  "Единица цены": "Price unit",
+  "Доступность": "Availability",
+  "Теги": "Tags",
+  "Изображение": "Image",
+  "Комментарий администратора": "Admin comment",
+  "Сохранить": "Save",
+  "Опубликовать": "Publish",
+  "В архив": "Archive",
+  "Одобрить": "Approve",
+  "Вернуть на доработку": "Request changes",
+  "Отклонить": "Reject",
+  "Комментарий для сотрудника": "Comment for employee",
+  "Причина отклонения": "Rejection reason"
+});
+
+Object.assign(translations.ro, {
+  "Каталог продуктов и сервисов": "Catalog de produse și servicii",
+  "Управляйте кофе, оборудованием, расходниками и сервисами, которые используются на сайте, в пакетах, заявках и коммерческих предложениях.": "Gestionează cafeaua, echipamentele, consumabilele și serviciile folosite pe site, în pachete, cereri și oferte comerciale.",
+  "+ Добавить позицию": "+ Adaugă poziție",
+  "Открыть модерацию": "Deschide moderarea",
+  "Активные позиции": "Poziții active",
+  "На модерации из бота": "Din bot la moderare",
+  "Черновики": "Ciorne",
+  "Требуют обновления": "Necesită actualizare",
+  "Обновления из Telegram-бота": "Actualizări din botul Telegram",
+  "Сотрудники могут отправлять новые продукты и обновления через Telegram. Все отправленные карточки попадают сюда на проверку перед публикацией в каталог.": "Angajații pot trimite produse noi și actualizări prin Telegram. Toate cardurile trimise apar aici pentru verificare înainte de publicarea în catalog.",
+  "На модерации:": "La moderare:",
+  "Все позиции": "Toate pozițiile",
+  "На модерации": "La moderare",
+  "Активные": "Active",
+  "Архив": "Arhivă",
+  "Из Telegram-бота": "Din botul Telegram",
+  "Источник": "Sursă",
+  "Поиск": "Căutare",
+  "Обновлено:": "Actualizat:",
+  "Нет новых отправок из бота": "Nu există trimiteri noi din bot",
+  "Когда сотрудник отправит продукт через Telegram-бот, он появится здесь на проверку.": "Când un angajat trimite un produs prin botul Telegram, acesta va apărea aici pentru verificare.",
+  "Каталог пока пуст": "Catalogul este gol",
+  "Добавьте позицию вручную или примите первую отправку из Telegram-бота.": "Adaugă o poziție manual sau aprobă prima trimitere din botul Telegram.",
+  "Выберите позицию для редактирования или создайте новую.": "Selectează o poziție pentru editare sau creează una nouă.",
+  "Редактор позиции": "Editor poziție",
+  "Новая позиция": "Poziție nouă",
+  "Название": "Denumire",
+  "Краткое описание": "Descriere scurtă",
+  "Полное описание": "Descriere completă",
+  "Цена": "Preț",
+  "Единица цены": "Unitate preț",
+  "Доступность": "Disponibilitate",
+  "Теги": "Taguri",
+  "Изображение": "Imagine",
+  "Комментарий администратора": "Comentariu admin",
+  "Сохранить": "Salvează",
+  "Опубликовать": "Publică",
+  "В архив": "În arhivă",
+  "Одобрить": "Aprobă",
+  "Вернуть на доработку": "Cere modificări",
+  "Отклонить": "Respinge",
+  "Комментарий для сотрудника": "Comentariu pentru angajat",
+  "Причина отклонения": "Motivul respingerii"
+});
+
 const page = (title: string, body: string, options: { admin?: boolean; plain?: boolean } = {}) => `<!doctype html>
 <html lang="en">
 <head>
@@ -2634,34 +2726,74 @@ const adminLeadsEnhanced = (ctx: RequestContext) => {
 
 const adminCatalog = (ctx: RequestContext) => {
   if (!requireAdmin(ctx)) return "";
-  const items = catalogItems();
+  const defaults = [
+    { id: "cat-horeca-espresso", source: "manual", status: "active", segment: "horeca", category: "Coffee", name: "HoReCa Signature Espresso Beans", shortDescription: "Кофейные зёрна для ресторанов, кафе и отелей, рассчитанные на стабильный вкус и интенсивную ежедневную работу.", fullDescription: "Стабильный espresso blend для интенсивной HoReCa эксплуатации.", price: 31, priceUnit: "EUR/kg", availability: "in_stock", imageUrl: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=900&q=82", tags: ["espresso", "horeca"], updatedAt: new Date().toISOString() },
+    { id: "cat-barista-training", source: "manual", status: "active", segment: "horeca", category: "Training", name: "Barista Launch Training", shortDescription: "Стартовое обучение команды для стабильного качества напитков, настройки оборудования и повторяемого сервиса.", fullDescription: "Обучение команды перед запуском или обновлением кофейной зоны.", price: 260, priceUnit: "EUR/session", availability: "on_request", imageUrl: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=82", tags: ["training", "barista"], updatedAt: new Date().toISOString() },
+    { id: "cat-office-machine", source: "manual", status: "active", segment: "office", category: "Equipment", name: "Office Coffee Machine", shortDescription: "Кофемашина для офиса с установкой, настройкой и плановым обслуживанием.", fullDescription: "Офисное оборудование под размер команды и регулярное потребление.", price: 120, priceUnit: "EUR/mo", availability: "on_request", imageUrl: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=900&q=82", tags: ["machine", "office"], updatedAt: new Date().toISOString() },
+    { id: "cat-office-consumables", source: "manual", status: "active", segment: "office", category: "Consumables", name: "Office Consumables Pack", shortDescription: "Стаканы, сахар, мешалки, салфетки и другие позиции для ежедневного офисного потребления.", fullDescription: "Регулярно пополняемый набор расходников для кухни и переговорных.", price: 45, priceUnit: "EUR/mo", availability: "in_stock", imageUrl: "https://images.unsplash.com/photo-1522992319-0365e5f11656?auto=format&fit=crop&w=900&q=82", tags: ["office", "consumables"], updatedAt: new Date().toISOString() },
+    { id: "cat-retail-corner", source: "manual", status: "active", segment: "retail", category: "Equipment", name: "Self-Service Coffee Corner Kit", shortDescription: "Готовое решение для магазинов, АЗС и локаций с трафиком: оборудование, напитки, расходники и пополнение.", fullDescription: "Self-service кофейная точка для дополнительной продажи в retail.", price: null, priceUnit: "custom", availability: "on_request", imageUrl: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=900&q=82", tags: ["retail", "self-service"], updatedAt: new Date().toISOString() },
+    { id: "bot-tea-selection", source: "telegram_bot", status: "pending_review", segment: "office", category: "Consumables", name: "Premium Tea Selection", shortDescription: "Чайный набор для офисов и переговорных комнат.", fullDescription: "Отправлено сотрудником через Telegram-бот.", price: 18, priceUnit: "EUR/box", availability: "in_stock", imageUrl: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=900&q=82", tags: ["tea", "office"], submittedBy: "Maria", submittedAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "bot-retail-cups", source: "telegram_bot", status: "pending_review", segment: "retail", category: "Consumables", name: "Retail Cups & Lids Pack", shortDescription: "Стаканы и крышки для ежедневной продажи напитков в retail-точках.", fullDescription: "Отправлено сотрудником через Telegram-бот.", price: 0.08, priceUnit: "EUR/unit", availability: "in_stock", imageUrl: "https://images.unsplash.com/photo-1522992319-0365e5f11656?auto=format&fit=crop&w=900&q=82", tags: ["cups", "retail"], submittedBy: "Andrei", submittedAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: "bot-urgent-service", source: "telegram_bot", status: "needs_changes", segment: "horeca", category: "Service", name: "Urgent Machine Service", shortDescription: "Срочный сервис кофейного оборудования для HoReCa.", fullDescription: "Нужно уточнить SLA и условия выезда.", price: null, priceUnit: "custom", availability: "on_request", imageUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82", tags: ["service", "horeca"], submittedBy: "Service team", submittedAt: new Date().toISOString(), adminComment: "Уточнить SLA и условия выезда.", updatedAt: new Date().toISOString() }
+  ];
   return adminLayout(ctx, "Catalog", `
-    <div class="section-head"><div><p class="eyebrow">Product depth</p><h1 style="color:var(--ink); font-size:52px;">Catalog items</h1></div></div>
-    <div class="grid-2">
-      <form method="post" action="/admin/catalog" class="card card-body">
-        <label>Segment<select name="segment">${Object.entries(businessLines).map(([key, line]) => `<option value="${key}">${line.label}</option>`).join("")}</select></label>
-        <label>Category<select name="category"><option>Coffee</option><option>Tea</option><option>Equipment</option><option>Service</option><option>Consumables</option><option>Retail</option></select></label>
-        <label>Name<input required name="name" placeholder="Kimbo Espresso Office Blend"></label>
-        <label>Description<textarea required name="description" placeholder="Short sales-ready description"></textarea></label>
-        <label>Unit / monthly price EUR<input required type="number" name="unitPrice" value="120"></label>
-        <label>Image URL<input name="imageUrl" placeholder="https://..."></label>
-        <button>Add catalog item</button>
-      </form>
-      <div>
-        ${items.map((item) => `
-          <article class="card" style="margin-bottom:12px;">
-            ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}">` : ""}
-            <div class="card-body">
-              <span class="badge">${escapeHtml(slugLabel(item.segment))}</span>
-              <span class="badge hot">${escapeHtml(item.category)}</span>
-              <h3>${escapeHtml(item.name)}</h3>
-              <p>${escapeHtml(item.description)}</p>
-              <p><b>${money(item.unitPrice)}</b></p>
-            </div>
-          </article>
-        `).join("")}
-      </div>
+    <div class="section-head">
+      <div><p class="eyebrow">Catalog management</p><h1 style="color:var(--ink); font-size:52px;">Каталог продуктов и сервисов</h1><p>Управляйте кофе, оборудованием, расходниками и сервисами, которые используются на сайте, в пакетах, заявках и коммерческих предложениях.</p></div>
+      <div class="builder-actions"><button type="button" id="catNew">+ Добавить позицию</button><button type="button" class="ghost" id="openModeration">Открыть модерацию</button></div>
     </div>
+    <section class="metric-row"><div class="metric"><span>Активные позиции</span><b id="metricActive">0</b></div><div class="metric"><span>На модерации из бота</span><b id="metricPending">0</b></div><div class="metric"><span>Черновики</span><b id="metricDraft">0</b></div><div class="metric"><span>Требуют обновления</span><b id="metricNeeds">0</b></div></section>
+    <section class="band" style="padding-bottom:28px;"><div class="card card-body"><div class="section-head" style="margin:0;"><div><h3>Обновления из Telegram-бота</h3><p>Сотрудники могут отправлять новые продукты и обновления через Telegram. Все отправленные карточки попадают сюда на проверку перед публикацией в каталог.</p></div><span class="badge hot">На модерации: <b id="botCounter">0</b></span></div></div></section>
+    <div class="package-toolbar" id="catTabs"><button type="button" class="segment-tab active" data-tab="all">Все позиции</button><button type="button" class="segment-tab" data-tab="pending_review">На модерации</button><button type="button" class="segment-tab" data-tab="active">Активные</button><button type="button" class="segment-tab" data-tab="draft">Черновики</button><button type="button" class="segment-tab" data-tab="archived">Архив</button><button type="button" class="segment-tab" data-tab="telegram_bot">Из Telegram-бота</button></div>
+    <div class="card card-body" style="margin-bottom:16px;"><div class="builder-grid"><label>Сегмент<select id="filterSegment"><option value="all">All</option><option value="office">Office</option><option value="horeca">HoReCa</option><option value="retail">Retail</option></select></label><label>Категория<select id="filterCategory"><option value="all">All</option><option>Coffee</option><option>Equipment</option><option>Consumables</option><option>Service</option><option>Training</option><option>Water</option><option>Cleaning</option><option>Retail POS</option><option>Other</option></select></label><label>Источник<select id="filterSource"><option value="all">All</option><option value="manual">Manual</option><option value="telegram_bot">Telegram bot</option><option value="imported">Imported</option></select></label><label>Поиск<input id="filterSearch" placeholder="Search by name"></label></div></div>
+    <div class="package-builder"><section class="package-list" id="catList"></section><aside class="card card-body" id="catEditor"></aside></div>
+    <script>
+      (() => {
+        const defaults = ${JSON.stringify(defaults)};
+        const key = "binova_catalog_items_v1";
+        let items = JSON.parse(localStorage.getItem(key) || "null") || defaults;
+        let selectedId = items[0]?.id || "";
+        let tab = "all";
+        const q = (id) => document.getElementById(id);
+        const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const labels = { active:"Активен", draft:"Черновик", pending_review:"На модерации", rejected:"Отклонён", archived:"Архив", needs_changes:"На доработку", manual:"Manual", telegram_bot:"Из Telegram-бота", imported:"Imported", in_stock:"In stock", limited:"Limited", on_request:"On request", unavailable:"Unavailable", office:"Office", horeca:"HoReCa", retail:"Retail", all:"All" };
+        const save = () => localStorage.setItem(key, JSON.stringify(items));
+        const price = (item) => item.price === null || item.price === undefined || item.priceUnit === "custom" ? "Custom" : Number(item.price).toLocaleString("en-US") + " " + item.priceUnit;
+        const current = () => items.find((item) => item.id === selectedId) || null;
+        const filtered = () => items.filter((item) => {
+          const search = q("filterSearch").value.toLowerCase();
+          if (tab !== "all" && tab !== item.status && tab !== item.source) return false;
+          if (q("filterSegment").value !== "all" && item.segment !== q("filterSegment").value) return false;
+          if (q("filterCategory").value !== "all" && item.category !== q("filterCategory").value) return false;
+          if (q("filterSource").value !== "all" && item.source !== q("filterSource").value) return false;
+          return !search || item.name.toLowerCase().includes(search);
+        });
+        const metrics = () => { q("metricActive").textContent = items.filter((i) => i.status === "active").length; q("metricPending").textContent = items.filter((i) => i.source === "telegram_bot" && i.status === "pending_review").length; q("metricDraft").textContent = items.filter((i) => i.status === "draft").length; q("metricNeeds").textContent = items.filter((i) => i.status === "needs_changes").length; q("botCounter").textContent = items.filter((i) => i.source === "telegram_bot" && i.status === "pending_review").length; };
+        const renderList = () => {
+          const data = filtered();
+          q("catList").innerHTML = data.length ? data.map((item) => '<button type="button" class="package-card '+(item.id===selectedId?'active':'')+'" data-id="'+item.id+'"><div class="package-meta"><span class="badge">'+esc(labels[item.segment])+'</span><span class="badge">'+esc(item.category)+'</span><span class="badge hot">'+esc(labels[item.status])+'</span><span class="badge">'+esc(labels[item.source])+'</span></div>'+(item.imageUrl?'<img class="tile-image" style="margin:12px 0;border-radius:8px;" src="'+esc(item.imageUrl)+'" alt="'+esc(item.name)+'">':'')+'<h3>'+esc(item.name)+'</h3><p>'+esc(item.shortDescription)+'</p><p><b>'+esc(price(item))+'</b> · '+esc(labels[item.availability])+'</p><small>Обновлено: '+new Date(item.updatedAt).toLocaleDateString("ru-RU")+'</small><div class="builder-actions" style="margin-top:12px;"><span class="btn ghost">Edit</span><span class="btn ghost">Use in package</span></div></button>').join("") : '<div class="empty-state"><h3>'+(tab==="telegram_bot"||tab==="pending_review"?"Нет новых отправок из бота":"Каталог пока пуст")+'</h3><p>'+(tab==="telegram_bot"||tab==="pending_review"?"Когда сотрудник отправит продукт через Telegram-бот, он появится здесь на проверку.":"Добавьте позицию вручную или примите первую отправку из Telegram-бота.")+'</p></div>';
+          q("catList").querySelectorAll("[data-id]").forEach((node) => node.addEventListener("click", () => { selectedId = node.getAttribute("data-id"); render(); }));
+        };
+        const renderEditor = () => {
+          const item = current();
+          if (!item) { q("catEditor").innerHTML = '<div class="empty-state">Выберите позицию для редактирования или создайте новую.</div>'; return; }
+          q("catEditor").innerHTML = '<p class="eyebrow">Редактор позиции</p><h3>'+esc(item.name||"Новая позиция")+'</h3><form id="catForm"><div class="builder-grid"><label>Название<input id="editName" value="'+esc(item.name)+'"></label><label>Сегмент<select id="editSegment"><option value="office">Office</option><option value="horeca">HoReCa</option><option value="retail">Retail</option><option value="all">All</option></select></label></div><div class="builder-grid"><label>Категория<select id="editCategory"><option>Coffee</option><option>Equipment</option><option>Consumables</option><option>Service</option><option>Training</option><option>Water</option><option>Cleaning</option><option>Retail POS</option><option>Other</option></select></label><label>Статус<select id="editStatus"><option value="draft">Draft</option><option value="pending_review">Pending review</option><option value="active">Active</option><option value="rejected">Rejected</option><option value="archived">Archived</option><option value="needs_changes">Needs changes</option></select></label></div><label>Краткое описание<textarea id="editShort">'+esc(item.shortDescription)+'</textarea></label><label>Полное описание<textarea id="editFull">'+esc(item.fullDescription||"")+'</textarea></label><div class="builder-grid"><label>Цена<input id="editPrice" type="number" step="0.01" value="'+esc(item.price??"")+'"></label><label>Единица цены<select id="editUnit"><option>EUR/mo</option><option>EUR/unit</option><option>EUR/kg</option><option>EUR/session</option><option>EUR/box</option><option>custom</option></select></label></div><div class="builder-grid"><label>Доступность<select id="editAvailability"><option value="in_stock">In stock</option><option value="limited">Limited</option><option value="on_request">On request</option><option value="unavailable">Unavailable</option></select></label><label>Источник<select id="editSource"><option value="manual">Manual</option><option value="telegram_bot">Telegram bot</option><option value="imported">Imported</option></select></label></div><label>Теги<input id="editTags" value="'+esc((item.tags||[]).join(", "))+'"></label><label>Изображение<input id="editImage" value="'+esc(item.imageUrl||"")+'"></label>'+(item.source==="telegram_bot"?'<p><b>Submitted by:</b> '+esc(item.submittedBy||"-")+'</p><label>Комментарий администратора<textarea id="editComment">'+esc(item.adminComment||item.rejectionReason||"")+'</textarea></label>':'<input type="hidden" id="editComment" value="">')+'<div class="builder-actions"><button type="submit">Сохранить</button><button type="button" id="publishItem" class="ghost">Опубликовать</button><button type="button" id="archiveItem" class="ghost">В архив</button><button type="button" id="deleteItem" class="danger">Удалить</button></div>'+(item.source==="telegram_bot"&&item.status==="pending_review"?'<div class="builder-actions"><button type="button" id="approveBot">Одобрить</button><button type="button" id="changesBot" class="ghost">Вернуть на доработку</button><button type="button" id="rejectBot" class="danger">Отклонить</button></div>':'')+'</form>';
+          q("editSegment").value=item.segment; q("editCategory").value=item.category; q("editStatus").value=item.status; q("editUnit").value=item.priceUnit||"custom"; q("editAvailability").value=item.availability; q("editSource").value=item.source;
+          q("catForm").addEventListener("submit",(e)=>{e.preventDefault(); Object.assign(item,{name:q("editName").value.trim(),segment:q("editSegment").value,category:q("editCategory").value,status:q("editStatus").value,shortDescription:q("editShort").value.trim(),fullDescription:q("editFull").value.trim(),price:q("editUnit").value==="custom"?null:Number(q("editPrice").value||0),priceUnit:q("editUnit").value,availability:q("editAvailability").value,source:q("editSource").value,tags:q("editTags").value.split(",").map(t=>t.trim()).filter(Boolean),imageUrl:q("editImage").value.trim(),adminComment:q("editComment").value.trim(),updatedAt:new Date().toISOString()}); save(); render();});
+          q("publishItem").addEventListener("click",()=>{item.status="active";item.updatedAt=new Date().toISOString();save();render();});
+          q("archiveItem").addEventListener("click",()=>{item.status="archived";item.updatedAt=new Date().toISOString();save();render();});
+          q("deleteItem").addEventListener("click",()=>{if(!confirm("Удалить позицию "+item.name+"?"))return;items=items.filter(e=>e.id!==item.id);selectedId=items[0]?.id||"";save();render();});
+          q("approveBot")?.addEventListener("click",()=>{item.status="active";item.reviewedBy="Admin";item.reviewedAt=new Date().toISOString();item.updatedAt=new Date().toISOString();save();render();});
+          q("changesBot")?.addEventListener("click",()=>{const c=prompt("Комментарий для сотрудника",item.adminComment||"");if(c===null)return;item.status="needs_changes";item.adminComment=c;item.updatedAt=new Date().toISOString();save();render();});
+          q("rejectBot")?.addEventListener("click",()=>{const r=prompt("Причина отклонения");if(!r)return;item.status="rejected";item.rejectionReason=r;item.updatedAt=new Date().toISOString();save();render();});
+        };
+        const render = () => { metrics(); renderList(); renderEditor(); };
+        q("catNew").addEventListener("click",()=>{const item={id:"cat-"+Date.now(),source:"manual",status:"draft",segment:"office",category:"Coffee",name:"Новая позиция",shortDescription:"",fullDescription:"",price:null,priceUnit:"custom",availability:"on_request",imageUrl:"",tags:[],updatedAt:new Date().toISOString()};items.unshift(item);selectedId=item.id;save();render();});
+        q("openModeration").addEventListener("click",()=>{tab="pending_review";q("catTabs").querySelectorAll("[data-tab]").forEach(n=>n.classList.toggle("active",n.getAttribute("data-tab")===tab));render();});
+        q("catTabs").querySelectorAll("[data-tab]").forEach((b)=>b.addEventListener("click",()=>{tab=b.getAttribute("data-tab");q("catTabs").querySelectorAll("[data-tab]").forEach(n=>n.classList.toggle("active",n===b));render();}));
+        ["filterSegment","filterCategory","filterSource","filterSearch"].forEach((id)=>q(id).addEventListener("input",render));
+        render();
+      })();
+    </script>
   `);
 };
 
@@ -2902,7 +3034,17 @@ const adminPackageBuilder = (ctx: RequestContext) => {
     <script>
       (() => {
         const defaults = ${JSON.stringify(defaultPackages)};
-        const catalog = ${JSON.stringify(catalog)};
+        let catalog = ${JSON.stringify(catalog)};
+        const adminCatalogItems = JSON.parse(localStorage.getItem("binova_catalog_items_v1") || "[]")
+          .filter((item) => item.status === "active")
+          .map((item) => ({
+            id: "catalog-" + item.id,
+            name: item.name,
+            category: item.category,
+            basePrice: item.price || 0,
+            segments: item.segment === "all" ? ["office", "horeca", "retail"] : [item.segment]
+          }));
+        catalog = [...catalog, ...adminCatalogItems.filter((item) => !catalog.some((base) => base.id === item.id || base.name === item.name))];
         const key = "binova_admin_packages_v2";
         const segmentLabels = { office: "Офис", horeca: "HoReCa", retail: "Ритейл" };
         const statusLabels = { draft: "Черновик", active: "Активен" };
