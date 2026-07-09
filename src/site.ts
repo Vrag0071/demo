@@ -23,24 +23,24 @@ type RequestContext = {
 const businessLines = {
   office: {
     label: "Office",
-    title: "Office operations without daily procurement noise",
-    short: "Coffee, water, hygiene, consumables, equipment and planned replenishment for offices.",
+    title: "Office Coffee Solutions",
+    short: "Predictable coffee, tea, equipment and service for teams of any size.",
     hero:
       "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=82",
     services: ["Coffee program", "Coffee machines", "Water service", "Cleaning supplies", "Office consumables", "Preventive maintenance"]
   },
   retail: {
     label: "Retail",
-    title: "Retail supply packages for stores and networks",
-    short: "Shelf-ready assortment, replenishment rhythm, store equipment and commercial operations support.",
+    title: "Retail & Multi-location Solutions",
+    short: "Standardized beverage systems for stores, networks and high-traffic locations.",
     hero:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1800&q=82",
     services: ["Store consumables", "Shelf equipment", "Coffee corner", "POS supplies", "Cleaning supplies", "Scheduled replenishment"]
   },
   horeca: {
     label: "HoReCa",
-    title: "HoReCa service bundles for hospitality teams",
-    short: "Coffee, equipment, maintenance, hygiene and operational products for hotels, restaurants and cafes.",
+    title: "HoReCa Beverage Systems",
+    short: "Professional coffee, equipment, training and service for cafes, hotels and restaurants.",
     hero:
       "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1800&q=82",
     services: ["Coffee beans", "Professional machines", "Machine service", "Tabletop supplies", "Kitchen hygiene", "Emergency replenishment"]
@@ -343,6 +343,22 @@ const translations: Record<string, Record<string, string>> = {
     "Terms": "Условия",
     "About us": "О нас",
     "Binova Group demo В· local MVP": "Binova Group demo · локальный MVP",
+    "Office Solutions": "Офисные решения",
+    "Retail Solutions": "Решения для ритейла",
+    "HoReCa Solutions": "Решения для HoReCa",
+    "Get Offer": "Получить предложение",
+    "Coffee & beverage systems built around your business.": "Кофейные и beverage-системы, собранные вокруг вашего бизнеса.",
+    "Choose your business type and get a tailored solution for products, equipment, supply, service and long-term support.": "Выберите тип бизнеса и получите решение под продукты, оборудование, поставки, сервис и долгосрочную поддержку.",
+    "Get a tailored offer": "Получить персональное предложение",
+    "Office Coffee Solutions": "Офисные кофейные решения",
+    "Predictable coffee, tea, equipment and service for teams of any size.": "Предсказуемые кофе, чай, оборудование и сервис для команд любого размера.",
+    "Build office package": "Собрать офисный пакет",
+    "Retail & Multi-location Solutions": "Решения для ритейла и сетей",
+    "Standardized beverage systems for stores, networks and high-traffic locations.": "Стандартизированные beverage-системы для магазинов, сетей и точек с высоким трафиком.",
+    "Configure retail solution": "Настроить решение для ритейла",
+    "HoReCa Beverage Systems": "Beverage-системы для HoReCa",
+    "Professional coffee, equipment, training and service for cafes, hotels and restaurants.": "Профессиональный кофе, оборудование, обучение и сервис для кафе, отелей и ресторанов.",
+    "Request HoReCa setup": "Запросить HoReCa setup",
     "Coffee systems for the way your business works.": "Кофейные системы под то, как работает ваш бизнес.",
     "Choose your business line. We will shape the right beverage service experience around your team, locations and customers.": "Выберите направление бизнеса. Мы соберем сервис напитков под вашу команду, точки и клиентов.",
     "Why Binova": "Почему Binova",
@@ -514,6 +530,22 @@ const translations: Record<string, Record<string, string>> = {
     "Terms": "Termeni",
     "About us": "Despre noi",
     "Binova Group demo В· local MVP": "Binova Group demo · MVP local",
+    "Office Solutions": "Soluții pentru birouri",
+    "Retail Solutions": "Soluții pentru retail",
+    "HoReCa Solutions": "Soluții HoReCa",
+    "Get Offer": "Cere ofertă",
+    "Coffee & beverage systems built around your business.": "Sisteme de cafea și băuturi construite în jurul afacerii tale.",
+    "Choose your business type and get a tailored solution for products, equipment, supply, service and long-term support.": "Alege tipul de business și primește o soluție adaptată pentru produse, echipamente, aprovizionare, service și suport pe termen lung.",
+    "Get a tailored offer": "Cere o ofertă adaptată",
+    "Office Coffee Solutions": "Soluții de cafea pentru birouri",
+    "Predictable coffee, tea, equipment and service for teams of any size.": "Cafea, ceai, echipamente și service predictibil pentru echipe de orice dimensiune.",
+    "Build office package": "Construiește pachetul office",
+    "Retail & Multi-location Solutions": "Soluții pentru retail și rețele",
+    "Standardized beverage systems for stores, networks and high-traffic locations.": "Sisteme standardizate de băuturi pentru magazine, rețele și locații cu trafic ridicat.",
+    "Configure retail solution": "Configurează soluția retail",
+    "HoReCa Beverage Systems": "Sisteme de băuturi HoReCa",
+    "Professional coffee, equipment, training and service for cafes, hotels and restaurants.": "Cafea profesională, echipamente, training și service pentru cafenele, hoteluri și restaurante.",
+    "Request HoReCa setup": "Cere setup HoReCa",
     "Coffee systems for the way your business works.": "Sisteme de cafea pentru felul în care funcționează afacerea ta.",
     "Choose your business line. We will shape the right beverage service experience around your team, locations and customers.": "Alege direcția de business. Construim experiența potrivită de beverage service în jurul echipei, locațiilor și clienților tăi.",
     "Why Binova": "De ce Binova",
@@ -983,8 +1015,21 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       box-shadow: 0 28px 70px rgba(0,0,0,.28);
     }
     .segment-choice:hover::after { transform: rotate(18deg) scale(1.12); }
-    .segment-choice strong { position: relative; font-size: 30px; line-height: 1; }
+    .segment-choice strong { position: relative; max-width: 82%; font-size: 28px; line-height: 1.08; }
     .segment-choice span { position: relative; color: rgba(255,255,255,.72); line-height: 1.4; }
+    .segment-choice em {
+      position: relative;
+      width: fit-content;
+      margin-top: 6px;
+      padding: 8px 11px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      color: #fff;
+      font-style: normal;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(255,255,255,.08);
+    }
     main { padding: 26px 28px 82px; }
     .band { padding: 72px 0; border-top: 1px solid var(--line); }
     .section-head {
@@ -1341,11 +1386,11 @@ const publicNav = () => `
   <nav class="nav">
     <a class="logo" href="/">Binova Group</a>
     <div class="navlinks">
-      <a href="/solutions/office">Office</a>
-      <a href="/solutions/retail">Retail</a>
-      <a href="/solutions/horeca">HoReCa</a>
+      <a href="/solutions/office">Office Solutions</a>
+      <a href="/solutions/retail">Retail Solutions</a>
+      <a href="/solutions/horeca">HoReCa Solutions</a>
       <a href="/about">About</a>
-      <a class="admin-link" href="/admin">Admin</a>
+      <a class="admin-link" href="/#segments">Get Offer</a>
       <span class="lang-switch" aria-label="Language">
         <a href="?lang=en" data-lang="en">EN</a>
         <a href="?lang=ru" data-lang="ru">RU</a>
@@ -1388,15 +1433,16 @@ const homePage = () => {
       <div class="hero-inner hero-panel">
         <div>
           <p class="eyebrow">Binova Group</p>
-          <h1>Coffee systems for the way your business works.</h1>
-          <p>Choose your business line. We will shape the right beverage service experience around your team, locations and customers.</p>
+          <h1>Coffee & beverage systems built around your business.</h1>
+          <p>Choose your business type and get a tailored solution for products, equipment, supply, service and long-term support.</p>
           <div class="hero-actions">
+            <a class="btn" href="#segments">Get a tailored offer</a>
             <a class="btn secondary" href="/about">Why Binova</a>
           </div>
-          <div class="home-choice-grid" aria-label="Choose business line">
-            <a class="segment-choice" href="/solutions/office"><strong>Office</strong><span>For teams, kitchens, meeting rooms and employee experience.</span></a>
-            <a class="segment-choice" href="/solutions/retail"><strong>Retail</strong><span>For stores, networks, traffic points and standardized service.</span></a>
-            <a class="segment-choice" href="/solutions/horeca"><strong>HoReCa</strong><span>For cafes, hotels, restaurants and hospitality operations.</span></a>
+          <div id="segments" class="home-choice-grid" aria-label="Choose business line">
+            <a class="segment-choice" href="/solutions/office"><strong>Office Coffee Solutions</strong><span>Predictable coffee, tea, equipment and service for teams of any size.</span><em>Build office package</em></a>
+            <a class="segment-choice" href="/solutions/retail"><strong>Retail & Multi-location Solutions</strong><span>Standardized beverage systems for stores, networks and high-traffic locations.</span><em>Configure retail solution</em></a>
+            <a class="segment-choice" href="/solutions/horeca"><strong>HoReCa Beverage Systems</strong><span>Professional coffee, equipment, training and service for cafes, hotels and restaurants.</span><em>Request HoReCa setup</em></a>
           </div>
         </div>
       </div>
