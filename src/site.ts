@@ -23,7 +23,7 @@ type RequestContext = {
 const businessLines = {
   office: {
     label: "Office",
-    title: "Office Coffee Solutions",
+    title: "Coffee, equipment and service for an office without extra operations",
     short: "Predictable coffee, tea, equipment and service for teams of any size.",
     hero:
       "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=82",
@@ -66,6 +66,49 @@ const defaultServicePrices: Record<string, number> = {
   "Kitchen hygiene": 170,
   "Emergency replenishment": 240
 };
+
+const solutionCopy = {
+  office: {
+    heroDescription: "Choose your team size, beverage format and required services. Binova will build a solution for your office: coffee, tea, equipment, supply and maintenance.",
+    proofTitle: "From a basic set to a complete coffee system for a large team.",
+    primaryCta: "Build package",
+    packageIntro: "This is a starting point for the offer. Choose a base option, then add the services you need.",
+    presets: [
+      {
+        name: "Basic office package",
+        description: "Coffee, equipment and regular maintenance for stable office operations.",
+        items: "Coffee · Coffee machine · Monthly service · Starter kit",
+        services: ["Coffee program", "Coffee machines", "Preventive maintenance"]
+      },
+      {
+        name: "Beverages and consumables",
+        description: "Coffee, tea, sugar, cups and other items that can be replenished regularly.",
+        items: "Coffee beans · Instant coffee · Tea · Sugar · Cups",
+        services: ["Coffee program", "Office consumables", "Water service"]
+      },
+      {
+        name: "Equipment and service",
+        description: "Coffee machines, installation, maintenance and support so everything works without downtime.",
+        items: "Rental · Purchase · Installation · Maintenance · Replacement",
+        services: ["Coffee machines", "Preventive maintenance"]
+      }
+    ]
+  },
+  retail: {
+    heroDescription: "Select what you need and send the request. The Binova team shapes the service around your real operation.",
+    proofTitle: "Pick the service layers. We build the system.",
+    primaryCta: "Select services",
+    packageIntro: "A clean starting point for the conversation with Binova.",
+    presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
+  },
+  horeca: {
+    heroDescription: "Select what you need and send the request. The Binova team shapes the service around your real operation.",
+    proofTitle: "Pick the service layers. We build the system.",
+    primaryCta: "Select services",
+    packageIntro: "A clean starting point for the conversation with Binova.",
+    presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
+  }
+} as const;
 
 const companySizes = [
   { value: "small", label: "Small", hint: "1-20 people / one location" },
@@ -350,7 +393,9 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee & beverage systems built around your business.": "Кофейные и beverage-системы, собранные вокруг вашего бизнеса.",
     "Choose your business type and get a tailored solution for products, equipment, supply, service and long-term support.": "Выберите тип бизнеса и получите решение под продукты, оборудование, поставки, сервис и долгосрочную поддержку.",
     "Get a tailored offer": "Получить персональное предложение",
+    "Build package": "Собрать пакет",
     "Office Coffee Solutions": "Офисные кофейные решения",
+    "Coffee, equipment and service for an office without extra operations": "Кофе, оборудование и сервис для офиса без лишней операционки",
     "Predictable coffee, tea, equipment and service for teams of any size.": "Предсказуемые кофе, чай, оборудование и сервис для команд любого размера.",
     "Build office package": "Собрать офисный пакет",
     "Retail & Multi-location Solutions": "Решения для ритейла и сетей",
@@ -378,6 +423,7 @@ const translations: Record<string, Record<string, string>> = {
     "Less procurement noise. Better beverage experience.": "Меньше закупочного шума. Лучше опыт напитков.",
     "No public price tables and no catalog maze. Pick the environment, select services, send context.": "Без публичных прайсов и лабиринта каталога. Выберите среду, отметьте сервисы и отправьте контекст.",
     "Pick the environment, choose the service layers and send a structured request to the Binova team.": "Выберите направление, отметьте сервисы и отправьте структурированную заявку команде Binova.",
+    "Select what you need and send the request. The Binova team shapes the service around your real operation.": "Выберите нужные сервисы и отправьте заявку. Команда Binova соберет сервис под вашу реальную операционную модель.",
     "Continuity": "Стабильность",
     "Reliable daily service": "Надежный ежедневный сервис",
     "Equipment, replenishment and support are treated as one operating experience.": "Оборудование, пополнение и поддержка работают как единый операционный опыт.",
@@ -388,6 +434,18 @@ const translations: Record<string, Record<string, string>> = {
     "One partner owns the flow": "Один партнер отвечает за весь процесс",
     "Office, Retail and HoReCa requests start clean and continue with a dedicated Binova conversation.": "Запросы Office, Retail и HoReCa стартуют структурно и продолжаются в отдельном диалоге с Binova.",
     "Office solution": "Решение для офиса",
+    "Choose your team size, beverage format and required services. Binova will build a solution for your office: coffee, tea, equipment, supply and maintenance.": "Выберите размер команды, формат напитков и нужные сервисы. Binova соберёт решение под ваш офис: кофе, чай, оборудование, поставки и обслуживание.",
+    "From a basic set to a complete coffee system for a large team.": "От базового набора до полноценной кофейной системы для большой команды.",
+    "This is a starting point for the offer. Choose a base option, then add the services you need.": "Это отправная точка для предложения. Выберите базовый вариант, а затем добавьте нужные услуги.",
+    "Basic office package": "Базовый офисный пакет",
+    "Coffee, equipment and regular maintenance for stable office operations.": "Кофе, оборудование и регулярное обслуживание для стабильной работы офиса.",
+    "Coffee · Coffee machine · Monthly service · Starter kit": "Кофе · Кофемашина · Ежемесячный сервис · Стартовый набор",
+    "Beverages and consumables": "Напитки и расходники",
+    "Coffee, tea, sugar, cups and other items that can be replenished regularly.": "Кофе, чай, сахар, стаканы и другие позиции, которые можно пополнять регулярно.",
+    "Coffee beans · Instant coffee · Tea · Sugar · Cups": "Зерновой кофе · Растворимый кофе · Чай · Сахар · Стаканы",
+    "Equipment and service": "Оборудование и сервис",
+    "Coffee machines, installation, maintenance and support so everything works without downtime.": "Кофемашины, установка, обслуживание и поддержка, чтобы всё работало без простоев.",
+    "Rental · Purchase · Installation · Maintenance · Replacement": "Аренда · Покупка · Установка · Обслуживание · Замена",
     "Retail solution": "Решение для ритейла",
     "HoReCa solution": "Решение для HoReCa",
     "Office operations without daily procurement noise": "Офис без ежедневного закупочного шума",
@@ -547,7 +605,9 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee & beverage systems built around your business.": "Sisteme de cafea și băuturi construite în jurul afacerii tale.",
     "Choose your business type and get a tailored solution for products, equipment, supply, service and long-term support.": "Alege tipul de business și primește o soluție adaptată pentru produse, echipamente, aprovizionare, service și suport pe termen lung.",
     "Get a tailored offer": "Cere o ofertă adaptată",
+    "Build package": "Construiește pachetul",
     "Office Coffee Solutions": "Soluții de cafea pentru birouri",
+    "Coffee, equipment and service for an office without extra operations": "Cafea, echipamente și service pentru birou fără operațiuni inutile",
     "Predictable coffee, tea, equipment and service for teams of any size.": "Cafea, ceai, echipamente și service predictibil pentru echipe de orice dimensiune.",
     "Build office package": "Construiește pachetul office",
     "Retail & Multi-location Solutions": "Soluții pentru retail și rețele",
@@ -575,6 +635,7 @@ const translations: Record<string, Record<string, string>> = {
     "Less procurement noise. Better beverage experience.": "Mai puțin zgomot în achiziții. O experiență mai bună a băuturilor.",
     "No public price tables and no catalog maze. Pick the environment, select services, send context.": "Fără tabele publice de prețuri și fără labirint de catalog. Alege mediul, selectează serviciile și trimite contextul.",
     "Pick the environment, choose the service layers and send a structured request to the Binova team.": "Alege direcția, selectează straturile de servicii și trimite o cerere structurată echipei Binova.",
+    "Select what you need and send the request. The Binova team shapes the service around your real operation.": "Selectează serviciile necesare și trimite cererea. Echipa Binova construiește serviciul în jurul operațiunii tale reale.",
     "Continuity": "Continuitate",
     "Reliable daily service": "Serviciu zilnic de încredere",
     "Equipment, replenishment and support are treated as one operating experience.": "Echipamentul, reaprovizionarea și suportul sunt tratate ca o singură experiență operațională.",
@@ -585,6 +646,18 @@ const translations: Record<string, Record<string, string>> = {
     "One partner owns the flow": "Un singur partener gestionează tot fluxul",
     "Office, Retail and HoReCa requests start clean and continue with a dedicated Binova conversation.": "Cererile Office, Retail și HoReCa pornesc structurat și continuă într-o discuție dedicată cu Binova.",
     "Office solution": "Soluție pentru birouri",
+    "Choose your team size, beverage format and required services. Binova will build a solution for your office: coffee, tea, equipment, supply and maintenance.": "Alege dimensiunea echipei, formatul băuturilor și serviciile necesare. Binova va construi o soluție pentru biroul tău: cafea, ceai, echipamente, aprovizionare și mentenanță.",
+    "From a basic set to a complete coffee system for a large team.": "De la un set de bază până la un sistem complet de cafea pentru o echipă mare.",
+    "This is a starting point for the offer. Choose a base option, then add the services you need.": "Acesta este punctul de pornire pentru ofertă. Alege o variantă de bază, apoi adaugă serviciile necesare.",
+    "Basic office package": "Pachet office de bază",
+    "Coffee, equipment and regular maintenance for stable office operations.": "Cafea, echipamente și mentenanță regulată pentru funcționarea stabilă a biroului.",
+    "Coffee · Coffee machine · Monthly service · Starter kit": "Cafea · Espressor · Service lunar · Kit de start",
+    "Beverages and consumables": "Băuturi și consumabile",
+    "Coffee, tea, sugar, cups and other items that can be replenished regularly.": "Cafea, ceai, zahăr, pahare și alte poziții care pot fi reaprovizionate regulat.",
+    "Coffee beans · Instant coffee · Tea · Sugar · Cups": "Cafea boabe · Cafea instant · Ceai · Zahăr · Pahare",
+    "Equipment and service": "Echipamente și service",
+    "Coffee machines, installation, maintenance and support so everything works without downtime.": "Espressoare, instalare, mentenanță și suport pentru funcționare fără întreruperi.",
+    "Rental · Purchase · Installation · Maintenance · Replacement": "Chirie · Achiziție · Instalare · Mentenanță · Înlocuire",
     "Retail solution": "Soluție pentru retail",
     "HoReCa solution": "Soluție pentru HoReCa",
     "Office operations without daily procurement noise": "Operațiuni de birou fără zgomot zilnic în achiziții",
@@ -1294,6 +1367,17 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .solution-card img { aspect-ratio: 16 / 10; }
     .solution-card .card-body { min-height: 270px; display: flex; flex-direction: column; }
     .solution-card .btn { margin-top: auto; width: fit-content; }
+    .package-preset {
+      cursor: pointer;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .package-preset:hover,
+    .package-preset:focus-visible {
+      transform: translateY(-4px);
+      border-color: #c7b8a4;
+      box-shadow: var(--soft-shadow);
+      outline: none;
+    }
     .footer { border-top: 1px solid var(--line); padding: 26px 28px; color: var(--muted); }
     .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
@@ -1395,6 +1479,26 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         input.dispatchEvent(new Event("change", { bubbles: true }));
       });
       input.addEventListener("change", () => updateRequestCup(input));
+    });
+
+    document.querySelectorAll(".package-preset").forEach((card) => {
+      const applyPreset = () => {
+        const services = String(card.getAttribute("data-services") || "").split("|").filter(Boolean);
+        const form = document.querySelector("#request form");
+        if (!form || !services.length) return;
+        form.querySelectorAll(".service-card input").forEach((input) => {
+          input.checked = services.includes(input.value);
+          input.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+        document.querySelector("#request")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+      card.addEventListener("click", applyPreset);
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          applyPreset();
+        }
+      });
     });
 
     document.querySelectorAll(".cup-stage-button").forEach((button) => {
@@ -1501,36 +1605,21 @@ const homePage = () => {
 
 const solutionPage = (segment: keyof typeof businessLines) => {
   const line = businessLines[segment];
+  const copy = solutionCopy[segment];
   const packages = activePackages(segment);
   const items = catalogItems(segment);
-
-  return page(`${line.label} solution`, `
-    <header class="hero">
-      ${beanField()}
-      <div class="hero-inner hero-panel">
-        <div>
-        <p class="eyebrow">${escapeHtml(line.label)} solution</p>
-        <h1>${escapeHtml(line.title)}</h1>
-        <p>${escapeHtml(line.short)} Select what you need and send the request. The Binova team shapes the service around your real operation.</p>
-        <div class="hero-actions">
-          <a class="btn" href="#request">Select services</a>
-          <a class="btn secondary" href="/">Back to segments</a>
-        </div>
-        </div>
-        <div class="hero-visual" aria-label="${escapeHtml(line.label)} visual">
-          <div class="visual-tile large"><img src="${line.hero}" alt="${escapeHtml(line.label)}"></div>
-          <div class="proof-card"><span>${escapeHtml(line.label)}</span><b>Pick the service layers. We build the system.</b></div>
-        </div>
-      </div>
-    </header>
-    <main>
-      <section class="band">
-        <div class="section-head">
-          <div><p class="eyebrow">Service direction</p><h2>Choose a starting package</h2></div>
-          <p>A clean starting point for the conversation with Binova.</p>
-        </div>
-        <div class="grid-3">
-          ${packages.map((pkg) => `
+  const packageCards = copy.presets.length
+    ? copy.presets.map((preset) => `
+            <article class="card package-preset" role="button" tabindex="0" data-services="${escapeHtml(preset.services.join("|"))}">
+              <div class="card-body">
+                <span class="badge">${escapeHtml(line.label)}</span>
+                <h3>${escapeHtml(preset.name)}</h3>
+                <p>${escapeHtml(preset.description)}</p>
+                <p>${escapeHtml(preset.items)}</p>
+              </div>
+            </article>
+          `).join("")
+    : packages.map((pkg) => `
             <article class="card">
               <div class="card-body">
                 <span class="badge">${escapeHtml(line.label)}</span>
@@ -1539,8 +1628,10 @@ const solutionPage = (segment: keyof typeof businessLines) => {
                 <p>${escapeHtml(String(pkg.items).split("\n").join(" · "))}</p>
               </div>
             </article>
-          `).join("") || `<div class="card"><div class="card-body"><h3>Packages are being prepared</h3><p>Send a request and the Binova team will recommend the right service setup.</p></div></div>`}
-          ${line.services.slice(0, Math.max(0, 3 - packages.length)).map((service) => `
+          `).join("");
+  const fillerCards = copy.presets.length
+    ? ""
+    : line.services.slice(0, Math.max(0, 3 - packages.length)).map((service) => `
             <article class="card">
               <div class="card-body">
                 <span class="badge">Layer</span>
@@ -1548,7 +1639,36 @@ const solutionPage = (segment: keyof typeof businessLines) => {
                 <p>Can be combined with catalog items, equipment, replenishment rhythm and service support.</p>
               </div>
             </article>
-          `).join("")}
+          `).join("");
+
+  return page(`${line.label} solution`, `
+    <header class="hero">
+      ${beanField()}
+      <div class="hero-inner hero-panel">
+        <div>
+        <p class="eyebrow">${escapeHtml(line.label)} solution</p>
+        <h1>${escapeHtml(line.title)}</h1>
+        <p>${escapeHtml(copy.heroDescription)}</p>
+        <div class="hero-actions">
+          <a class="btn" href="#request">${escapeHtml(copy.primaryCta)}</a>
+          <a class="btn secondary" href="/">Back to segments</a>
+        </div>
+        </div>
+        <div class="hero-visual" aria-label="${escapeHtml(line.label)} visual">
+          <div class="visual-tile large"><img src="${line.hero}" alt="${escapeHtml(line.label)}"></div>
+          <div class="proof-card"><span>${escapeHtml(line.label)}</span><b>${escapeHtml(copy.proofTitle)}</b></div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="band">
+        <div class="section-head">
+          <div><p class="eyebrow">Service direction</p><h2>Choose a starting package</h2></div>
+          <p>${escapeHtml(copy.packageIntro)}</p>
+        </div>
+        <div class="grid-3">
+          ${packageCards || `<div class="card"><div class="card-body"><h3>Packages are being prepared</h3><p>Send a request and the Binova team will recommend the right service setup.</p></div></div>`}
+          ${fillerCards}
         </div>
       </section>
       <section id="request" class="band">
