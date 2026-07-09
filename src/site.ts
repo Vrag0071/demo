@@ -961,6 +961,14 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .bean.b2 { right: 13%; top: 15%; transform: rotate(22deg); animation-delay: -2.4s; }
     .bean.b3 { left: 48%; bottom: 16%; transform: rotate(-38deg); animation-delay: -4.1s; }
     .bean.b4 { right: 6%; bottom: 20%; transform: rotate(42deg); animation-delay: -1.6s; }
+    .bean.b5 { left: 18%; bottom: 24%; width: 38px; height: 50px; transform: rotate(31deg); animation-delay: -5.2s; opacity: .82; }
+    .bean.b6 { left: 31%; top: 12%; width: 42px; height: 56px; transform: rotate(-17deg); animation-delay: -3.6s; opacity: .76; }
+    .bean.b7 { right: 28%; top: 24%; width: 44px; height: 58px; transform: rotate(58deg); animation-delay: -6.4s; opacity: .88; }
+    .bean.b8 { right: 21%; bottom: 12%; width: 36px; height: 48px; transform: rotate(-52deg); animation-delay: -1.1s; opacity: .72; }
+    .bean.b9 { left: 4%; bottom: 42%; width: 34px; height: 46px; transform: rotate(72deg); animation-delay: -4.8s; opacity: .66; }
+    .bean.b10 { right: 42%; bottom: 30%; width: 40px; height: 54px; transform: rotate(-8deg); animation-delay: -2.9s; opacity: .78; }
+    .bean.b11 { left: 62%; top: 10%; width: 32px; height: 44px; transform: rotate(18deg); animation-delay: -7.1s; opacity: .6; }
+    .bean.b12 { right: 3%; top: 44%; width: 46px; height: 60px; transform: rotate(-32deg); animation-delay: -3.1s; opacity: .84; }
     .home-choice-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1421,6 +1429,11 @@ const footer = () => `
     </div>
   </footer>`;
 
+const beanField = () => `
+  <div class="bean-field">
+    ${Array.from({ length: 12 }, (_, index) => `<span class="bean b${index + 1}"></span>`).join("")}
+  </div>`;
+
 const cupPreview = (stage = 1) => `
   <div class="cup-preview" data-stage="${stage}" aria-label="AI generated latte stage preview">
     ${[1, 2, 3, 4, 5, 6].map((item) => `<span class="cup-frame stage-${item}"></span>`).join("")}
@@ -1429,7 +1442,7 @@ const cupPreview = (stage = 1) => `
 const homePage = () => {
   return page("Business supply platform", `
     <header class="hero">
-      <div class="bean-field"><span class="bean b1"></span><span class="bean b2"></span><span class="bean b3"></span><span class="bean b4"></span></div>
+      ${beanField()}
       <div class="hero-inner hero-panel">
         <div>
           <p class="eyebrow">Binova Group</p>
@@ -1452,14 +1465,14 @@ const homePage = () => {
         <div class="section-head">
           <div>
             <p class="eyebrow">Why Binova</p>
-            <h2>Less procurement noise. Better beverage experience.</h2>
+            <h2>Less hassle. Better coffee. One managed system.</h2>
           </div>
-          <p>Pick the environment, choose the service layers and send a structured request to the Binova team.</p>
+          <p>Tell us how your business works. We’ll shape the right setup: products, equipment, supply, service and support.</p>
         </div>
         <div class="grid-3">
-          <article class="card"><div class="card-body"><span class="badge">Continuity</span><h3>Reliable daily service</h3><p>Equipment, replenishment and support are treated as one operating experience.</p></div></article>
-          <article class="card"><div class="card-body"><span class="badge">Taste</span><h3>Coffee people remember</h3><p>Products and service setup are selected for the business context, not sold as isolated SKUs.</p></div></article>
-          <article class="card"><div class="card-body"><span class="badge">Care</span><h3>One partner owns the flow</h3><p>Office, Retail and HoReCa requests start clean and continue with a dedicated Binova conversation.</p></div></article>
+          <article class="card"><div class="card-body"><span class="badge">Continuity</span><h3>Everything works, every day</h3><p>Equipment, supply and service are managed together, so your team does not have to coordinate separate suppliers.</p></div></article>
+          <article class="card"><div class="card-body"><span class="badge">Quality</span><h3>The right setup for every cup</h3><p>Coffee, equipment and service are selected around your business type, volume and customer experience.</p></div></article>
+          <article class="card"><div class="card-body"><span class="badge">Control</span><h3>One partner, one clear process</h3><p>Every Office, HoReCa or Retail request starts structured and continues with a dedicated Binova team.</p></div></article>
         </div>
       </section>
     </main>
@@ -1473,7 +1486,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
 
   return page(`${line.label} solution`, `
     <header class="hero">
-      <div class="bean-field"><span class="bean b1"></span><span class="bean b2"></span><span class="bean b3"></span><span class="bean b4"></span></div>
+      ${beanField()}
       <div class="hero-inner hero-panel">
         <div>
         <p class="eyebrow">${escapeHtml(line.label)} solution</p>
