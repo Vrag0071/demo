@@ -390,6 +390,11 @@ const ensureSiteTables = () => {
   addClientLeadColumn(`"selectedServices" TEXT`);
   addClientLeadColumn(`"additionalDetails" TEXT`);
   addClientLeadColumn(`"estimatedDealValue" INTEGER`);
+  addClientLeadColumn(`"setupFee" INTEGER`);
+  addClientLeadColumn(`"yearlyValue" INTEGER`);
+  addClientLeadColumn(`"pricingRuleId" TEXT`);
+  addClientLeadColumn(`"selectedServiceLayers" TEXT`);
+  addClientLeadColumn(`"priceBreakdown" TEXT`);
   addClientLeadColumn(`"assignedManager" TEXT`);
   addClientLeadColumn(`"followUpDate" TEXT`);
 
@@ -2115,13 +2120,28 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .builder-actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .builder-error { color: #8b2c21; font-weight: 900; min-height: 20px; }
     .empty-state { border: 1px dashed #cdbda9; border-radius: 8px; padding: 22px; color: var(--muted); background: rgba(255,253,249,.7); }
+    .pricing-engine .card { overflow: visible; }
+    .layer-list { display: grid; gap: 10px; }
+    .layer-row { display: grid; grid-template-columns: 1.2fr .9fr .9fr .65fr .75fr auto; gap: 8px; align-items: center; border: 1px solid var(--line); border-radius: 8px; background: #fffdfa; padding: 10px; }
+    .layer-row input, .layer-row select { min-height: 38px; padding: 8px 10px; }
+    .sim-layer-list { display: grid; gap: 8px; margin: 14px 0; max-height: 250px; overflow: auto; }
+    .sim-layer { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; padding: 9px 10px; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; background: rgba(255,255,255,.05); }
+    .sim-layer small { color: rgba(255,255,255,.58); font-weight: 800; }
+    .calc-result { display: grid; gap: 10px; margin-top: 16px; }
+    .calc-total, .calc-mini { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; border-top: 1px solid rgba(255,255,255,.14); padding-top: 12px; }
+    .calc-total b { color: #fff; font-size: 34px; }
+    .calc-mini b { color: #fff; font-size: 18px; }
+    .calc-result ul { margin: 6px 0 0; padding-left: 18px; color: rgba(255,255,255,.72); display: grid; gap: 5px; }
+    .calc-preview input, .calc-preview select { background: rgba(255,255,255,.92); }
+    .calc-filters select, .calc-filters input { width: auto; min-width: 170px; }
+    .table-wrap { overflow-x: auto; border-radius: 8px; }
     .footer { border-top: 1px solid var(--line); padding: 26px 28px; color: var(--muted); }
     .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
       .hero { min-height: 68vh; padding: 28px 18px; }
       main { padding: 24px 16px 56px; }
-      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .trust-strip, .hero-visual, .home-choice-grid, .service-grid, .package-builder, .builder-grid, .item-picker { grid-template-columns: 1fr; }
+      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .trust-strip, .hero-visual, .home-choice-grid, .service-grid, .package-builder, .builder-grid, .item-picker, .layer-row { grid-template-columns: 1fr; }
       .request-form-wrap { grid-template-columns: 1fr; }
       .cup-lab { grid-template-columns: 1fr; }
       .cup-lab-stage { min-height: 420px; }
@@ -2250,6 +2270,65 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
           applyPreset();
         }
       });
+    });
+
+    const defaultLayerPrices = {
+      "Coffee program": 180, "Coffee machines": 120, "Water service": 90, "Cleaning supplies": 70, "Office consumables": 2, "Preventive maintenance": 70,
+      "Store consumables": 80, "Shelf equipment": 350, "Coffee corner": 350, "POS supplies": 40, "Scheduled replenishment": 90,
+      "Coffee beans": 180, "Professional machines": 260, "Machine service": 120, "Table consumables": 80, "Kitchen hygiene": 70, "Emergency replenishment": 90
+    };
+
+    const calculatePublicOffer = (form) => {
+      const rules = JSON.parse(localStorage.getItem("binova_pricing_rules_v1") || "[]");
+      const layers = JSON.parse(localStorage.getItem("binova_service_layers_v1") || "[]");
+      const segment = form.querySelector('[name="segment"]')?.value || "office";
+      const size = form.querySelector('[name="companySize"]')?.value || "small";
+      const employees = Number(form.querySelector('[name="employeeCount"]')?.value || 0);
+      const locations = Math.max(1, Number(form.querySelector('[name="locationsCount"]')?.value || 1));
+      const selectedServices = Array.from(form.querySelectorAll('[name="services"]:checked')).map((input) => input.value);
+      const rule = rules.find((item) => item.status === "active" && (item.segment === segment || item.segment === "all") && item.clientSize === size)
+        || rules.find((item) => item.status === "active" && (item.segment === segment || item.segment === "all"))
+        || { id:"server-fallback", name:"Fallback estimate", baseMonthlyPrice:500, minimumMonthlyPrice:500, setupFee:0, perEmployee:5, perLocation:100, serviceLevelMultiplier:1, packageMultiplier:1, discountType:"none", discountValue:0, markupType:"none", markupValue:0 };
+      const matchingLayers = selectedServices.map((service) => layers.find((layer) => layer.segment === segment && String(layer.name).toLowerCase() === String(service).toLowerCase())).filter(Boolean);
+      const serviceTotal = selectedServices.reduce((sum, service) => {
+        const layer = matchingLayers.find((item) => String(item.name).toLowerCase() === String(service).toLowerCase());
+        if (layer) {
+          if (layer.pricingType === "per_employee") return sum + Number(layer.price || 0) * employees;
+          if (layer.pricingType === "per_location") return sum + Number(layer.price || 0) * locations;
+          if (layer.pricingType === "one_time" || layer.pricingType === "custom_quote") return sum;
+          return sum + Number(layer.price || 0);
+        }
+        return sum + (defaultLayerPrices[service] || 100);
+      }, 0);
+      let subtotal = Number(rule.baseMonthlyPrice || 0) + employees * Number(rule.perEmployee || 0) + locations * Number(rule.perLocation || 0) + serviceTotal;
+      subtotal = subtotal * Number(rule.serviceLevelMultiplier || 1) * Number(rule.packageMultiplier || 1);
+      const markup = rule.markupType === "percent" ? subtotal * Number(rule.markupValue || 0) / 100 : rule.markupType === "fixed" ? Number(rule.markupValue || 0) : 0;
+      subtotal += markup;
+      const discount = rule.discountType === "percent" ? subtotal * Number(rule.discountValue || 0) / 100 : rule.discountType === "fixed" ? Number(rule.discountValue || 0) : 0;
+      subtotal -= discount;
+      const monthly = Math.max(Number(rule.minimumMonthlyPrice || 0), Math.round(subtotal));
+      const setupLayerFee = matchingLayers.filter((layer) => layer.pricingType === "one_time").reduce((sum, layer) => sum + Number(layer.price || 0), 0);
+      const setup = Math.round(Number(rule.setupFee || 0) + setupLayerFee);
+      const yearly = monthly * 12 + setup;
+      const breakdown = [
+        "Rule: " + (rule.name || rule.id),
+        "Base: " + Number(rule.baseMonthlyPrice || 0) + " EUR",
+        "Employees: " + employees + " x " + Number(rule.perEmployee || 0) + " EUR",
+        "Locations: " + locations + " x " + Number(rule.perLocation || 0) + " EUR",
+        "Service layers: " + Math.round(serviceTotal) + " EUR",
+        "Markup: " + Math.round(markup) + " EUR",
+        "Discount: " + Math.round(discount) + " EUR"
+      ];
+      form.querySelector('[name="estimatedMonthlyPrice"]').value = String(monthly);
+      form.querySelector('[name="setupFee"]').value = String(setup);
+      form.querySelector('[name="yearlyValue"]').value = String(yearly);
+      form.querySelector('[name="pricingRuleId"]').value = rule.id || "";
+      form.querySelector('[name="selectedServiceLayers"]').value = JSON.stringify(matchingLayers.map((layer) => layer.id));
+      form.querySelector('[name="priceBreakdown"]').value = JSON.stringify(breakdown);
+    };
+
+    document.querySelectorAll('form[action="/lead"]').forEach((form) => {
+      form.addEventListener("submit", () => calculatePublicOffer(form));
     });
 
     document.querySelectorAll(".cup-stage-button").forEach((button) => {
@@ -2440,6 +2519,12 @@ const solutionPage = (segment: keyof typeof businessLines) => {
         <div class="request-form-wrap">
           <form class="card card-body" method="post" action="/lead">
             <input type="hidden" name="segment" value="${segment}">
+            <input type="hidden" name="estimatedMonthlyPrice">
+            <input type="hidden" name="setupFee">
+            <input type="hidden" name="yearlyValue">
+            <input type="hidden" name="pricingRuleId">
+            <input type="hidden" name="selectedServiceLayers">
+            <input type="hidden" name="priceBreakdown">
             <label>Company name<input required name="companyName" placeholder="Example SRL"></label>
             <label>Contact name<input required name="contactName" placeholder="Decision maker"></label>
             <label>Email<input required type="email" name="email" placeholder="name@company.com"></label>
@@ -2804,6 +2889,14 @@ const adminProposals = (ctx: RequestContext) => {
   const items = catalogItems();
   const proposals = statementAll(`SELECT * FROM "CommercialProposal" ORDER BY "createdAt" DESC`);
   const selectedLeadId = Number(ctx.url.searchParams.get("leadId") ?? leads[0]?.id ?? 0);
+  const selectedLead = leads.find((lead) => Number(lead.id) === selectedLeadId);
+  const selectedBreakdown = selectedLead?.priceBreakdown ? (() => {
+    try {
+      return JSON.parse(String(selectedLead.priceBreakdown)) as string[];
+    } catch {
+      return [];
+    }
+  })() : [];
 
   return adminLayout(ctx, "Commercial proposals", `
     <div class="section-head"><div><p class="eyebrow">Offer desk</p><h1 style="color:var(--ink); font-size:52px;">Commercial proposals</h1></div></div>
@@ -2824,7 +2917,8 @@ const adminProposals = (ctx: RequestContext) => {
           ${items.map((item) => `<label class="check"><input type="checkbox" name="catalogItemIds" value="${item.id}"> ${escapeHtml(item.name)} · ${money(item.unitPrice)}</label>`).join("")}
         </div>
         <label>Discount percent<input type="number" min="0" max="60" name="discountPercent" value="0"></label>
-        <label>Commercial notes<textarea name="notes" placeholder="Delivery rhythm, service SLA, equipment replacement, next step..."></textarea></label>
+        ${selectedLead ? `<div class="empty-state"><h3>Расчёт из заявки</h3><p><b>${money(selectedLead.estimatedDealValue ?? selectedLead.estimatedMonthlyPrice)}</b> monthly · setup ${Number(selectedLead.setupFee ?? 0).toLocaleString("en-US")} EUR · yearly ${Number(selectedLead.yearlyValue ?? 0).toLocaleString("en-US")} EUR</p><p>Rule: ${escapeHtml(selectedLead.pricingRuleId || "server estimate")}</p>${selectedBreakdown.length ? `<ul>${selectedBreakdown.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+        <label>Commercial notes<textarea name="notes" placeholder="Delivery rhythm, service SLA, equipment replacement, next step...">${selectedLead ? `Calculated monthly: ${money(selectedLead.estimatedDealValue ?? selectedLead.estimatedMonthlyPrice)}. Setup fee: ${Number(selectedLead.setupFee ?? 0).toLocaleString("en-US")} EUR. Yearly value: ${Number(selectedLead.yearlyValue ?? 0).toLocaleString("en-US")} EUR.` : ""}</textarea></label>
         <button>Create commercial proposal</button>
       </form>
       <div>
@@ -2846,27 +2940,211 @@ const adminProposals = (ctx: RequestContext) => {
 
 const adminCalculator = (ctx: RequestContext) => {
   if (!requireAdmin(ctx)) return "";
-  const rules = statementAll(`SELECT * FROM "CalculatorRule" ORDER BY "segment", "companySize"`);
   return adminLayout(ctx, "Calculator", `
-    <div class="section-head"><div><p class="eyebrow">Pricing engine</p><h1 style="color:var(--ink); font-size:52px;">Calculator rules</h1></div></div>
-    <form method="post" action="/admin/calculator" class="card card-body">
-      <div class="grid-3">
-        <label>Segment<select name="segment">${Object.entries(businessLines).map(([key, line]) => `<option value="${key}">${line.label}</option>`).join("")}</select></label>
-        <label>Company size<select name="companySize">${companySizes.map((size) => `<option value="${size.value}">${size.label}</option>`).join("")}</select></label>
-        <label>Base price<input name="basePrice" type="number" value="790"></label>
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" data-calc-i18n="pricingEngine">PRICING ENGINE</p>
+        <h1 style="color:var(--ink); font-size:52px;" data-calc-i18n="title">Калькулятор предложений</h1>
+        <p data-calc-i18n="subtitle">Настраивайте правила расчёта для Office, HoReCa и Retail: базовая цена, размер клиента, локации, сервисные слои, скидки и доплаты.</p>
       </div>
-      <div class="grid-2">
-        <label>Per employee<input name="perEmployeePrice" type="number" value="6"></label>
-        <label>Per location<input name="perLocationPrice" type="number" value="150"></label>
+      <div class="builder-actions">
+        <button type="button" id="calcNew" data-calc-i18n="newRule">+ Новое правило</button>
+        <button type="button" id="calcExport" class="ghost" data-calc-i18n="exportRules">Экспорт правил</button>
+        <button type="button" id="calcReset" class="ghost" data-calc-i18n="resetDemo">Сбросить демо-данные</button>
       </div>
-      <button>Save rule</button>
-    </form>
+    </div>
+    <div class="package-builder pricing-engine">
+      <section class="builder-panel">
+        <form class="card card-body" id="calcForm">
+          <input type="hidden" id="calcId">
+          <div class="builder-grid">
+            <label><span data-calc-i18n="status">Статус</span><select id="calcStatus"><option value="active">Active</option><option value="draft">Draft</option><option value="archived">Archived</option></select></label>
+            <label><span data-calc-i18n="segment">Сегмент</span><select id="calcSegment"><option value="office">Office</option><option value="horeca">HoReCa</option><option value="retail">Retail</option><option value="all">All segments</option></select></label>
+            <label><span data-calc-i18n="clientSize">Размер клиента</span><select id="calcSize"><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option><option value="custom">Custom</option></select></label>
+            <label><span data-calc-i18n="ruleName">Название правила</span><input id="calcName" placeholder="Office Small Monthly Package"></label>
+          </div>
+          <div class="builder-grid">
+            <label><span data-calc-i18n="baseMonthly">Базовая цена в месяц EUR</span><input id="calcBase" type="number" min="0" value="790"></label>
+            <label><span data-calc-i18n="minMonthly">Минимальная цена в месяц EUR</span><input id="calcMin" type="number" min="0" value="790"></label>
+            <label><span data-calc-i18n="setupFee">Разовый setup fee EUR</span><input id="calcSetup" type="number" min="0" value="180"></label>
+            <label><span data-calc-i18n="perEmployee">Цена за сотрудника EUR</span><input id="calcEmployee" type="number" min="0" step="0.01" value="6"></label>
+            <label><span data-calc-i18n="perLocation">Цена за локацию EUR</span><input id="calcLocation" type="number" min="0" step="0.01" value="150"></label>
+            <label><span data-calc-i18n="billingModel">Модель оплаты</span><select id="calcBilling"><option value="monthly">Monthly</option><option value="one_time">One-time</option><option value="custom_quote">Custom quote</option><option value="from_price">From price</option></select></label>
+            <label><span data-calc-i18n="deliveryFrequency">Частота поставок</span><select id="calcDelivery"><option value="weekly">Weekly</option><option value="twice_month">Twice per month</option><option value="monthly">Monthly</option><option value="custom">Custom</option></select></label>
+            <label><span data-calc-i18n="serviceLevel">Уровень сервиса</span><select id="calcServiceLevel"><option value="standard">Standard</option><option value="priority">Priority</option><option value="urgent">Urgent</option><option value="custom">Custom</option></select></label>
+            <label><span data-calc-i18n="serviceMultiplier">Множитель сервиса</span><input id="calcServiceMultiplier" type="number" min="0" step="0.01" value="1"></label>
+            <label><span data-calc-i18n="packageMultiplier">Множитель пакета</span><input id="calcPackageMultiplier" type="number" min="0" step="0.01" value="1"></label>
+          </div>
+          <div class="builder-grid">
+            <label><span data-calc-i18n="discount">Скидка</span><select id="calcDiscountType"><option value="none">none</option><option value="fixed">fixed EUR</option><option value="percent">percentage</option></select></label>
+            <label><span data-calc-i18n="discountValue">Значение скидки</span><input id="calcDiscountValue" type="number" min="0" step="0.01" value="0"></label>
+            <label><span data-calc-i18n="markup">Наценка</span><select id="calcMarkupType"><option value="none">none</option><option value="fixed">fixed EUR</option><option value="percent">percentage</option></select></label>
+            <label><span data-calc-i18n="markupValue">Значение наценки</span><input id="calcMarkupValue" type="number" min="0" step="0.01" value="0"></label>
+          </div>
+          <label><span data-calc-i18n="internalNote">Внутренняя заметка</span><textarea id="calcNotes" placeholder="Internal note explaining when this rule should be used."></textarea></label>
+          <div class="builder-actions">
+            <button type="submit" data-calc-i18n="saveRule">Сохранить правило</button>
+            <button type="button" id="calcDuplicate" class="ghost" data-calc-i18n="duplicate">Дублировать</button>
+            <button type="button" id="calcArchive" class="ghost" data-calc-i18n="archive">Архивировать</button>
+            <button type="button" id="calcDelete" class="danger" data-calc-i18n="delete">Удалить</button>
+          </div>
+          <div class="builder-error" id="calcError"></div>
+        </form>
+        <section class="card card-body">
+          <div class="section-head" style="margin-bottom:12px;">
+            <div><p class="eyebrow" data-calc-i18n="serviceLayers">Сервисные слои</p><h3 data-calc-i18n="serviceLayerPrices">Цены по сервисным слоям</h3></div>
+            <button type="button" id="layerAdd" class="ghost" data-calc-i18n="addLayer">Добавить сервисный слой</button>
+          </div>
+          <div class="layer-list" id="layerEditor"></div>
+        </section>
+      </section>
+      <aside class="package-preview calc-preview">
+        <p class="eyebrow" data-calc-i18n="livePreview">Предпросмотр расчёта</p>
+        <div class="builder-grid">
+          <label><span data-calc-i18n="employeesCount">Сотрудники</span><input id="simEmployees" type="number" min="0" value="25"></label>
+          <label><span data-calc-i18n="locationsCount">Локации</span><input id="simLocations" type="number" min="1" value="1"></label>
+          <label><span data-calc-i18n="selectedPackage">Выбранный пакет</span><select id="simPackage"><option value="starter">Starter</option><option value="complex">Complex package</option><option value="lean">Lean starter</option></select></label>
+          <label><span data-calc-i18n="simServiceLevel">Уровень сервиса</span><select id="simServiceLevel"><option value="standard">Standard</option><option value="priority">Priority</option><option value="urgent">Urgent</option></select></label>
+        </div>
+        <div id="simLayers" class="sim-layer-list"></div>
+        <button type="button" id="calcRun" data-calc-i18n="calculateExample">Рассчитать пример</button>
+        <div id="calcResult" class="calc-result"></div>
+      </aside>
+    </div>
     <section class="band">
-      <table class="table">
-        <thead><tr><th>Segment</th><th>Size</th><th>Base</th><th>Per employee</th><th>Per location</th></tr></thead>
-        <tbody>${rules.map((rule) => `<tr><td>${escapeHtml(slugLabel(rule.segment))}</td><td>${escapeHtml(rule.companySize)}</td><td>${money(rule.basePrice)}</td><td>${money(rule.perEmployeePrice)}</td><td>${money(rule.perLocationPrice)}</td></tr>`).join("")}</tbody>
-      </table>
+      <div class="section-head">
+        <div><p class="eyebrow" data-calc-i18n="rulesTable">Таблица правил</p><h2 data-calc-i18n="savedRules">Сохранённые правила</h2></div>
+        <p data-calc-i18n="rulesHint">Фильтруйте правила, открывайте строку для редактирования, дублируйте или архивируйте устаревшую логику.</p>
+      </div>
+      <div class="package-toolbar calc-filters">
+        <select id="filterSegment"><option value="all">All segments</option><option value="office">Office</option><option value="horeca">HoReCa</option><option value="retail">Retail</option></select>
+        <select id="filterStatus"><option value="all">All statuses</option><option value="active">Active</option><option value="draft">Draft</option><option value="archived">Archived</option></select>
+        <select id="filterSize"><option value="all">All sizes</option><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option><option value="custom">Custom</option></select>
+        <select id="filterBilling"><option value="all">All billing models</option><option value="monthly">Monthly</option><option value="one_time">One-time</option><option value="custom_quote">Custom quote</option><option value="from_price">From price</option></select>
+        <input id="filterSearch" placeholder="Search">
+      </div>
+      <div class="table-wrap"><table class="table" id="rulesTable"></table></div>
     </section>
+    <section class="band grid-2">
+      <div class="card"><div class="card-body">
+        <span class="badge">Offer Builder</span>
+        <h3 data-calc-i18n="offerBuilderLink">Связь с заявками и КП</h3>
+        <p data-calc-i18n="offerBuilderText">Публичная форма читает эти правила в браузере, считает предварительную цену и сохраняет breakdown в заявку. При создании КП менеджер видит расчёт как стартовую точку и может вручную скорректировать финальную цену.</p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <span class="badge">Bitrix24</span>
+        <h3 data-calc-i18n="bitrixPayload">Поля для CRM</h3>
+        <p>estimatedMonthlyPrice, setupFee, yearlyValue, segment, clientSize, employeesCount, locationsCount, selectedServices, pricingRuleName, priceBreakdown.</p>
+      </div></div>
+    </section>
+    <script>
+      (() => {
+        const lang = localStorage.getItem("binova_lang") || "ru";
+        const i18n = {
+          ru: {
+            pricingEngine:"PRICING ENGINE", title:"Калькулятор предложений", subtitle:"Настраивайте правила расчёта для Office, HoReCa и Retail: базовая цена, размер клиента, локации, сервисные слои, скидки и доплаты.", newRule:"+ Новое правило", exportRules:"Экспорт правил", resetDemo:"Сбросить демо-данные", status:"Статус", segment:"Сегмент", clientSize:"Размер клиента", ruleName:"Название правила", baseMonthly:"Базовая цена в месяц EUR", minMonthly:"Минимальная цена в месяц EUR", setupFee:"Разовый setup fee EUR", perEmployee:"Цена за сотрудника EUR", perLocation:"Цена за локацию EUR", billingModel:"Модель оплаты", deliveryFrequency:"Частота поставок", serviceLevel:"Уровень сервиса", serviceMultiplier:"Множитель сервиса", packageMultiplier:"Множитель пакета", discount:"Скидка", discountValue:"Значение скидки", markup:"Наценка", markupValue:"Значение наценки", internalNote:"Внутренняя заметка", saveRule:"Сохранить правило", duplicate:"Дублировать", archive:"Архивировать", delete:"Удалить", serviceLayers:"Сервисные слои", serviceLayerPrices:"Цены по сервисным слоям", addLayer:"Добавить сервисный слой", livePreview:"Предпросмотр расчёта", employeesCount:"Сотрудники", locationsCount:"Локации", selectedPackage:"Выбранный пакет", simServiceLevel:"Уровень сервиса", calculateExample:"Рассчитать пример", rulesTable:"Таблица правил", savedRules:"Сохранённые правила", rulesHint:"Фильтруйте правила, открывайте строку для редактирования, дублируйте или архивируйте устаревшую логику.", offerBuilderLink:"Связь с заявками и КП", offerBuilderText:"Публичная форма читает эти правила в браузере, считает предварительную цену и сохраняет breakdown в заявку. При создании КП менеджер видит расчёт как стартовую точку и может вручную скорректировать финальную цену.", bitrixPayload:"Поля для CRM", affected:"Что повлияло на цену", monthly:"Месячная цена", yearly:"Годовая оценка", oneTime:"Разовый setup fee", noRules:"Правил по фильтру нет.", validation:"Заполните сегмент, размер клиента, название, базовую цену и модель оплаты.", layerName:"Название слоя", category:"Категория", pricingType:"Тип цены", price:"Цена", enabled:"Включён", remove:"Убрать"
+          },
+          en: {
+            pricingEngine:"PRICING ENGINE", title:"Offer calculator", subtitle:"Configure pricing rules for Office, HoReCa and Retail: base price, client size, locations, service layers, discounts and markups.", newRule:"+ New rule", exportRules:"Export rules", resetDemo:"Reset demo data", status:"Status", segment:"Segment", clientSize:"Client size", ruleName:"Rule name", baseMonthly:"Base monthly price EUR", minMonthly:"Minimum monthly price EUR", setupFee:"One-time setup fee EUR", perEmployee:"Per employee EUR", perLocation:"Per location EUR", billingModel:"Billing model", deliveryFrequency:"Delivery frequency", serviceLevel:"Service level", serviceMultiplier:"Service multiplier", packageMultiplier:"Package multiplier", discount:"Discount", discountValue:"Discount value", markup:"Markup", markupValue:"Markup value", internalNote:"Internal note", saveRule:"Save rule", duplicate:"Duplicate", archive:"Archive", delete:"Delete", serviceLayers:"Service layers", serviceLayerPrices:"Service layer prices", addLayer:"Add service layer", livePreview:"Calculation preview", employeesCount:"Employees", locationsCount:"Locations", selectedPackage:"Selected package", simServiceLevel:"Service level", calculateExample:"Calculate example", rulesTable:"Rules table", savedRules:"Saved rules", rulesHint:"Filter rules, open a row to edit, duplicate or archive old logic.", offerBuilderLink:"Connection with requests and proposals", offerBuilderText:"The public form reads these rules in the browser, calculates a preliminary price and saves the breakdown into the request. When creating a proposal, the manager sees the calculation as a starting point and can adjust the final price manually.", bitrixPayload:"CRM fields", affected:"What affected the price", monthly:"Monthly price", yearly:"Estimated yearly value", oneTime:"One-time setup fee", noRules:"No rules match the filters.", validation:"Fill segment, client size, rule name, base price and billing model.", layerName:"Layer name", category:"Category", pricingType:"Pricing type", price:"Price", enabled:"Enabled", remove:"Remove"
+          },
+          ro: {
+            pricingEngine:"PRICING ENGINE", title:"Calculator de oferte", subtitle:"Configurează regulile de calcul pentru Office, HoReCa și Retail: preț de bază, dimensiunea clientului, locații, straturi de servicii, reduceri și adaosuri.", newRule:"+ Regulă nouă", exportRules:"Export reguli", resetDemo:"Resetează date demo", status:"Status", segment:"Segment", clientSize:"Dimensiune client", ruleName:"Numele regulii", baseMonthly:"Preț lunar de bază EUR", minMonthly:"Preț lunar minim EUR", setupFee:"Taxă setup unică EUR", perEmployee:"Preț per angajat EUR", perLocation:"Preț per locație EUR", billingModel:"Model de plată", deliveryFrequency:"Frecvență livrări", serviceLevel:"Nivel service", serviceMultiplier:"Multiplicator service", packageMultiplier:"Multiplicator pachet", discount:"Reducere", discountValue:"Valoare reducere", markup:"Adaos", markupValue:"Valoare adaos", internalNote:"Notă internă", saveRule:"Salvează regula", duplicate:"Duplică", archive:"Arhivează", delete:"Șterge", serviceLayers:"Straturi de servicii", serviceLayerPrices:"Prețuri pe straturi de servicii", addLayer:"Adaugă strat de serviciu", livePreview:"Previzualizare calcul", employeesCount:"Angajați", locationsCount:"Locații", selectedPackage:"Pachet selectat", simServiceLevel:"Nivel service", calculateExample:"Calculează exemplu", rulesTable:"Tabel reguli", savedRules:"Reguli salvate", rulesHint:"Filtrează regulile, deschide o linie pentru editare, duplică sau arhivează logica veche.", offerBuilderLink:"Conexiune cu cereri și oferte", offerBuilderText:"Formularul public citește aceste reguli în browser, calculează un preț preliminar și salvează breakdown-ul în cerere. La crearea ofertei, managerul vede calculul ca punct de pornire și poate ajusta manual prețul final.", bitrixPayload:"Câmpuri CRM", affected:"Ce a influențat prețul", monthly:"Preț lunar", yearly:"Valoare anuală estimată", oneTime:"Taxă setup unică", noRules:"Nu există reguli pentru filtre.", validation:"Completează segmentul, dimensiunea clientului, numele regulii, prețul de bază și modelul de plată.", layerName:"Nume strat", category:"Categorie", pricingType:"Tip preț", price:"Preț", enabled:"Activ", remove:"Elimină"
+          }
+        };
+        const t = (key) => (i18n[lang] && i18n[lang][key]) || i18n.ru[key] || key;
+        document.querySelectorAll("[data-calc-i18n]").forEach((node) => { node.textContent = t(node.getAttribute("data-calc-i18n")); });
+        const q = (id) => document.getElementById(id);
+        const key = "binova_pricing_rules_v1";
+        const layerKey = "binova_service_layers_v1";
+        const eur = (value) => Math.round(Number(value || 0)).toLocaleString("en-US") + " EUR";
+        const defaults = [
+          {id:"office-small",status:"active",segment:"office",clientSize:"small",name:"Office Small Monthly Package",baseMonthlyPrice:390,minimumMonthlyPrice:390,setupFee:120,perEmployee:8,perLocation:90,billingModel:"monthly",deliveryFrequency:"monthly",serviceLevel:"standard",serviceLevelMultiplier:1,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Small office starter rule.",updatedAt:new Date().toISOString()},
+          {id:"office-medium",status:"active",segment:"office",clientSize:"medium",name:"Office Medium Monthly Package",baseMonthlyPrice:790,minimumMonthlyPrice:790,setupFee:180,perEmployee:6,perLocation:150,billingModel:"monthly",deliveryFrequency:"monthly",serviceLevel:"standard",serviceLevelMultiplier:1,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Growing office rule.",updatedAt:new Date().toISOString()},
+          {id:"office-large",status:"active",segment:"office",clientSize:"large",name:"Office Large Managed System",baseMonthlyPrice:1490,minimumMonthlyPrice:1490,setupFee:300,perEmployee:4,perLocation:240,billingModel:"monthly",deliveryFrequency:"weekly",serviceLevel:"priority",serviceLevelMultiplier:1.15,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Enterprise office rule.",updatedAt:new Date().toISOString()},
+          {id:"horeca-small",status:"active",segment:"horeca",clientSize:"small",name:"HoReCa Small Venue",baseMonthlyPrice:590,minimumMonthlyPrice:590,setupFee:250,perEmployee:0,perLocation:120,billingModel:"monthly",deliveryFrequency:"weekly",serviceLevel:"standard",serviceLevelMultiplier:1,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Cafe or small venue.",updatedAt:new Date().toISOString()},
+          {id:"horeca-medium",status:"active",segment:"horeca",clientSize:"medium",name:"HoReCa Medium Operation",baseMonthlyPrice:1290,minimumMonthlyPrice:1290,setupFee:400,perEmployee:0,perLocation:220,billingModel:"monthly",deliveryFrequency:"weekly",serviceLevel:"priority",serviceLevelMultiplier:1.15,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Restaurant or hotel setup.",updatedAt:new Date().toISOString()},
+          {id:"horeca-large",status:"active",segment:"horeca",clientSize:"large",name:"HoReCa Large Managed System",baseMonthlyPrice:1990,minimumMonthlyPrice:1990,setupFee:600,perEmployee:0,perLocation:350,billingModel:"monthly",deliveryFrequency:"weekly",serviceLevel:"urgent",serviceLevelMultiplier:1.3,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Heavy service load.",updatedAt:new Date().toISOString()},
+          {id:"retail-small",status:"active",segment:"retail",clientSize:"small",name:"Retail Small Location",baseMonthlyPrice:690,minimumMonthlyPrice:690,setupFee:300,perEmployee:0,perLocation:150,billingModel:"monthly",deliveryFrequency:"monthly",serviceLevel:"standard",serviceLevelMultiplier:1,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Single traffic point.",updatedAt:new Date().toISOString()},
+          {id:"retail-medium",status:"active",segment:"retail",clientSize:"medium",name:"Retail Medium Network",baseMonthlyPrice:1490,minimumMonthlyPrice:1490,setupFee:500,perEmployee:0,perLocation:260,billingModel:"monthly",deliveryFrequency:"twice_month",serviceLevel:"priority",serviceLevelMultiplier:1.15,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Several locations.",updatedAt:new Date().toISOString()},
+          {id:"retail-large",status:"active",segment:"retail",clientSize:"large",name:"Retail Large Network",baseMonthlyPrice:2490,minimumMonthlyPrice:2490,setupFee:800,perEmployee:0,perLocation:420,billingModel:"monthly",deliveryFrequency:"weekly",serviceLevel:"priority",serviceLevelMultiplier:1.15,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"Network standard.",updatedAt:new Date().toISOString()}
+        ];
+        const defaultLayers = [
+          {id:"office-coffee-program",segment:"office",name:"Coffee program",category:"Coffee",pricingType:"fixed_monthly",price:180,enabledByDefault:true},{id:"office-machine",segment:"office",name:"Coffee machine",category:"Equipment",pricingType:"fixed_monthly",price:120,enabledByDefault:true},{id:"office-consumables",segment:"office",name:"Tea and consumables",category:"Consumables",pricingType:"per_employee",price:2,enabledByDefault:true},{id:"office-water",segment:"office",name:"Water supply",category:"Water",pricingType:"fixed_monthly",price:90,enabledByDefault:false},{id:"office-maintenance",segment:"office",name:"Monthly maintenance",category:"Service",pricingType:"fixed_monthly",price:70,enabledByDefault:true},
+          {id:"horeca-beans",segment:"horeca",name:"Coffee beans",category:"Coffee",pricingType:"custom_quote",price:0,enabledByDefault:true},{id:"horeca-machine",segment:"horeca",name:"Professional machine",category:"Equipment",pricingType:"fixed_monthly",price:260,enabledByDefault:true},{id:"horeca-grinder",segment:"horeca",name:"Grinder",category:"Equipment",pricingType:"fixed_monthly",price:90,enabledByDefault:true},{id:"horeca-training",segment:"horeca",name:"Barista training",category:"Training",pricingType:"one_time",price:260,enabledByDefault:false},{id:"horeca-priority",segment:"horeca",name:"Priority service",category:"Service",pricingType:"fixed_monthly",price:180,enabledByDefault:true},{id:"horeca-preventive",segment:"horeca",name:"Preventive maintenance",category:"Service",pricingType:"fixed_monthly",price:120,enabledByDefault:true},
+          {id:"retail-corner",segment:"retail",name:"Self-service corner",category:"Equipment",pricingType:"fixed_monthly",price:350,enabledByDefault:true},{id:"retail-cups",segment:"retail",name:"Cups and lids",category:"Consumables",pricingType:"per_location",price:80,enabledByDefault:true},{id:"retail-pos",segment:"retail",name:"POS consumables",category:"Retail POS",pricingType:"per_location",price:40,enabledByDefault:true},{id:"retail-replenishment",segment:"retail",name:"Planned replenishment",category:"Delivery",pricingType:"per_location",price:90,enabledByDefault:true},{id:"retail-maintenance",segment:"retail",name:"Centralized maintenance",category:"Service",pricingType:"per_location",price:120,enabledByDefault:true},{id:"retail-reporting",segment:"retail",name:"Reporting by location",category:"Reporting",pricingType:"fixed_monthly",price:150,enabledByDefault:false}
+        ];
+        let rules = JSON.parse(localStorage.getItem(key) || "null") || defaults;
+        let layers = JSON.parse(localStorage.getItem(layerKey) || "null") || defaultLayers;
+        let selectedId = rules[0]?.id;
+        const save = () => { localStorage.setItem(key, JSON.stringify(rules)); localStorage.setItem(layerKey, JSON.stringify(layers)); };
+        const current = () => rules.find((rule) => rule.id === selectedId) || rules[0];
+        const readNumber = (id) => Number(q(id).value || 0);
+        const fill = (rule) => {
+          selectedId = rule.id; q("calcId").value = rule.id; q("calcStatus").value = rule.status; q("calcSegment").value = rule.segment; q("calcSize").value = rule.clientSize; q("calcName").value = rule.name; q("calcBase").value = rule.baseMonthlyPrice; q("calcMin").value = rule.minimumMonthlyPrice; q("calcSetup").value = rule.setupFee; q("calcEmployee").value = rule.perEmployee; q("calcLocation").value = rule.perLocation; q("calcBilling").value = rule.billingModel; q("calcDelivery").value = rule.deliveryFrequency; q("calcServiceLevel").value = rule.serviceLevel; q("calcServiceMultiplier").value = rule.serviceLevelMultiplier; q("calcPackageMultiplier").value = rule.packageMultiplier; q("calcDiscountType").value = rule.discountType; q("calcDiscountValue").value = rule.discountValue; q("calcMarkupType").value = rule.markupType; q("calcMarkupValue").value = rule.markupValue; q("calcNotes").value = rule.notes || ""; renderLayers(); renderTable(); renderPreview();
+        };
+        const readRule = () => ({ id:q("calcId").value || "rule-" + Date.now(), status:q("calcStatus").value, segment:q("calcSegment").value, clientSize:q("calcSize").value, name:q("calcName").value.trim(), baseMonthlyPrice:readNumber("calcBase"), minimumMonthlyPrice:readNumber("calcMin"), setupFee:readNumber("calcSetup"), perEmployee:readNumber("calcEmployee"), perLocation:readNumber("calcLocation"), billingModel:q("calcBilling").value, deliveryFrequency:q("calcDelivery").value, serviceLevel:q("calcServiceLevel").value, serviceLevelMultiplier:readNumber("calcServiceMultiplier") || 1, packageMultiplier:readNumber("calcPackageMultiplier") || 1, discountType:q("calcDiscountType").value, discountValue:readNumber("calcDiscountValue"), markupType:q("calcMarkupType").value, markupValue:readNumber("calcMarkupValue"), notes:q("calcNotes").value, updatedAt:new Date().toISOString() });
+        const layerPrice = (layer, employees, locations) => layer.pricingType === "per_employee" ? layer.price * employees : layer.pricingType === "per_location" ? layer.price * locations : layer.pricingType === "one_time" || layer.pricingType === "custom_quote" ? 0 : Number(layer.price || 0);
+        const calculate = (rule, selectedLayers, employees, locations) => {
+          const layerMonthly = selectedLayers.reduce((sum, layer) => sum + layerPrice(layer, employees, locations), 0);
+          const oneTimeLayers = selectedLayers.filter((layer) => layer.pricingType === "one_time").reduce((sum, layer) => sum + Number(layer.price || 0), 0);
+          let subtotal = rule.baseMonthlyPrice + employees * rule.perEmployee + locations * rule.perLocation + layerMonthly;
+          subtotal = subtotal * (rule.serviceLevelMultiplier || 1) * (rule.packageMultiplier || 1);
+          const markup = rule.markupType === "percent" ? subtotal * rule.markupValue / 100 : rule.markupType === "fixed" ? rule.markupValue : 0;
+          subtotal += markup;
+          const discount = rule.discountType === "percent" ? subtotal * rule.discountValue / 100 : rule.discountType === "fixed" ? rule.discountValue : 0;
+          subtotal -= discount;
+          const monthlyPrice = Math.max(rule.minimumMonthlyPrice || 0, Math.round(subtotal));
+          return { monthlyPrice, setupFee: Math.round((rule.setupFee || 0) + oneTimeLayers), yearlyValue: Math.round(monthlyPrice * 12 + (rule.setupFee || 0) + oneTimeLayers), layerMonthly: Math.round(layerMonthly), markup: Math.round(markup), discount: Math.round(discount), breakdown:["Base price: " + eur(rule.baseMonthlyPrice), "Employees: " + employees + " × " + eur(rule.perEmployee) + " = " + eur(employees * rule.perEmployee), "Locations: " + locations + " × " + eur(rule.perLocation) + " = " + eur(locations * rule.perLocation), "Service layers: " + eur(layerMonthly), "Service level multiplier: × " + rule.serviceLevelMultiplier, "Package multiplier: × " + rule.packageMultiplier, "Markup: " + eur(markup), "Discount: " + eur(discount), "Minimum monthly price: " + eur(rule.minimumMonthlyPrice)] };
+        };
+        const segmentLayers = () => layers.filter((layer) => layer.segment === q("calcSegment").value || q("calcSegment").value === "all");
+        const selectedLayers = () => Array.from(document.querySelectorAll(".sim-layer input:checked")).map((input) => layers.find((layer) => layer.id === input.value)).filter(Boolean);
+        const renderLayers = () => {
+          q("layerEditor").innerHTML = segmentLayers().map((layer) => '<div class="layer-row" data-layer-id="' + layer.id + '"><input value="' + layer.name + '" data-field="name" placeholder="' + t("layerName") + '"><input value="' + layer.category + '" data-field="category" placeholder="' + t("category") + '"><select data-field="pricingType"><option value="fixed_monthly">fixed monthly</option><option value="per_employee">per employee</option><option value="per_location">per location</option><option value="one_time">one-time</option><option value="custom_quote">custom quote</option></select><input type="number" value="' + layer.price + '" data-field="price" placeholder="' + t("price") + '"><label class="check"><input type="checkbox" data-field="enabledByDefault" ' + (layer.enabledByDefault ? "checked" : "") + '> ' + t("enabled") + '</label><button type="button" class="danger layer-remove">' + t("remove") + '</button></div>').join("") || '<div class="empty-state">No layers for this segment.</div>';
+          document.querySelectorAll(".layer-row").forEach((row) => { const layer = layers.find((item) => item.id === row.dataset.layerId); if (!layer) return; row.querySelector('[data-field="pricingType"]').value = layer.pricingType; row.querySelectorAll("input,select").forEach((input) => input.addEventListener("change", () => { const field = input.dataset.field; layer[field] = field === "price" ? Number(input.value || 0) : field === "enabledByDefault" ? input.checked : input.value; save(); renderPreview(); })); row.querySelector(".layer-remove").addEventListener("click", () => { layers = layers.filter((item) => item.id !== layer.id); save(); renderLayers(); renderPreview(); }); });
+          renderPreview();
+        };
+        const renderPreview = () => {
+          const rule = readRule();
+          const employees = readNumber("simEmployees");
+          const locations = Math.max(1, readNumber("simLocations"));
+          const pack = q("simPackage").value;
+          rule.packageMultiplier = pack === "complex" ? 1.1 : pack === "lean" ? .9 : rule.packageMultiplier || 1;
+          rule.serviceLevelMultiplier = q("simServiceLevel").value === "urgent" ? 1.3 : q("simServiceLevel").value === "priority" ? 1.15 : rule.serviceLevelMultiplier || 1;
+          const available = segmentLayers();
+          q("simLayers").innerHTML = available.map((layer) => '<label class="sim-layer"><input type="checkbox" value="' + layer.id + '" ' + (layer.enabledByDefault ? "checked" : "") + '> <span>' + layer.name + '</span><small>' + layer.pricingType.replace("_"," ") + " · " + eur(layer.price) + '</small></label>').join("");
+          q("simLayers").querySelectorAll("input").forEach((input) => input.addEventListener("change", renderResult));
+          renderResult();
+        };
+        const renderResult = () => {
+          const rule = readRule();
+          const employees = readNumber("simEmployees");
+          const locations = Math.max(1, readNumber("simLocations"));
+          const pack = q("simPackage").value;
+          rule.packageMultiplier = pack === "complex" ? 1.1 : pack === "lean" ? .9 : rule.packageMultiplier || 1;
+          rule.serviceLevelMultiplier = q("simServiceLevel").value === "urgent" ? 1.3 : q("simServiceLevel").value === "priority" ? 1.15 : rule.serviceLevelMultiplier || 1;
+          const result = calculate(rule, selectedLayers(), employees, locations);
+          q("calcResult").innerHTML = '<div class="calc-total"><span>' + t("monthly") + '</span><b>' + eur(result.monthlyPrice) + '/mo</b></div><div class="calc-mini"><span>' + t("oneTime") + '</span><b>' + eur(result.setupFee) + '</b></div><div class="calc-mini"><span>' + t("yearly") + '</span><b>' + eur(result.yearlyValue) + '</b></div><h4>' + t("affected") + '</h4><ul>' + result.breakdown.map((line) => '<li>' + line + '</li>').join("") + '</ul>';
+        };
+        const renderTable = () => {
+          const fs = q("filterSegment").value, st = q("filterStatus").value, sz = q("filterSize").value, bill = q("filterBilling").value, search = q("filterSearch").value.toLowerCase();
+          const list = rules.filter((rule) => (fs === "all" || rule.segment === fs || rule.segment === "all") && (st === "all" || rule.status === st) && (sz === "all" || rule.clientSize === sz) && (bill === "all" || rule.billingModel === bill) && (!search || rule.name.toLowerCase().includes(search)));
+          q("rulesTable").innerHTML = '<thead><tr><th>Status</th><th>Segment</th><th>Size</th><th>Rule name</th><th>Base price</th><th>Min price</th><th>Per employee</th><th>Per location</th><th>Service level</th><th>Billing model</th><th>Updated</th><th>Actions</th></tr></thead><tbody>' + (list.length ? list.map((rule) => '<tr data-rule-id="' + rule.id + '"><td><span class="badge">' + rule.status + '</span></td><td>' + rule.segment + '</td><td>' + rule.clientSize + '</td><td><b>' + rule.name + '</b></td><td>' + eur(rule.baseMonthlyPrice) + '</td><td>' + eur(rule.minimumMonthlyPrice) + '</td><td>' + eur(rule.perEmployee) + '</td><td>' + eur(rule.perLocation) + '</td><td>' + rule.serviceLevel + '</td><td>' + rule.billingModel + '</td><td>' + new Date(rule.updatedAt).toLocaleDateString() + '</td><td><button type="button" data-action="edit">' + t("saveRule").replace("Сохранить правило","Edit") + '</button><button type="button" data-action="dup">' + t("duplicate") + '</button><button type="button" data-action="archive">' + t("archive") + '</button><button type="button" data-action="del" class="danger">' + t("delete") + '</button></td></tr>').join("") : '<tr><td colspan="12">' + t("noRules") + '</td></tr>') + '</tbody>';
+          q("rulesTable").querySelectorAll("tr[data-rule-id]").forEach((row) => row.addEventListener("click", (event) => { const rule = rules.find((item) => item.id === row.dataset.ruleId); if (!rule) return; const action = event.target.dataset.action; if (action === "dup") { rules.unshift({...rule,id:"rule-"+Date.now(),name:rule.name+" copy",status:"draft",updatedAt:new Date().toISOString()}); save(); renderTable(); return; } if (action === "archive") { rule.status = "archived"; rule.updatedAt = new Date().toISOString(); save(); renderTable(); return; } if (action === "del") { rules = rules.filter((item) => item.id !== rule.id); selectedId = rules[0]?.id; save(); fill(current()); return; } fill(rule); }));
+        };
+        q("calcForm").addEventListener("submit", (event) => { event.preventDefault(); const rule = readRule(); if (!rule.segment || !rule.clientSize || !rule.name || !rule.baseMonthlyPrice || !rule.billingModel) { q("calcError").textContent = t("validation"); return; } q("calcError").textContent = ""; const index = rules.findIndex((item) => item.id === rule.id); if (index >= 0) rules[index] = rule; else rules.unshift(rule); selectedId = rule.id; save(); fill(rule); });
+        q("calcNew").addEventListener("click", () => fill({id:"rule-"+Date.now(),status:"draft",segment:"office",clientSize:"small",name:"Новое правило",baseMonthlyPrice:390,minimumMonthlyPrice:390,setupFee:120,perEmployee:8,perLocation:90,billingModel:"monthly",deliveryFrequency:"monthly",serviceLevel:"standard",serviceLevelMultiplier:1,packageMultiplier:1,discountType:"none",discountValue:0,markupType:"none",markupValue:0,notes:"",updatedAt:new Date().toISOString()}));
+        q("calcDuplicate").addEventListener("click", () => { const rule = readRule(); rule.id = "rule-" + Date.now(); rule.name += " copy"; rule.status = "draft"; rules.unshift(rule); save(); fill(rule); });
+        q("calcArchive").addEventListener("click", () => { const rule = readRule(); rule.status = "archived"; const index = rules.findIndex((item) => item.id === rule.id); if (index >= 0) rules[index] = rule; save(); fill(rule); });
+        q("calcDelete").addEventListener("click", () => { rules = rules.filter((item) => item.id !== selectedId); selectedId = rules[0]?.id; save(); fill(current()); });
+        q("layerAdd").addEventListener("click", () => { layers.push({id:"layer-"+Date.now(),segment:q("calcSegment").value === "all" ? "office" : q("calcSegment").value,name:"New service layer",category:"Service",pricingType:"fixed_monthly",price:100,enabledByDefault:false}); save(); renderLayers(); });
+        q("calcReset").addEventListener("click", () => { rules = defaults; layers = defaultLayers; selectedId = rules[0].id; save(); fill(rules[0]); });
+        q("calcExport").addEventListener("click", () => { const blob = new Blob([JSON.stringify({rules,layers}, null, 2)], {type:"application/json"}); const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "binova-pricing-rules.json"; a.click(); URL.revokeObjectURL(a.href); });
+        ["calcSegment","calcSize","calcBase","calcMin","calcSetup","calcEmployee","calcLocation","calcBilling","calcServiceLevel","calcServiceMultiplier","calcPackageMultiplier","calcDiscountType","calcDiscountValue","calcMarkupType","calcMarkupValue","simEmployees","simLocations","simPackage","simServiceLevel"].forEach((id) => q(id).addEventListener("change", () => { if (id === "calcSegment") renderLayers(); else renderResult(); }));
+        ["filterSegment","filterStatus","filterSize","filterBilling","filterSearch"].forEach((id) => q(id).addEventListener("input", renderTable));
+        window.binovaPricingEngine = { rules, layers, calculate };
+        fill(current());
+      })();
+    </script>
   `);
 };
 
@@ -3237,7 +3515,10 @@ const handlePost = async (ctx: RequestContext) => {
     const employeeCount = asNumber(body.employeeCount, 0);
     const locationsCount = asNumber(body.locationsCount, 1);
     const services = asArray(body.services);
-    const estimate = calculateEstimate(segment, companySize, employeeCount, locationsCount, services);
+    const browserEstimate = asNumber(body.estimatedMonthlyPrice, 0);
+    const estimate = browserEstimate > 0 ? browserEstimate : calculateEstimate(segment, companySize, employeeCount, locationsCount, services);
+    const setupFee = asNumber(body.setupFee, 0);
+    const yearlyValue = asNumber(body.yearlyValue, estimate * 12 + setupFee);
     const servicesPayload = services.join(",");
     const result = db.prepare(`
       INSERT INTO "ClientLead" (
@@ -3265,10 +3546,15 @@ const handlePost = async (ctx: RequestContext) => {
         "selectedServices",
         "additionalDetails",
         "estimatedDealValue",
+        "setupFee",
+        "yearlyValue",
+        "pricingRuleId",
+        "selectedServiceLayers",
+        "priceBreakdown",
         "assignedManager",
         "followUpDate"
       )
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       segment,
       asString(body.companyName),
@@ -3294,6 +3580,11 @@ const handlePost = async (ctx: RequestContext) => {
       servicesPayload,
       asString(body.message),
       estimate,
+      setupFee,
+      yearlyValue,
+      asString(body.pricingRuleId),
+      asString(body.selectedServiceLayers),
+      asString(body.priceBreakdown),
       asString(body.assignedManager),
       asString(body.followUpDate)
     );
