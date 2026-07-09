@@ -367,6 +367,32 @@ const ensureSiteTables = () => {
     END;
   `);
 
+  const addClientLeadColumn = (definition: string) => {
+    try {
+      db.exec(`ALTER TABLE "ClientLead" ADD COLUMN ${definition}`);
+    } catch (error: any) {
+      if (!String(error?.message ?? "").includes("duplicate column name")) {
+        throw error;
+      }
+    }
+  };
+
+  addClientLeadColumn(`"businessSegment" TEXT`);
+  addClientLeadColumn(`"businessFormat" TEXT`);
+  addClientLeadColumn(`"contactPerson" TEXT`);
+  addClientLeadColumn(`"employeesCount" INTEGER`);
+  addClientLeadColumn(`"city" TEXT`);
+  addClientLeadColumn(`"currentSupplier" TEXT`);
+  addClientLeadColumn(`"currentEquipment" TEXT`);
+  addClientLeadColumn(`"desiredStartDate" TEXT`);
+  addClientLeadColumn(`"budgetRange" TEXT`);
+  addClientLeadColumn(`"deliveryFrequency" TEXT`);
+  addClientLeadColumn(`"selectedServices" TEXT`);
+  addClientLeadColumn(`"additionalDetails" TEXT`);
+  addClientLeadColumn(`"estimatedDealValue" INTEGER`);
+  addClientLeadColumn(`"assignedManager" TEXT`);
+  addClientLeadColumn(`"followUpDate" TEXT`);
+
   const insertRule = db.prepare(`
     INSERT OR IGNORE INTO "CalculatorRule" ("segment", "companySize", "basePrice", "perEmployeePrice", "perLocationPrice")
     VALUES (?, ?, ?, ?, ?)
@@ -2048,27 +2074,27 @@ const solutionPage = (segment: keyof typeof businessLines) => {
 const aboutPage = () => page("About us", `
   <main>
     <section class="band">
-      <p class="eyebrow">About Binova Group</p>
-      <h1 style="color:var(--ink); font-size:64px;">The operator behind business coffee systems.</h1>
-      <p class="copy">Binova Group is positioned as the next evolution of fifteen years of Binonic Lux experience: not just a supplier of coffee, but an operator of beverage systems for business. The visible product is coffee. The value is continuity: calibrated equipment, predictable replenishment, service response, replacement logic and a partner who owns the operating complexity.</p>
+      <p class="eyebrow">О Binova Group</p>
+      <h1 style="color:var(--ink); font-size:64px;">Оператор систем для кофе, напитков и сервиса</h1>
+      <p class="copy">Binova Group — это эволюция Binonic Lux и 15-летнего опыта работы с бизнес-клиентами. Мы не просто поставляем кофе или оборудование. Мы собираем и обслуживаем систему, которая помогает офисам, HoReCa и ритейлу работать стабильнее: продукт, техника, пополнение, сервис, обучение и поддержка в одном процессе.</p>
     </section>
     <section class="band">
       <div class="grid-3">
-        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=82" alt="Business meeting"><div class="card-body"><h3>Leadership through systems</h3><p>Binova moves the conversation from product price to business reliability: uptime, planned deliveries, service standards and clear commercial ownership.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82" alt="Coffee service"><div class="card-body"><h3>Service as the differentiator</h3><p>Fast intervention, preventive maintenance and replacement equipment become visible sales arguments instead of invisible back-office work.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=82" alt="Retail operations"><div class="card-body"><h3>Segment-specific growth</h3><p>Office, Retail and HoReCa each get a different logic of offer, because a 10-person office, a cafe and a multi-location chain do not buy the same system.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=82" alt="Business meeting"><div class="card-body"><h3>Система вместо разрозненных поставок</h3><p>Binova объединяет продукт, оборудование, пополнение и сервис в один управляемый процесс. Клиент получает не набор поставщиков, а одного партнёра, который отвечает за результат.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82" alt="Coffee service"><div class="card-body"><h3>Сервис как часть продукта</h3><p>Кофе работает только тогда, когда работает оборудование. Поэтому обслуживание, профилактика, настройка и замена техники — не дополнение, а часть самой системы Binova.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=82" alt="Retail operations"><div class="card-body"><h3>Три сегмента — три логики роста</h3><p>Офису важны комфорт команды и предсказуемый бюджет. HoReCa — стабильное качество и отсутствие простоев. Ритейлу — стандарт на всех точках и дополнительная продажа. Поэтому каждый сегмент получает свой flow и своё предложение.</p></div></article>
       </div>
     </section>
     <section class="band grid-2">
       <div>
-        <p class="eyebrow">Strategic promise</p>
-        <h2>Operational peace becomes business growth.</h2>
-        <p class="copy">For offices, coffee becomes part of culture and retention. For HoReCa, it becomes differentiation, menu quality and repeat visits. For retail, it becomes a profit point with standardized execution across locations.</p>
+        <p class="eyebrow">Стратегическое обещание</p>
+        <h2>Операционное спокойствие, которое работает на рост</h2>
+        <p class="copy">Для офиса кофе становится частью культуры и заботы о команде. Для HoReCa — продуктом, который влияет на повторный визит и средний чек. Для ритейла — точкой дополнительной продажи и способом превратить трафик в выручку. Binova берёт на себя систему за чашкой: оборудование, поставки, обслуживание, обучение и поддержку.</p>
       </div>
       <div class="card"><div class="card-body">
-        <h3>Why this digital demo matters</h3>
-        <p>The website identifies the client segment, captures relevant operating context and gives the commercial team a structured request instead of a vague message.</p>
-        <p>Telegram keeps the catalog alive: products, photos, packages and availability can be added by the team without a developer.</p>
+        <h3>Зачем это цифровое демо</h3>
+        <p>Это демо показывает путь от интереса к структурированной заявке: клиент выбирает свой сегмент, отмечает нужные сервисы, а Binova получает данные для подготовки точного коммерческого предложения.</p>
+        <p>Дальше заявка может передаваться в Bitrix24: с сегментом, выбранными услугами, размером клиента, количеством локаций, потребностью в оборудовании, сервисе и пополнении.</p>
       </div></div>
     </section>
   </main>
@@ -2487,9 +2513,37 @@ const handlePost = async (ctx: RequestContext) => {
     const locationsCount = asNumber(body.locationsCount, 1);
     const services = asArray(body.services);
     const estimate = calculateEstimate(segment, companySize, employeeCount, locationsCount, services);
+    const servicesPayload = services.join(",");
     const result = db.prepare(`
-      INSERT INTO "ClientLead" ("segment", "companyName", "contactName", "email", "phone", "companySize", "employeeCount", "locationsCount", "services", "message", "estimatedMonthlyPrice")
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO "ClientLead" (
+        "segment",
+        "companyName",
+        "contactName",
+        "email",
+        "phone",
+        "companySize",
+        "employeeCount",
+        "locationsCount",
+        "services",
+        "message",
+        "estimatedMonthlyPrice",
+        "businessSegment",
+        "businessFormat",
+        "contactPerson",
+        "employeesCount",
+        "city",
+        "currentSupplier",
+        "currentEquipment",
+        "desiredStartDate",
+        "budgetRange",
+        "deliveryFrequency",
+        "selectedServices",
+        "additionalDetails",
+        "estimatedDealValue",
+        "assignedManager",
+        "followUpDate"
+      )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       segment,
       asString(body.companyName),
@@ -2499,9 +2553,24 @@ const handlePost = async (ctx: RequestContext) => {
       companySize,
       employeeCount,
       locationsCount,
-      services.join(","),
+      servicesPayload,
       asString(body.message),
-      estimate
+      estimate,
+      segment,
+      companySize,
+      asString(body.contactName),
+      employeeCount,
+      asString(body.city),
+      asString(body.currentSupplier),
+      asString(body.currentEquipment),
+      asString(body.desiredStartDate),
+      asString(body.budgetRange),
+      asString(body.deliveryFrequency),
+      servicesPayload,
+      asString(body.message),
+      estimate,
+      asString(body.assignedManager),
+      asString(body.followUpDate)
     );
     send(ctx.response, 200, thankYouPage(Number(result.lastInsertRowid), estimate));
     return;
