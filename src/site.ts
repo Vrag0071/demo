@@ -1126,6 +1126,116 @@ const translations: Record<string, Record<string, string>> = {
   }
 };
 
+Object.assign(translations.en = {}, {
+  "Админка Binova": "Binova Admin",
+  "Центр управления": "Control center",
+  "Обзор": "Overview",
+  "Заявки": "Requests",
+  "Коммерческие предложения": "Commercial proposals",
+  "Калькулятор": "Calculator",
+  "Пакеты": "Packages",
+  "Каталог": "Catalog",
+  "Обновления из бота": "Bot updates",
+  "Настройки сайта": "Site settings",
+  "Центр коммерческого управления": "Commercial control center",
+  "Заявки, калькулятор, каталог, пакеты, Bitrix24 и коммерческие предложения в одной рабочей панели.": "Requests, calculator, catalog, packages, Bitrix24 and commercial proposals in one workspace.",
+  "Открыть новые заявки": "Open new requests",
+  "Новые заявки": "New requests",
+  "Запросы, которые ещё не обработаны.": "Requests that have not been processed yet.",
+  "КП в работе": "Proposals in progress",
+  "Предложения, которые готовятся менеджером.": "Offers being prepared by a manager.",
+  "Готовые КП": "Ready proposals",
+  "Предложения, готовые к отправке клиенту.": "Offers ready to be sent to the client.",
+  "Обновления каталога": "Catalog updates",
+  "Позиции из бота, ожидающие проверки.": "Items from the bot waiting for review.",
+  "Входящие заявки": "Incoming requests",
+  "Все запросы с сайта по Office, HoReCa и Retail попадают сюда со статусом, сегментом и выбранными сервисами.": "All website requests for Office, HoReCa and Retail land here with status, segment and selected services.",
+  "Открыть заявки": "Open requests",
+  "Расчёт": "Calculation",
+  "Калькулятор предложений": "Offer calculator",
+  "Настройте правила расчёта: базовые цены, пакеты, сервисные слои и коэффициенты по сегментам.": "Configure calculation rules: base prices, packages, service layers and segment coefficients.",
+  "Настроить расчёт": "Configure calculation",
+  "Пакеты услуг": "Service packages",
+  "Собирайте стартовые решения для Office, HoReCa и Retail: что входит, для кого подходит и как считается.": "Build starter solutions for Office, HoReCa and Retail: what is included, who it fits and how it is calculated.",
+  "Управлять пакетами": "Manage packages",
+  "Каталог продуктов и сервисов": "Product and service catalog",
+  "Управляйте кофе, оборудованием, расходниками, сервисами и товарами, которые используются в предложениях.": "Manage coffee, equipment, consumables, services and items used in offers.",
+  "Открыть каталог": "Open catalog",
+  "Собирайте КП из заявки, выбранных пакетов, товаров и сервисов. Готовьте версию для отправки клиенту.": "Build proposals from requests, selected packages, items and services. Prepare a client-ready version.",
+  "Собрать КП": "Build proposal",
+  "Bitrix24 интеграция": "Bitrix24 integration",
+  "Передавайте заявки с сайта в Bitrix24 как лиды или сделки с сегментом, услугами, бюджетом и ответственным менеджером.": "Send website requests to Bitrix24 as leads or deals with segment, services, budget and responsible manager.",
+  "Настроить интеграцию": "Configure integration",
+  "Клиент": "Client",
+  "Сегмент и параметры": "Segment and parameters",
+  "Выбранные сервисы": "Selected services",
+  "Статус": "Status",
+  "Действия": "Actions",
+  "Новая": "New",
+  "В обработке": "In progress",
+  "КП готовится": "Proposal in progress",
+  "КП отправлено": "Proposal sent",
+  "Выиграна": "Won",
+  "Потеряна": "Lost",
+  "Ответственный: не назначен": "Manager: not assigned",
+  "Ответственный:": "Manager:",
+  "не назначен": "not assigned",
+  "локац.": "loc.",
+  "Bitrix24: не отправлено": "Bitrix24: not sent",
+  "Создать КП": "Create proposal",
+  "Отправить в Bitrix24": "Send to Bitrix24",
+  "Заявок пока нет.": "No requests yet.",
+  "Каталог на проверке": "Catalog review queue",
+  "Нет обновлений на проверке": "No updates pending review",
+  "Когда бот отправит новые товары или пакеты, они появятся здесь.": "When the bot sends new products or packages, they will appear here.",
+  "CRM интеграция": "CRM integration",
+  "Что будет передаваться": "What will be sent",
+  "Следующий шаг": "Next step",
+  "Подключить webhook Bitrix24 и выбрать режим: создавать лиды или сделки. После этого кнопка в заявке сможет отправлять данные менеджеру в CRM.": "Connect a Bitrix24 webhook and choose the mode: create leads or deals. Then the request button can send data to the manager in CRM.",
+  "Конструктор пакетов": "Package Builder",
+  "Создавайте коммерческие пакеты для Office, HoReCa и Retail: продукты, оборудование, сервис и регулярную поддержку в одном предложении.": "Create commercial packages for Office, HoReCa and Retail: products, equipment, service and recurring support in one offer.",
+  "+ Новый пакет": "+ New package",
+  "Все пакеты": "All packages",
+  "Сегмент": "Segment",
+  "Черновик": "Draft",
+  "Активен": "Active",
+  "Название пакета": "Package name",
+  "Коммерческое позиционирование": "Commercial positioning",
+  "Например: предсказуемый месячный пакет для офисов без лишней операционной нагрузки.": "Example: a predictable monthly package for offices without extra operational workload.",
+  "Кому подходит": "Recommended for",
+  "Модель оплаты": "Billing model",
+  "Цена в месяц, EUR": "Monthly price, EUR",
+  "Краткое описание": "Short description",
+  "Что входит в пакет": "Included in package",
+  "Выберите позиции из каталога или добавьте вручную.": "Select items from the catalog or add manually.",
+  "+ Добавить вручную": "+ Add custom item",
+  "Позиция": "Item",
+  "Категория": "Category",
+  "Опциональная цена": "Optional price",
+  "Добавить позицию": "Add item",
+  "Создать пакет": "Create package",
+  "Сохранить изменения": "Save changes",
+  "Дублировать": "Duplicate",
+  "Удалить": "Delete",
+  "Выбран пакет для редактирования.": "Package selected for editing.",
+  "Пакет сохранён.": "Package saved.",
+  "Введите название позиции.": "Enter item name.",
+  "Введите название пакета.": "Enter package name.",
+  "Добавьте краткое описание.": "Add a short description.",
+  "Добавьте минимум одну позицию.": "Add at least one item.",
+  "Позиции ещё не выбраны.": "No items selected yet.",
+  "Новый пакет": "New package",
+  "Краткое описание появится здесь.": "Short description will appear here.",
+  "Кому подходит:": "Recommended for:",
+  "не указано": "not specified",
+  "Добавьте позиции в пакет": "Add items to the package",
+  "Обновлено:": "Updated:",
+  "Нет пакетов для этого сегмента": "No packages for this segment yet.",
+  "Создайте первый пакет для выбранного направления.": "Create the first package for the selected segment.",
+  "Офис": "Office",
+  "Ритейл": "Retail"
+});
+
 Object.assign(translations.ru, {
   "Operator of coffee, beverage and service systems": "Оператор систем для кофе, напитков и сервиса",
   "Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.": "Binova Group — это эволюция Binonic Lux и 15-летнего опыта работы с бизнес-клиентами. Мы не просто поставляем кофе или оборудование. Мы собираем и обслуживаем систему, которая помогает офисам, HoReCa и ритейлу работать стабильнее: продукт, техника, пополнение, сервис, обучение и поддержка в одном процессе.",
@@ -1143,6 +1253,113 @@ Object.assign(translations.ru, {
 });
 
 Object.assign(translations.ro, {
+  "Админка Binova": "Admin Binova",
+  "Центр управления": "Centru de control",
+  "Обзор": "Prezentare",
+  "Заявки": "Cereri",
+  "Коммерческие предложения": "Oferte comerciale",
+  "Калькулятор": "Calculator",
+  "Пакеты": "Pachete",
+  "Каталог": "Catalog",
+  "Обновления из бота": "Actualizări din bot",
+  "Настройки сайта": "Setări site",
+  "Центр коммерческого управления": "Centru de management comercial",
+  "Заявки, калькулятор, каталог, пакеты, Bitrix24 и коммерческие предложения в одной рабочей панели.": "Cereri, calculator, catalog, pachete, Bitrix24 și oferte comerciale într-un singur spațiu de lucru.",
+  "Открыть новые заявки": "Deschide cererile noi",
+  "Новые заявки": "Cereri noi",
+  "Запросы, которые ещё не обработаны.": "Cereri care încă nu au fost procesate.",
+  "КП в работе": "Oferte în lucru",
+  "Предложения, которые готовятся менеджером.": "Oferte pregătite de manager.",
+  "Готовые КП": "Oferte gata",
+  "Предложения, готовые к отправке клиенту.": "Oferte gata pentru trimitere către client.",
+  "Обновления каталога": "Actualizări catalog",
+  "Позиции из бота, ожидающие проверки.": "Poziții din bot care așteaptă verificarea.",
+  "Входящие заявки": "Cereri primite",
+  "Все запросы с сайта по Office, HoReCa и Retail попадают сюда со статусом, сегментом и выбранными сервисами.": "Toate cererile de pe site pentru Office, HoReCa și Retail ajung aici cu status, segment și servicii selectate.",
+  "Открыть заявки": "Deschide cererile",
+  "Расчёт": "Calcul",
+  "Калькулятор предложений": "Calculator de oferte",
+  "Настройте правила расчёта: базовые цены, пакеты, сервисные слои и коэффициенты по сегментам.": "Configurează regulile de calcul: prețuri de bază, pachete, straturi de service și coeficienți pe segmente.",
+  "Настроить расчёт": "Configurează calculul",
+  "Пакеты услуг": "Pachete de servicii",
+  "Собирайте стартовые решения для Office, HoReCa и Retail: что входит, для кого подходит и как считается.": "Construiește soluții de start pentru Office, HoReCa și Retail: ce include, cui se potrivește și cum se calculează.",
+  "Управлять пакетами": "Gestionează pachetele",
+  "Каталог продуктов и сервисов": "Catalog de produse și servicii",
+  "Управляйте кофе, оборудованием, расходниками, сервисами и товарами, которые используются в предложениях.": "Gestionează cafeaua, echipamentele, consumabilele, serviciile și produsele folosite în oferte.",
+  "Открыть каталог": "Deschide catalogul",
+  "Собирайте КП из заявки, выбранных пакетов, товаров и сервисов. Готовьте версию для отправки клиенту.": "Construiește oferta din cerere, pachete selectate, produse și servicii. Pregătește versiunea pentru client.",
+  "Собрать КП": "Construiește oferta",
+  "Bitrix24 интеграция": "Integrare Bitrix24",
+  "Передавайте заявки с сайта в Bitrix24 как лиды или сделки с сегментом, услугами, бюджетом и ответственным менеджером.": "Trimite cererile din site în Bitrix24 ca lead-uri sau deal-uri cu segment, servicii, buget și manager responsabil.",
+  "Настроить интеграцию": "Configurează integrarea",
+  "Клиент": "Client",
+  "Сегмент и параметры": "Segment și parametri",
+  "Выбранные сервисы": "Servicii selectate",
+  "Статус": "Status",
+  "Действия": "Acțiuni",
+  "Новая": "Nouă",
+  "В обработке": "În procesare",
+  "КП готовится": "Oferta se pregătește",
+  "КП отправлено": "Oferta trimisă",
+  "Выиграна": "Câștigată",
+  "Потеряна": "Pierdută",
+  "Ответственный: не назначен": "Responsabil: nealocat",
+  "Ответственный:": "Responsabil:",
+  "не назначен": "nealocat",
+  "локац.": "loc.",
+  "Bitrix24: не отправлено": "Bitrix24: netrimis",
+  "Создать КП": "Creează oferta",
+  "Отправить в Bitrix24": "Trimite în Bitrix24",
+  "Заявок пока нет.": "Nu există cereri încă.",
+  "Каталог на проверке": "Catalog la verificare",
+  "Нет обновлений на проверке": "Nu există actualizări la verificare",
+  "Когда бот отправит новые товары или пакеты, они появятся здесь.": "Când botul trimite produse sau pachete noi, vor apărea aici.",
+  "CRM интеграция": "Integrare CRM",
+  "Что будет передаваться": "Ce va fi transmis",
+  "Следующий шаг": "Următorul pas",
+  "Подключить webhook Bitrix24 и выбрать режим: создавать лиды или сделки. После этого кнопка в заявке сможет отправлять данные менеджеру в CRM.": "Conectează webhook-ul Bitrix24 și alege modul: creare lead-uri sau deal-uri. După aceea butonul din cerere va putea trimite datele managerului în CRM.",
+  "Конструктор пакетов": "Constructor de pachete",
+  "Создавайте коммерческие пакеты для Office, HoReCa и Retail: продукты, оборудование, сервис и регулярную поддержку в одном предложении.": "Creează pachete comerciale pentru Office, HoReCa și Retail: produse, echipamente, service și suport recurent într-o singură ofertă.",
+  "+ Новый пакет": "+ Pachet nou",
+  "Все пакеты": "Toate pachetele",
+  "Сегмент": "Segment",
+  "Черновик": "Ciornă",
+  "Активен": "Activ",
+  "Название пакета": "Denumirea pachetului",
+  "Коммерческое позиционирование": "Poziționare comercială",
+  "Например: предсказуемый месячный пакет для офисов без лишней операционной нагрузки.": "Exemplu: pachet lunar predictibil pentru birouri fără efort operațional suplimentar.",
+  "Кому подходит": "Recomandat pentru",
+  "Модель оплаты": "Model de plată",
+  "Цена в месяц, EUR": "Preț lunar, EUR",
+  "Краткое описание": "Descriere scurtă",
+  "Что входит в пакет": "Ce include pachetul",
+  "Выберите позиции из каталога или добавьте вручную.": "Selectează poziții din catalog sau adaugă manual.",
+  "+ Добавить вручную": "+ Adaugă manual",
+  "Позиция": "Poziție",
+  "Категория": "Categorie",
+  "Опциональная цена": "Preț opțional",
+  "Добавить позицию": "Adaugă poziție",
+  "Создать пакет": "Creează pachet",
+  "Сохранить изменения": "Salvează modificările",
+  "Дублировать": "Duplică",
+  "Удалить": "Șterge",
+  "Выбран пакет для редактирования.": "Pachet selectat pentru editare.",
+  "Пакет сохранён.": "Pachet salvat.",
+  "Введите название позиции.": "Introdu denumirea poziției.",
+  "Введите название пакета.": "Introdu denumirea pachetului.",
+  "Добавьте краткое описание.": "Adaugă o descriere scurtă.",
+  "Добавьте минимум одну позицию.": "Adaugă cel puțin o poziție.",
+  "Позиции ещё не выбраны.": "Nu sunt poziții selectate încă.",
+  "Новый пакет": "Pachet nou",
+  "Краткое описание появится здесь.": "Descrierea scurtă va apărea aici.",
+  "Кому подходит:": "Recomandat pentru:",
+  "не указано": "nespecificat",
+  "Добавьте позиции в пакет": "Adaugă poziții în pachet",
+  "Обновлено:": "Actualizat:",
+  "Нет пакетов для этого сегмента": "Nu există pachete pentru acest segment.",
+  "Создайте первый пакет для выбранного направления.": "Creează primul pachet pentru segmentul selectat.",
+  "Офис": "Office",
+  "Ритейл": "Retail",
   "Operator of coffee, beverage and service systems": "Operator de sisteme pentru cafea, băuturi și servicii",
   "Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.": "Binova Group este evoluția Binonic Lux și a celor 15 ani de experiență cu clienți business. Nu livrăm doar cafea sau echipamente. Construim și întreținem un sistem care ajută birourile, HoReCa și retailul să funcționeze mai stabil: produs, echipamente, reaprovizionare, service, training și suport într-un singur proces.",
   "A system instead of fragmented supply": "Un sistem în locul livrărilor fragmentate",
@@ -1156,6 +1373,36 @@ Object.assign(translations.ro, {
   "Why this digital demo exists": "De ce există acest demo digital",
   "This demo shows the path from interest to a structured request: the client chooses a segment, marks the required services, and Binova receives the data needed to prepare an accurate commercial offer.": "Acest demo arată drumul de la interes la o cerere structurată: clientul alege segmentul, marchează serviciile necesare, iar Binova primește datele pentru pregătirea unei oferte comerciale exacte.",
   "Later the request can be passed to Bitrix24 with the segment, selected services, client size, number of locations, and needs for equipment, service and replenishment.": "Ulterior, cererea poate fi transmisă în Bitrix24 cu segmentul, serviciile selectate, dimensiunea clientului, numărul de locații și nevoile de echipamente, service și reaprovizionare."
+});
+
+Object.assign(translations.ru, {
+  "Remove": "Убрать",
+  "Use in offer": "Использовать в КП",
+  "No packages for this segment yet.": "Нет пакетов для этого сегмента.",
+  "Create first package": "Создать первый пакет",
+  "Select a package to edit or create a new one.": "Выберите пакет для редактирования или создайте новый.",
+  "Package Builder": "Конструктор пакетов",
+  "Package selected for editing.": "Выбран пакет для редактирования.",
+  "Package saved.": "Пакет сохранён.",
+  "Add item": "Добавить позицию",
+  "Add at least one item.": "Добавьте минимум одну позицию.",
+  "Enter package name.": "Введите название пакета.",
+  "Enter item name.": "Введите название позиции."
+});
+
+Object.assign(translations.ro, {
+  "Remove": "Elimină",
+  "Use in offer": "Folosește în ofertă",
+  "No packages for this segment yet.": "Nu există pachete pentru acest segment.",
+  "Create first package": "Creează primul pachet",
+  "Select a package to edit or create a new one.": "Selectează un pachet pentru editare sau creează unul nou.",
+  "Package Builder": "Constructor de pachete",
+  "Package selected for editing.": "Pachet selectat pentru editare.",
+  "Package saved.": "Pachet salvat.",
+  "Add item": "Adaugă poziție",
+  "Add at least one item.": "Adaugă cel puțin o poziție.",
+  "Enter package name.": "Introdu denumirea pachetului.",
+  "Enter item name.": "Introdu denumirea poziției."
 });
 
 const page = (title: string, body: string, options: { admin?: boolean; plain?: boolean } = {}) => `<!doctype html>
@@ -1812,7 +2059,6 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         link.classList.toggle("active", link.getAttribute("data-lang") === lang);
       });
       window.binovaTranslate = (value) => value;
-      if (lang === "en") return;
       const dict = dictionaries[lang] || {};
       const entries = Object.entries(dict).sort((a, b) => b[0].length - a[0].length);
       const normalize = (value) => value.replace(/\\s+/g, " ").trim();
@@ -1831,27 +2077,42 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         return next;
       };
       window.binovaTranslate = translate;
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-        acceptNode(node) {
-          const text = node.nodeValue || "";
-          const parent = node.parentElement;
-          if (!normalize(text) || !parent || ["SCRIPT", "STYLE"].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
-          return NodeFilter.FILTER_ACCEPT;
-        }
-      });
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      nodes.forEach((node) => {
-        node.nodeValue = translate(node.nodeValue || "");
-      });
-      document.querySelectorAll("[placeholder]").forEach((node) => {
-        const value = node.getAttribute("placeholder") || "";
-        node.setAttribute("placeholder", translate(value));
-      });
-      document.querySelectorAll("option").forEach((node) => {
-        node.textContent = translate(node.textContent || "");
-      });
+      const applyTranslations = (root) => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(node) {
+            const text = node.nodeValue || "";
+            const parent = node.parentElement;
+            if (!normalize(text) || !parent || ["SCRIPT", "STYLE"].includes(parent.tagName)) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((node) => {
+          node.nodeValue = translate(node.nodeValue || "");
+        });
+        root.querySelectorAll?.("[placeholder]").forEach((node) => {
+          const value = node.getAttribute("placeholder") || "";
+          node.setAttribute("placeholder", translate(value));
+        });
+        root.querySelectorAll?.("option").forEach((node) => {
+          node.textContent = translate(node.textContent || "");
+        });
+      };
+      applyTranslations(document.body);
       document.title = translate(document.title);
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              node.nodeValue = translate(node.nodeValue || "");
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+              applyTranslations(node);
+            }
+          });
+        });
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
     })();
 
     const setCupStage = (root, stage) => {
