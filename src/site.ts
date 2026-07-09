@@ -31,7 +31,7 @@ const businessLines = {
   },
   retail: {
     label: "Retail",
-    title: "Retail & Multi-location Solutions",
+    title: "Coffee solutions for stores and networks",
     short: "Standardized beverage systems for stores, networks and high-traffic locations.",
     hero:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1800&q=82",
@@ -110,10 +110,10 @@ const solutionCopy = {
     ]
   },
   retail: {
-    heroDescription: "Select what you need and send the request. The Binova team shapes the service around your real operation.",
-    proofTitle: "Pick the service layers. We build the system.",
-    primaryCta: "Select services",
-    packageIntro: "A clean starting point for the conversation with Binova.",
+    heroDescription: "Choose your location format, required services and send the request. Binova will build a solution for your network: equipment, beverages, supply, service and one standard across every location.",
+    proofTitle: "From one point to a location network, we shape the setup around your format.",
+    primaryCta: "Build solution",
+    packageIntro: "This is a starting point for the offer. Choose a base option, then add the services your locations need.",
     requestEyebrow: "Your request",
     requestTitle: "Select services and send context",
     requestIntro: "Select services below and the preview updates immediately.",
@@ -122,7 +122,26 @@ const solutionCopy = {
     contextPlaceholder: "Current supplier, delivery rhythm, expected start date, decision criteria...",
     submitLabel: "Send request",
     serviceDescriptions: {} as Record<string, string>,
-    presets: [] as Array<{ name: string; description: string; items: string; services: string[] }>
+    presets: [
+      {
+        name: "Basic retail solution",
+        description: "A coffee point for a store, gas station, commercial area or another high-traffic location.",
+        items: "Equipment · Beverages · Consumables · Basic service",
+        services: ["Coffee corner", "Shelf equipment", "Store consumables"]
+      },
+      {
+        name: "Daily replenishment",
+        description: "Regular supply of coffee, cups, sugar, consumables and other items for stable point operations.",
+        items: "Coffee · Cups · Sugar · Consumables · Planned deliveries",
+        services: ["Store consumables", "POS supplies", "Scheduled replenishment"]
+      },
+      {
+        name: "Network service",
+        description: "One service standard for several locations: supply, technical support and equipment performance control.",
+        items: "Multiple points · One standard · Service · Reporting",
+        services: ["Shelf equipment", "Scheduled replenishment", "Cleaning supplies"]
+      }
+    ]
   },
   horeca: {
     heroDescription: "Select what you need and send the request. The Binova team shapes the service around your real operation.",
@@ -430,6 +449,7 @@ const translations: Record<string, Record<string, string>> = {
     "Predictable coffee, tea, equipment and service for teams of any size.": "Предсказуемые кофе, чай, оборудование и сервис для команд любого размера.",
     "Build office package": "Собрать офисный пакет",
     "Retail & Multi-location Solutions": "Решения для ритейла и сетей",
+    "Coffee solutions for stores and networks": "Кофейные решения для магазинов и сетей",
     "Standardized beverage systems for stores, networks and high-traffic locations.": "Стандартизированные beverage-системы для магазинов, сетей и точек с высоким трафиком.",
     "Configure retail solution": "Настроить решение для ритейла",
     "HoReCa Beverage Systems": "Beverage-системы для HoReCa",
@@ -478,6 +498,18 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee machines, installation, maintenance and support so everything works without downtime.": "Кофемашины, установка, обслуживание и поддержка, чтобы всё работало без простоев.",
     "Rental · Purchase · Installation · Maintenance · Replacement": "Аренда · Покупка · Установка · Обслуживание · Замена",
     "Retail solution": "Решение для ритейла",
+    "Choose your location format, required services and send the request. Binova will build a solution for your network: equipment, beverages, supply, service and one standard across every location.": "Выберите формат локаций, нужные сервисы и отправьте заявку. Binova соберёт решение для вашей сети: оборудование, напитки, поставки, обслуживание и единый стандарт на всех точках.",
+    "From one point to a location network, we shape the setup around your format.": "От одной точки до сети локаций — подберём решение под ваш формат.",
+    "This is a starting point for the offer. Choose a base option, then add the services your locations need.": "Это отправная точка для предложения. Выберите базовый вариант, а затем добавьте нужные услуги под ваши локации.",
+    "Basic retail solution": "Базовое решение для ритейла",
+    "A coffee point for a store, gas station, commercial area or another high-traffic location.": "Кофейная точка для магазина, АЗС, торговой зоны или другой локации с трафиком.",
+    "Equipment · Beverages · Consumables · Basic service": "Оборудование · Напитки · Расходники · Базовое обслуживание",
+    "Daily replenishment": "Ежедневное пополнение",
+    "Regular supply of coffee, cups, sugar, consumables and other items for stable point operations.": "Регулярные поставки кофе, стаканов, сахара, расходников и других позиций для стабильной работы точки.",
+    "Coffee · Cups · Sugar · Consumables · Planned deliveries": "Кофе · Стаканы · Сахар · Расходники · Плановые поставки",
+    "Network service": "Сервис для сети",
+    "One service standard for several locations: supply, technical support and equipment performance control.": "Единый стандарт обслуживания для нескольких локаций: поставки, техническая поддержка и контроль работы оборудования.",
+    "Multiple points · One standard · Service · Reporting": "Несколько точек · Единый стандарт · Сервис · Отчётность",
     "HoReCa solution": "Решение для HoReCa",
     "Office operations without daily procurement noise": "Офис без ежедневного закупочного шума",
     "Retail supply packages for stores and networks": "Пакеты снабжения для магазинов и сетей",
@@ -486,6 +518,7 @@ const translations: Record<string, Record<string, string>> = {
     "Shelf-ready assortment, replenishment rhythm, store equipment and commercial operations support.": "Готовый ассортимент, ритм пополнения, оборудование точки и поддержка коммерческих операций.",
     "Coffee, equipment, maintenance, hygiene and operational products for hotels, restaurants and cafes.": "Кофе, оборудование, сервис, гигиена и операционные продукты для отелей, ресторанов и кафе.",
     "Select services": "Выбрать сервисы",
+    "Build solution": "Собрать решение",
     "Back to segments": "Назад к направлениям",
     "Solution request": "Заявка на решение",
     "Choose services and send the request": "Выберите услуги и отправьте запрос",
@@ -656,6 +689,7 @@ const translations: Record<string, Record<string, string>> = {
     "Predictable coffee, tea, equipment and service for teams of any size.": "Cafea, ceai, echipamente și service predictibil pentru echipe de orice dimensiune.",
     "Build office package": "Construiește pachetul office",
     "Retail & Multi-location Solutions": "Soluții pentru retail și rețele",
+    "Coffee solutions for stores and networks": "Soluții de cafea pentru magazine și rețele",
     "Standardized beverage systems for stores, networks and high-traffic locations.": "Sisteme standardizate de băuturi pentru magazine, rețele și locații cu trafic ridicat.",
     "Configure retail solution": "Configurează soluția retail",
     "HoReCa Beverage Systems": "Sisteme de băuturi HoReCa",
@@ -704,6 +738,18 @@ const translations: Record<string, Record<string, string>> = {
     "Coffee machines, installation, maintenance and support so everything works without downtime.": "Espressoare, instalare, mentenanță și suport pentru funcționare fără întreruperi.",
     "Rental · Purchase · Installation · Maintenance · Replacement": "Chirie · Achiziție · Instalare · Mentenanță · Înlocuire",
     "Retail solution": "Soluție pentru retail",
+    "Choose your location format, required services and send the request. Binova will build a solution for your network: equipment, beverages, supply, service and one standard across every location.": "Alege formatul locațiilor, serviciile necesare și trimite cererea. Binova va construi o soluție pentru rețeaua ta: echipamente, băuturi, aprovizionare, service și un standard unic în toate locațiile.",
+    "From one point to a location network, we shape the setup around your format.": "De la un singur punct până la o rețea de locații, adaptăm soluția la formatul tău.",
+    "This is a starting point for the offer. Choose a base option, then add the services your locations need.": "Acesta este punctul de pornire pentru ofertă. Alege o variantă de bază, apoi adaugă serviciile necesare locațiilor tale.",
+    "Basic retail solution": "Soluție retail de bază",
+    "A coffee point for a store, gas station, commercial area or another high-traffic location.": "Un punct de cafea pentru magazin, benzinărie, zonă comercială sau altă locație cu trafic.",
+    "Equipment · Beverages · Consumables · Basic service": "Echipamente · Băuturi · Consumabile · Service de bază",
+    "Daily replenishment": "Reaprovizionare zilnică",
+    "Regular supply of coffee, cups, sugar, consumables and other items for stable point operations.": "Livrări regulate de cafea, pahare, zahăr, consumabile și alte poziții pentru funcționarea stabilă a punctului.",
+    "Coffee · Cups · Sugar · Consumables · Planned deliveries": "Cafea · Pahare · Zahăr · Consumabile · Livrări planificate",
+    "Network service": "Service pentru rețea",
+    "One service standard for several locations: supply, technical support and equipment performance control.": "Un standard unic de service pentru mai multe locații: aprovizionare, suport tehnic și controlul funcționării echipamentelor.",
+    "Multiple points · One standard · Service · Reporting": "Mai multe puncte · Un standard · Service · Raportare",
     "HoReCa solution": "Soluție pentru HoReCa",
     "Office operations without daily procurement noise": "Operațiuni de birou fără zgomot zilnic în achiziții",
     "Retail supply packages for stores and networks": "Pachete de aprovizionare pentru magazine și rețele",
@@ -712,6 +758,7 @@ const translations: Record<string, Record<string, string>> = {
     "Shelf-ready assortment, replenishment rhythm, store equipment and commercial operations support.": "Asortiment gata de raft, ritm de reaprovizionare, echipament de magazin și suport operațional comercial.",
     "Coffee, equipment, maintenance, hygiene and operational products for hotels, restaurants and cafes.": "Cafea, echipamente, mentenanță, igienă și produse operaționale pentru hoteluri, restaurante și cafenele.",
     "Select services": "Selectează servicii",
+    "Build solution": "Construiește soluția",
     "Back to segments": "Înapoi la segmente",
     "Solution request": "Cerere pentru soluție",
     "Choose services and send the request": "Alege serviciile și trimite cererea",
