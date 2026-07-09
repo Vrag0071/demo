@@ -1521,6 +1521,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .metric { background: rgba(255,253,249,.92); border: 1px solid var(--line); border-radius: 8px; padding: 18px; box-shadow: var(--soft-shadow); }
     .metric span { display: block; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
     .metric b { font-size: 32px; }
+    .metric small { display: block; color: var(--muted); font-size: 12px; line-height: 1.45; margin-top: 8px; }
     form { display: grid; gap: 14px; }
     label { display: grid; gap: 7px; font-weight: 750; color: #2a2a2a; }
     input, select, textarea {
@@ -2203,14 +2204,16 @@ const thankYouPage = (leadId: number, estimate: number) => page("Request receive
 const adminLayout = (ctx: RequestContext, title: string, content: string) => page(title, `
   <div class="admin-shell">
     <aside class="admin-side">
-      <h2 style="font-size:24px;">Control room</h2>
-      <a href="/admin">Dashboard</a>
-      <a href="/admin/leads">Leads</a>
-      <a href="/admin/calculator">Calculator</a>
-      <a href="/admin/catalog">Catalog</a>
-      <a href="/admin/packages">Packages</a>
-      <a href="/admin/proposals">Proposals</a>
-      <a href="/">Public site</a>
+      <h2 style="font-size:24px;">Центр управления</h2>
+      <a href="/admin">Обзор</a>
+      <a href="/admin/leads">Заявки</a>
+      <a href="/admin/proposals">Коммерческие предложения</a>
+      <a href="/admin/calculator">Калькулятор</a>
+      <a href="/admin/packages">Пакеты</a>
+      <a href="/admin/catalog">Каталог</a>
+      <a href="/admin/bot-updates">Обновления из бота</a>
+      <a href="/admin/bitrix24">Bitrix24</a>
+      <a href="/">Настройки сайта</a>
     </aside>
     <main class="admin-main">${content}</main>
   </div>
@@ -2232,27 +2235,40 @@ const adminDashboard = (ctx: RequestContext) => {
   if (!requireAdmin(ctx)) return "";
   const leads = statementGet(`SELECT COUNT(*) as count FROM "ClientLead"`)?.count ?? 0;
   const newLeads = statementGet(`SELECT COUNT(*) as count FROM "ClientLead" WHERE "status" = 'NEW'`)?.count ?? 0;
-  const packages = statementGet(`SELECT COUNT(*) as count FROM "ServicePackage"`)?.count ?? 0;
-  const catalog = approvedProducts().length;
+  const proposals = statementGet(`SELECT COUNT(*) as count FROM "CommercialProposal"`)?.count ?? 0;
+  const catalogUpdates = (() => {
+    try {
+      return statementGet(`SELECT COUNT(*) as count FROM "ProductSubmission" WHERE "status" IN ('SUBMITTED', 'RESUBMITTED', 'CHANGES_REQUESTED')`)?.count ?? 0;
+    } catch {
+      return 0;
+    }
+  })();
+  const proposalsInWork = Math.max(0, Number(leads) - Number(newLeads) - Number(proposals));
   return adminLayout(ctx, "Dashboard", `
     <section class="feature-band" style="margin-bottom:24px;">
-      <p class="eyebrow">Admin dashboard</p>
-      <h1 style="color:#fff; font-size:54px;">Commercial cockpit</h1>
-      <p>Lead intake, pricing logic, managed catalog, service packages and commercial proposal links in one local control room.</p>
+      <div class="section-head" style="border:0; padding:0; margin:0; align-items:flex-start;">
+        <div>
+          <p class="eyebrow">Admin dashboard</p>
+          <h1 style="color:#fff; font-size:54px;">Центр коммерческого управления</h1>
+          <p>Заявки, калькулятор, каталог, пакеты, Bitrix24 и коммерческие предложения в одной рабочей панели.</p>
+        </div>
+        <a class="btn" href="/admin/leads">Открыть новые заявки</a>
+      </div>
     </section>
     <section class="metric-row" style="margin-top:24px;">
-      <div class="metric"><span>Total leads</span><b>${leads}</b></div>
-      <div class="metric"><span>New leads</span><b>${newLeads}</b></div>
-      <div class="metric"><span>Packages</span><b>${packages}</b></div>
-      <div class="metric"><span>Bot catalog offers</span><b>${catalog}</b></div>
+      <div class="metric"><span>Новые заявки</span><b>${newLeads}</b><small>Запросы, которые ещё не обработаны.</small></div>
+      <div class="metric"><span>КП в работе</span><b>${proposalsInWork}</b><small>Предложения, которые готовятся менеджером.</small></div>
+      <div class="metric"><span>Готовые КП</span><b>${proposals}</b><small>Предложения, готовые к отправке клиенту.</small></div>
+      <div class="metric"><span>Обновления каталога</span><b>${catalogUpdates}</b><small>Позиции из бота, ожидающие проверки.</small></div>
     </section>
     <section class="band">
       <div class="grid-3">
-        <div class="card"><div class="card-body"><span class="badge">Intake</span><h3>Lead intake</h3><p>Every public business flow writes a request here.</p><a class="btn" href="/admin/leads">View leads</a></div></div>
-        <div class="card"><div class="card-body"><span class="badge">Pricing</span><h3>Calculator</h3><p>Change base prices by segment and company size.</p><a class="btn" href="/admin/calculator">Tune rules</a></div></div>
-        <div class="card"><div class="card-body"><span class="badge">Bundles</span><h3>Packages</h3><p>Build offer bundles for sales conversations.</p><a class="btn" href="/admin/packages">Manage packages</a></div></div>
-        <div class="card"><div class="card-body"><span class="badge">Catalog</span><h3>Product depth</h3><p>Manage coffee, tea, equipment, services and consumables.</p><a class="btn" href="/admin/catalog">Manage catalog</a></div></div>
-        <div class="card"><div class="card-body"><span class="badge">Proposal</span><h3>Commercial proposals</h3><p>Turn a lead into a priced offer with selected packages and catalog items.</p><a class="btn" href="/admin/proposals">Build proposal</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">Заявки</span><h3>Входящие заявки</h3><p>Все запросы с сайта по Office, HoReCa и Retail попадают сюда со статусом, сегментом и выбранными сервисами.</p><a class="btn" href="/admin/leads">Открыть заявки</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">Расчёт</span><h3>Калькулятор предложений</h3><p>Настройте правила расчёта: базовые цены, пакеты, сервисные слои и коэффициенты по сегментам.</p><a class="btn" href="/admin/calculator">Настроить расчёт</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">Пакеты</span><h3>Пакеты услуг</h3><p>Собирайте стартовые решения для Office, HoReCa и Retail: что входит, для кого подходит и как считается.</p><a class="btn" href="/admin/packages">Управлять пакетами</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">Каталог</span><h3>Каталог продуктов и сервисов</h3><p>Управляйте кофе, оборудованием, расходниками, сервисами и товарами, которые используются в предложениях.</p><a class="btn" href="/admin/catalog">Открыть каталог</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">КП</span><h3>Коммерческие предложения</h3><p>Собирайте КП из заявки, выбранных пакетов, товаров и сервисов. Готовьте версию для отправки клиенту.</p><a class="btn" href="/admin/proposals">Собрать КП</a></div></div>
+        <div class="card"><div class="card-body"><span class="badge">CRM</span><h3>Bitrix24 интеграция</h3><p>Передавайте заявки с сайта в Bitrix24 как лиды или сделки с сегментом, услугами, бюджетом и ответственным менеджером.</p><a class="btn" href="/admin/bitrix24">Настроить интеграцию</a></div></div>
       </div>
     </section>
   `);
@@ -2261,14 +2277,25 @@ const adminDashboard = (ctx: RequestContext) => {
 const adminLeads = (ctx: RequestContext) => {
   if (!requireAdmin(ctx)) return "";
   const leads = statementAll(`SELECT * FROM "ClientLead" ORDER BY "createdAt" DESC`);
+  const statusLabel = (status: string) => ({
+    NEW: "Новая",
+    IN_PROGRESS: "В обработке",
+    PROPOSAL_DRAFT: "КП готовится",
+    PROPOSAL_SENT: "КП отправлено",
+    WON: "Выиграна",
+    LOST: "Потеряна"
+  }[status] ?? status);
   return adminLayout(ctx, "Leads", `
-    <div class="section-head"><div><p class="eyebrow">Client requests</p><h1 style="color:var(--ink); font-size:52px;">Leads</h1></div></div>
+    <div class="section-head">
+      <div><p class="eyebrow">Входящие заявки</p><h1 style="color:var(--ink); font-size:52px;">Заявки</h1></div>
+      <a class="btn" href="/admin/proposals">Создать КП</a>
+    </div>
     <table class="table">
-      <thead><tr><th>ID</th><th>Company</th><th>Segment</th><th>Need</th><th>Estimate</th><th>Created</th></tr></thead>
+      <thead><tr><th>ID</th><th>Клиент</th><th>Сегмент и параметры</th><th>Выбранные сервисы</th><th>Статус</th><th>Действия</th></tr></thead>
       <tbody>
         ${leads.map((lead) => `
           <tr>
-            <td>#${lead.id}<br><span class="badge new">${escapeHtml(lead.status)}</span></td>
+            <td>#${lead.id}<br><span class="badge new">${escapeHtml(statusLabel(lead.status))}</span><br>${formatDate(lead.createdAt)}</td>
             <td><b>${escapeHtml(lead.companyName)}</b><br>${escapeHtml(lead.contactName)}<br>${escapeHtml(lead.email)}<br>${escapeHtml(lead.phone)}</td>
             <td>${escapeHtml(slugLabel(lead.segment))}<br>${escapeHtml(lead.companySize)} · ${lead.employeeCount} people · ${lead.locationsCount} loc.</td>
             <td>${escapeHtml(String(lead.services).split(",").join(", "))}<br><span style="color:var(--muted);">${escapeHtml(lead.message)}</span></td>
@@ -2276,6 +2303,41 @@ const adminLeads = (ctx: RequestContext) => {
             <td>${formatDate(lead.createdAt)}</td>
           </tr>
         `).join("") || `<tr><td colspan="6">No leads yet.</td></tr>`}
+      </tbody>
+    </table>
+  `);
+};
+
+const adminLeadsEnhanced = (ctx: RequestContext) => {
+  if (!requireAdmin(ctx)) return "";
+  const leads = statementAll(`SELECT * FROM "ClientLead" ORDER BY "createdAt" DESC`);
+  const statusLabel = (status: string) => ({
+    NEW: "Новая",
+    IN_PROGRESS: "В обработке",
+    PROPOSAL_DRAFT: "КП готовится",
+    PROPOSAL_SENT: "КП отправлено",
+    WON: "Выиграна",
+    LOST: "Потеряна"
+  }[status] ?? status);
+
+  return adminLayout(ctx, "Leads", `
+    <div class="section-head">
+      <div><p class="eyebrow">Входящие заявки</p><h1 style="color:var(--ink); font-size:52px;">Заявки</h1></div>
+      <a class="btn" href="/admin/proposals">Создать КП</a>
+    </div>
+    <table class="table">
+      <thead><tr><th>ID</th><th>Клиент</th><th>Сегмент и параметры</th><th>Выбранные сервисы</th><th>Статус</th><th>Действия</th></tr></thead>
+      <tbody>
+        ${leads.map((lead) => `
+          <tr>
+            <td>#${lead.id}<br><span class="badge new">${escapeHtml(statusLabel(lead.status))}</span><br>${formatDate(lead.createdAt)}</td>
+            <td><b>${escapeHtml(lead.companyName)}</b><br>${escapeHtml(lead.contactName)}<br>${escapeHtml(lead.email)}<br>${escapeHtml(lead.phone)}</td>
+            <td><b>${escapeHtml(slugLabel(lead.segment))}</b><br>${escapeHtml(lead.businessFormat || lead.companySize)}<br>${lead.employeesCount ?? lead.employeeCount} / ${lead.locationsCount} локац.<br><span style="color:var(--muted);">Ответственный: ${escapeHtml(lead.assignedManager || "не назначен")}</span></td>
+            <td>${escapeHtml(String(lead.selectedServices || lead.services).split(",").filter(Boolean).join(", "))}<br><span style="color:var(--muted);">${escapeHtml(lead.additionalDetails || lead.message)}</span></td>
+            <td><b>${money(lead.estimatedDealValue ?? lead.estimatedMonthlyPrice)}</b><br><span style="color:var(--muted);">Bitrix24: не отправлено</span></td>
+            <td><a href="/admin/proposals?leadId=${lead.id}">Создать КП</a><br><a href="/admin/bitrix24">Отправить в Bitrix24</a></td>
+          </tr>
+        `).join("") || `<tr><td colspan="6">Заявок пока нет.</td></tr>`}
       </tbody>
     </table>
   `);
@@ -2383,6 +2445,54 @@ const adminCalculator = (ctx: RequestContext) => {
         <thead><tr><th>Segment</th><th>Size</th><th>Base</th><th>Per employee</th><th>Per location</th></tr></thead>
         <tbody>${rules.map((rule) => `<tr><td>${escapeHtml(slugLabel(rule.segment))}</td><td>${escapeHtml(rule.companySize)}</td><td>${money(rule.basePrice)}</td><td>${money(rule.perEmployeePrice)}</td><td>${money(rule.perLocationPrice)}</td></tr>`).join("")}</tbody>
       </table>
+    </section>
+  `);
+};
+
+const adminBotUpdates = (ctx: RequestContext) => {
+  if (!requireAdmin(ctx)) return "";
+  const submissions = (() => {
+    try {
+      return statementAll(`SELECT * FROM "ProductSubmission" WHERE "status" IN ('SUBMITTED', 'RESUBMITTED', 'CHANGES_REQUESTED') ORDER BY "createdAt" DESC LIMIT 20`);
+    } catch {
+      return [];
+    }
+  })();
+
+  return adminLayout(ctx, "Bot catalog updates", `
+    <div class="section-head">
+      <div><p class="eyebrow">Обновления из бота</p><h1 style="color:var(--ink); font-size:52px;">Каталог на проверке</h1></div>
+      <a class="btn" href="/admin/catalog">Открыть каталог</a>
+    </div>
+    <div class="grid-2">
+      ${submissions.map((item) => `
+        <article class="card"><div class="card-body">
+          <span class="badge">${escapeHtml(item.status)}</span>
+          <h3>${escapeHtml(item.productName)}</h3>
+          <p>${escapeHtml(item.category)} · ${escapeHtml(item.availability)} · ${escapeHtml(item.segment)}</p>
+          <p>${escapeHtml(item.description)}</p>
+        </div></article>
+      `).join("") || `<article class="card"><div class="card-body"><h3>Нет обновлений на проверке</h3><p>Когда бот отправит новые товары или пакеты, они появятся здесь.</p></div></article>`}
+    </div>
+  `);
+};
+
+const adminBitrix = (ctx: RequestContext) => {
+  if (!requireAdmin(ctx)) return "";
+  return adminLayout(ctx, "Bitrix24 integration", `
+    <div class="section-head">
+      <div><p class="eyebrow">CRM интеграция</p><h1 style="color:var(--ink); font-size:52px;">Bitrix24</h1></div>
+      <a class="btn" href="/admin/leads">Открыть заявки</a>
+    </div>
+    <section class="band grid-2">
+      <div class="card"><div class="card-body">
+        <h3>Что будет передаваться</h3>
+        <p>companyName, contactPerson, email, phone, businessSegment, businessFormat, companySize, employeesCount, locationsCount, city, currentSupplier, currentEquipment, desiredStartDate, budgetRange, deliveryFrequency, selectedServices, additionalDetails, estimatedDealValue, assignedManager и followUpDate.</p>
+      </div></div>
+      <div class="card"><div class="card-body">
+        <h3>Следующий шаг</h3>
+        <p>Подключить webhook Bitrix24 и выбрать режим: создавать лиды или сделки. После этого кнопка в заявке сможет отправлять данные менеджеру в CRM.</p>
+      </div></div>
     </section>
   `);
 };
@@ -2717,7 +2827,7 @@ const handleGet = (ctx: RequestContext) => {
   if (pathname === "/admin/logout") return redirect(ctx.response, "/admin/login", { "Set-Cookie": "admin_session=; Path=/; Max-Age=0" });
   if (pathname === "/admin") return send(ctx.response, 200, ctx.admin ? adminDashboard(ctx) : loginPage("Login or create the first admin account."));
   if (pathname === "/admin/leads") {
-    const html = adminLeads(ctx);
+    const html = adminLeadsEnhanced(ctx);
     if (!ctx.response.headersSent) return send(ctx.response, 200, html);
     return;
   }
@@ -2738,6 +2848,16 @@ const handleGet = (ctx: RequestContext) => {
   }
   if (pathname === "/admin/proposals") {
     const html = adminProposals(ctx);
+    if (!ctx.response.headersSent) return send(ctx.response, 200, html);
+    return;
+  }
+  if (pathname === "/admin/bot-updates") {
+    const html = adminBotUpdates(ctx);
+    if (!ctx.response.headersSent) return send(ctx.response, 200, html);
+    return;
+  }
+  if (pathname === "/admin/bitrix24") {
+    const html = adminBitrix(ctx);
     if (!ctx.response.headersSent) return send(ctx.response, 200, html);
     return;
   }
