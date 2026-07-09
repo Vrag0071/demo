@@ -1126,6 +1126,38 @@ const translations: Record<string, Record<string, string>> = {
   }
 };
 
+Object.assign(translations.ru, {
+  "Operator of coffee, beverage and service systems": "Оператор систем для кофе, напитков и сервиса",
+  "Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.": "Binova Group — это эволюция Binonic Lux и 15-летнего опыта работы с бизнес-клиентами. Мы не просто поставляем кофе или оборудование. Мы собираем и обслуживаем систему, которая помогает офисам, HoReCa и ритейлу работать стабильнее: продукт, техника, пополнение, сервис, обучение и поддержка в одном процессе.",
+  "A system instead of fragmented supply": "Система вместо разрозненных поставок",
+  "Binova combines product, equipment, replenishment and service into one managed process. The client gets one partner responsible for the result, not a list of disconnected suppliers.": "Binova объединяет продукт, оборудование, пополнение и сервис в один управляемый процесс. Клиент получает не набор поставщиков, а одного партнёра, который отвечает за результат.",
+  "Service as part of the product": "Сервис как часть продукта",
+  "Coffee works only when the equipment works. Maintenance, prevention, calibration and replacement are not extras, but part of the Binova system itself.": "Кофе работает только тогда, когда работает оборудование. Поэтому обслуживание, профилактика, настройка и замена техники — не дополнение, а часть самой системы Binova.",
+  "Three segments, three growth logics": "Три сегмента — три логики роста",
+  "Offices need team comfort and predictable budgets. HoReCa needs stable quality and no downtime. Retail needs one standard across points and additional sales. That is why each segment gets its own flow and offer.": "Офису важны комфорт команды и предсказуемый бюджет. HoReCa — стабильное качество и отсутствие простоев. Ритейлу — стандарт на всех точках и дополнительная продажа. Поэтому каждый сегмент получает свой flow и своё предложение.",
+  "Operational calm that works for growth": "Операционное спокойствие, которое работает на рост",
+  "For offices, coffee becomes part of culture and care for the team. For HoReCa, it becomes a product that affects repeat visits and average check. For retail, it becomes a point of additional sales and a way to turn traffic into revenue. Binova takes responsibility for the system behind the cup: equipment, supply, maintenance, training and support.": "Для офиса кофе становится частью культуры и заботы о команде. Для HoReCa — продуктом, который влияет на повторный визит и средний чек. Для ритейла — точкой дополнительной продажи и способом превратить трафик в выручку. Binova берёт на себя систему за чашкой: оборудование, поставки, обслуживание, обучение и поддержку.",
+  "Why this digital demo exists": "Зачем это цифровое демо",
+  "This demo shows the path from interest to a structured request: the client chooses a segment, marks the required services, and Binova receives the data needed to prepare an accurate commercial offer.": "Это демо показывает путь от интереса к структурированной заявке: клиент выбирает свой сегмент, отмечает нужные сервисы, а Binova получает данные для подготовки точного коммерческого предложения.",
+  "Later the request can be passed to Bitrix24 with the segment, selected services, client size, number of locations, and needs for equipment, service and replenishment.": "Дальше заявка может передаваться в Bitrix24: с сегментом, выбранными услугами, размером клиента, количеством локаций, потребностью в оборудовании, сервисе и пополнении."
+});
+
+Object.assign(translations.ro, {
+  "Operator of coffee, beverage and service systems": "Operator de sisteme pentru cafea, băuturi și servicii",
+  "Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.": "Binova Group este evoluția Binonic Lux și a celor 15 ani de experiență cu clienți business. Nu livrăm doar cafea sau echipamente. Construim și întreținem un sistem care ajută birourile, HoReCa și retailul să funcționeze mai stabil: produs, echipamente, reaprovizionare, service, training și suport într-un singur proces.",
+  "A system instead of fragmented supply": "Un sistem în locul livrărilor fragmentate",
+  "Binova combines product, equipment, replenishment and service into one managed process. The client gets one partner responsible for the result, not a list of disconnected suppliers.": "Binova unește produsul, echipamentele, reaprovizionarea și service-ul într-un proces gestionat. Clientul primește un partener responsabil de rezultat, nu o listă de furnizori separați.",
+  "Service as part of the product": "Service-ul ca parte a produsului",
+  "Coffee works only when the equipment works. Maintenance, prevention, calibration and replacement are not extras, but part of the Binova system itself.": "Cafeaua funcționează doar atunci când funcționează echipamentul. Mentenanța, prevenția, calibrarea și înlocuirea nu sunt opțiuni separate, ci parte din sistemul Binova.",
+  "Three segments, three growth logics": "Trei segmente, trei logici de creștere",
+  "Offices need team comfort and predictable budgets. HoReCa needs stable quality and no downtime. Retail needs one standard across points and additional sales. That is why each segment gets its own flow and offer.": "Birourile au nevoie de confort pentru echipă și buget predictibil. HoReCa are nevoie de calitate stabilă și fără întreruperi. Retailul are nevoie de standard unic în toate punctele și vânzări suplimentare. De aceea fiecare segment primește propriul flow și propria ofertă.",
+  "Operational calm that works for growth": "Liniște operațională care lucrează pentru creștere",
+  "For offices, coffee becomes part of culture and care for the team. For HoReCa, it becomes a product that affects repeat visits and average check. For retail, it becomes a point of additional sales and a way to turn traffic into revenue. Binova takes responsibility for the system behind the cup: equipment, supply, maintenance, training and support.": "Pentru birouri, cafeaua devine parte din cultură și grijă pentru echipă. Pentru HoReCa, devine un produs care influențează revenirea clienților și bonul mediu. Pentru retail, devine un punct de vânzare suplimentară și o modalitate de a transforma traficul în venit. Binova preia sistemul din spatele ceștii: echipamente, livrări, mentenanță, training și suport.",
+  "Why this digital demo exists": "De ce există acest demo digital",
+  "This demo shows the path from interest to a structured request: the client chooses a segment, marks the required services, and Binova receives the data needed to prepare an accurate commercial offer.": "Acest demo arată drumul de la interes la o cerere structurată: clientul alege segmentul, marchează serviciile necesare, iar Binova primește datele pentru pregătirea unei oferte comerciale exacte.",
+  "Later the request can be passed to Bitrix24 with the segment, selected services, client size, number of locations, and needs for equipment, service and replenishment.": "Ulterior, cererea poate fi transmisă în Bitrix24 cu segmentul, serviciile selectate, dimensiunea clientului, numărul de locații și nevoile de echipamente, service și reaprovizionare."
+});
+
 const page = (title: string, body: string, options: { admin?: boolean; plain?: boolean } = {}) => `<!doctype html>
 <html lang="en">
 <head>
@@ -2074,27 +2106,27 @@ const solutionPage = (segment: keyof typeof businessLines) => {
 const aboutPage = () => page("About us", `
   <main>
     <section class="band">
-      <p class="eyebrow">О Binova Group</p>
-      <h1 style="color:var(--ink); font-size:64px;">Оператор систем для кофе, напитков и сервиса</h1>
-      <p class="copy">Binova Group — это эволюция Binonic Lux и 15-летнего опыта работы с бизнес-клиентами. Мы не просто поставляем кофе или оборудование. Мы собираем и обслуживаем систему, которая помогает офисам, HoReCa и ритейлу работать стабильнее: продукт, техника, пополнение, сервис, обучение и поддержка в одном процессе.</p>
+      <p class="eyebrow">About Binova Group</p>
+      <h1 style="color:var(--ink); font-size:64px;">Operator of coffee, beverage and service systems</h1>
+      <p class="copy">Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.</p>
     </section>
     <section class="band">
       <div class="grid-3">
-        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=82" alt="Business meeting"><div class="card-body"><h3>Система вместо разрозненных поставок</h3><p>Binova объединяет продукт, оборудование, пополнение и сервис в один управляемый процесс. Клиент получает не набор поставщиков, а одного партнёра, который отвечает за результат.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82" alt="Coffee service"><div class="card-body"><h3>Сервис как часть продукта</h3><p>Кофе работает только тогда, когда работает оборудование. Поэтому обслуживание, профилактика, настройка и замена техники — не дополнение, а часть самой системы Binova.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=82" alt="Retail operations"><div class="card-body"><h3>Три сегмента — три логики роста</h3><p>Офису важны комфорт команды и предсказуемый бюджет. HoReCa — стабильное качество и отсутствие простоев. Ритейлу — стандарт на всех точках и дополнительная продажа. Поэтому каждый сегмент получает свой flow и своё предложение.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=82" alt="Business meeting"><div class="card-body"><h3>A system instead of fragmented supply</h3><p>Binova combines product, equipment, replenishment and service into one managed process. The client gets one partner responsible for the result, not a list of disconnected suppliers.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82" alt="Coffee service"><div class="card-body"><h3>Service as part of the product</h3><p>Coffee works only when the equipment works. Maintenance, prevention, calibration and replacement are not extras, but part of the Binova system itself.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=82" alt="Retail operations"><div class="card-body"><h3>Three segments, three growth logics</h3><p>Offices need team comfort and predictable budgets. HoReCa needs stable quality and no downtime. Retail needs one standard across points and additional sales. That is why each segment gets its own flow and offer.</p></div></article>
       </div>
     </section>
     <section class="band grid-2">
       <div>
-        <p class="eyebrow">Стратегическое обещание</p>
-        <h2>Операционное спокойствие, которое работает на рост</h2>
-        <p class="copy">Для офиса кофе становится частью культуры и заботы о команде. Для HoReCa — продуктом, который влияет на повторный визит и средний чек. Для ритейла — точкой дополнительной продажи и способом превратить трафик в выручку. Binova берёт на себя систему за чашкой: оборудование, поставки, обслуживание, обучение и поддержку.</p>
+        <p class="eyebrow">Strategic promise</p>
+        <h2>Operational calm that works for growth</h2>
+        <p class="copy">For offices, coffee becomes part of culture and care for the team. For HoReCa, it becomes a product that affects repeat visits and average check. For retail, it becomes a point of additional sales and a way to turn traffic into revenue. Binova takes responsibility for the system behind the cup: equipment, supply, maintenance, training and support.</p>
       </div>
       <div class="card"><div class="card-body">
-        <h3>Зачем это цифровое демо</h3>
-        <p>Это демо показывает путь от интереса к структурированной заявке: клиент выбирает свой сегмент, отмечает нужные сервисы, а Binova получает данные для подготовки точного коммерческого предложения.</p>
-        <p>Дальше заявка может передаваться в Bitrix24: с сегментом, выбранными услугами, размером клиента, количеством локаций, потребностью в оборудовании, сервисе и пополнении.</p>
+        <h3>Why this digital demo exists</h3>
+        <p>This demo shows the path from interest to a structured request: the client chooses a segment, marks the required services, and Binova receives the data needed to prepare an accurate commercial offer.</p>
+        <p>Later the request can be passed to Bitrix24 with the segment, selected services, client size, number of locations, and needs for equipment, service and replenishment.</p>
       </div></div>
     </section>
   </main>
