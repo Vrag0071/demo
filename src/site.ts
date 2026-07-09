@@ -1748,13 +1748,41 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       box-shadow: var(--soft-shadow);
       outline: none;
     }
+    .btn.ghost, button.ghost { background: transparent; color: var(--green); border: 1px solid var(--line); box-shadow: none; }
+    .btn.danger, button.danger { background: #7a2b22; color: #fff; }
+    .package-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 24px; }
+    .segment-tab { border: 1px solid var(--line); background: rgba(255,253,249,.9); color: var(--ink); box-shadow: none; padding: 10px 14px; }
+    .segment-tab.active { background: var(--green); color: #fff; border-color: var(--green); }
+    .package-builder { display: grid; grid-template-columns: minmax(0, 1.04fr) minmax(360px, .96fr); gap: 18px; align-items: start; }
+    .builder-panel { display: grid; gap: 14px; }
+    .builder-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .item-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; max-height: 250px; overflow: auto; padding-right: 4px; }
+    .catalog-pick { border: 1px solid var(--line); border-radius: 8px; background: #fffdfa; padding: 10px; text-align: left; color: var(--ink); box-shadow: none; justify-content: flex-start; align-items: flex-start; display: grid; gap: 4px; }
+    .catalog-pick:hover { border-color: #cdbda9; transform: translateY(-1px); }
+    .catalog-pick small { color: var(--muted); font-weight: 800; }
+    .selected-items { display: grid; gap: 8px; }
+    .item-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; padding: 9px 10px; }
+    .item-row button { padding: 7px 9px; font-size: 12px; box-shadow: none; }
+    .package-list { display: grid; gap: 12px; }
+    .package-card { text-align: left; display: block; width: 100%; border: 1px solid var(--line); background: var(--panel); color: var(--ink); border-radius: 8px; padding: 16px; box-shadow: var(--soft-shadow); cursor: pointer; }
+    .package-card.active { border-color: var(--green); box-shadow: 0 0 0 2px rgba(16,37,29,.18), var(--shadow); }
+    .package-card h3 { margin: 8px 0; font-size: 22px; }
+    .package-card p { color: var(--muted); line-height: 1.45; margin: 0 0 10px; }
+    .package-meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    .package-preview { position: sticky; top: 18px; background: linear-gradient(145deg, #12251d, #0d1712); color: #fff; border-radius: 12px; padding: 22px; box-shadow: var(--shadow); min-height: 300px; }
+    .package-preview p, .package-preview li { color: rgba(255,255,255,.72); }
+    .package-preview h3 { color: #fff; font-size: 30px; margin: 12px 0; }
+    .preview-items { margin: 14px 0; padding-left: 20px; display: grid; gap: 6px; }
+    .builder-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .builder-error { color: #8b2c21; font-weight: 900; min-height: 20px; }
+    .empty-state { border: 1px dashed #cdbda9; border-radius: 8px; padding: 22px; color: var(--muted); background: rgba(255,253,249,.7); }
     .footer { border-top: 1px solid var(--line); padding: 26px 28px; color: var(--muted); }
     .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
       .hero { min-height: 68vh; padding: 28px 18px; }
       main { padding: 24px 16px 56px; }
-      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .trust-strip, .hero-visual, .home-choice-grid, .service-grid { grid-template-columns: 1fr; }
+      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .trust-strip, .hero-visual, .home-choice-grid, .service-grid, .package-builder, .builder-grid, .item-picker { grid-template-columns: 1fr; }
       .request-form-wrap { grid-template-columns: 1fr; }
       .cup-lab { grid-template-columns: 1fr; }
       .cup-lab-stage { min-height: 420px; }
@@ -2529,6 +2557,158 @@ const adminPackages = (ctx: RequestContext) => {
   `);
 };
 
+const adminPackageBuilder = (ctx: RequestContext) => {
+  if (!requireAdmin(ctx)) return "";
+  const defaultPackages = [
+    { id: "office-core", segment: "office", status: "active", name: "Office Coffee Core", positioning: "Предсказуемый месячный пакет для офисов без лишней операционной нагрузки.", recommendedFor: "Growing office", shortDescription: "Coffee, equipment and scheduled maintenance for stable daily office consumption.", monthlyPrice: 890, billingModel: "monthly", items: [{ id: "coffee-beans", name: "Coffee beans", category: "Coffee", basePrice: 220 }, { id: "coffee-machine", name: "Coffee machine", category: "Equipment", basePrice: 420 }, { id: "monthly-service", name: "Monthly service", category: "Service", basePrice: 160 }, { id: "water-starter", name: "Water starter pack", category: "Water", basePrice: 90 }], updatedAt: new Date().toISOString() },
+    { id: "office-comfort", segment: "office", status: "active", name: "Office Comfort Plus", positioning: "Полный beverage-набор для команды: напитки, расходники и сервис в одном процессе.", recommendedFor: "Corporate", shortDescription: "Coffee, tea, consumables and service for teams that need a complete office beverage setup.", monthlyPrice: 1240, billingModel: "monthly", items: [{ id: "coffee-beans", name: "Coffee beans", category: "Coffee", basePrice: 220 }, { id: "tea", name: "Tea", category: "Coffee", basePrice: 80 }, { id: "sugar", name: "Sugar", category: "Consumables", basePrice: 35 }, { id: "cups", name: "Cups", category: "Consumables", basePrice: 65 }, { id: "coffee-machine", name: "Coffee machine", category: "Equipment", basePrice: 420 }, { id: "monthly-service", name: "Monthly service", category: "Service", basePrice: 160 }], updatedAt: new Date().toISOString() },
+    { id: "horeca-ready", segment: "horeca", status: "active", name: "HoReCa Bar Ready", positioning: "Система для заведений, где качество чашки и отсутствие простоев влияют на выручку.", recommendedFor: "Restaurant", shortDescription: "Professional coffee setup for cafés, restaurants and hotels with equipment, training and service.", monthlyPrice: 1760, billingModel: "monthly", items: [{ id: "coffee-beans", name: "Coffee beans", category: "Coffee", basePrice: 220 }, { id: "pro-machine", name: "Professional machine", category: "Equipment", basePrice: 520 }, { id: "grinder", name: "Grinder", category: "Equipment", basePrice: 180 }, { id: "barista-training", name: "Barista training", category: "Training", basePrice: 260 }, { id: "priority-service", name: "Priority service", category: "Service", basePrice: 240 }], updatedAt: new Date().toISOString() },
+    { id: "horeca-service", segment: "horeca", status: "draft", name: "HoReCa Service Plus", positioning: "Сервисный пакет для заведений, где простой оборудования означает потерянную выручку.", recommendedFor: "Hotel", shortDescription: "Maintenance, urgent support and replenishment logic for venues where downtime means lost revenue.", monthlyPrice: null, billingModel: "custom_quote", items: [{ id: "preventive-maintenance", name: "Preventive maintenance", category: "Service", basePrice: 190 }, { id: "urgent-service", name: "Urgent service", category: "Service", basePrice: 240 }, { id: "replacement-machine", name: "Replacement machine", category: "Equipment", basePrice: 300 }, { id: "coffee-supply", name: "Coffee supply", category: "Delivery", basePrice: 220 }], updatedAt: new Date().toISOString() },
+    { id: "retail-daily", segment: "retail", status: "active", name: "Retail Daily Ops", positioning: "Операционный пакет для точки с трафиком: self-service, расходники и регулярное пополнение.", recommendedFor: "Store", shortDescription: "Self-service coffee corner and replenishment routine for stores and high-traffic locations.", monthlyPrice: 1240, billingModel: "monthly", items: [{ id: "self-service", name: "Self-service equipment", category: "Equipment", basePrice: 380 }, { id: "coffee", name: "Coffee", category: "Coffee", basePrice: 220 }, { id: "cups", name: "Cups", category: "Consumables", basePrice: 65 }, { id: "pos-supplies", name: "POS supplies", category: "Retail POS", basePrice: 90 }, { id: "delivery-route", name: "Monthly delivery route", category: "Delivery", basePrice: 130 }], updatedAt: new Date().toISOString() },
+    { id: "retail-network", segment: "retail", status: "draft", name: "Retail Network Standard", positioning: "Единый стандарт напитков, поставок и сервиса для сети локаций.", recommendedFor: "Retail chain", shortDescription: "Standardized beverage solution for several locations with centralized supply and service.", monthlyPrice: null, billingModel: "custom_quote", items: [{ id: "multi-location", name: "Multi-location setup", category: "Retail POS", basePrice: 500 }, { id: "central-maintenance", name: "Centralized maintenance", category: "Service", basePrice: 360 }, { id: "replenishment-plan", name: "Replenishment plan", category: "Delivery", basePrice: 220 }, { id: "location-reporting", name: "Reporting by location", category: "Other", basePrice: 140 }], updatedAt: new Date().toISOString() }
+  ];
+  const catalog = [
+    { id: "coffee-beans", name: "Coffee beans", category: "Coffee", basePrice: 220, segments: ["office", "horeca", "retail"] },
+    { id: "tea", name: "Tea", category: "Coffee", basePrice: 80, segments: ["office"] },
+    { id: "coffee-machine", name: "Coffee machine", category: "Equipment", basePrice: 420, segments: ["office"] },
+    { id: "pro-machine", name: "Professional machine", category: "Equipment", basePrice: 520, segments: ["horeca"] },
+    { id: "grinder", name: "Grinder", category: "Equipment", basePrice: 180, segments: ["horeca"] },
+    { id: "self-service", name: "Self-service equipment", category: "Equipment", basePrice: 380, segments: ["retail"] },
+    { id: "cups", name: "Cups", category: "Consumables", basePrice: 65, segments: ["office", "horeca", "retail"] },
+    { id: "sugar", name: "Sugar", category: "Consumables", basePrice: 35, segments: ["office", "horeca", "retail"] },
+    { id: "monthly-service", name: "Monthly service", category: "Service", basePrice: 160, segments: ["office"] },
+    { id: "priority-service", name: "Priority service", category: "Service", basePrice: 240, segments: ["horeca"] },
+    { id: "barista-training", name: "Barista training", category: "Training", basePrice: 260, segments: ["horeca"] },
+    { id: "delivery-route", name: "Monthly delivery route", category: "Delivery", basePrice: 130, segments: ["office", "retail"] },
+    { id: "water-starter", name: "Water starter pack", category: "Water", basePrice: 90, segments: ["office"] },
+    { id: "kitchen-hygiene", name: "Kitchen hygiene starter", category: "Cleaning", basePrice: 120, segments: ["horeca"] },
+    { id: "pos-supplies", name: "POS supplies", category: "Retail POS", basePrice: 90, segments: ["retail"] }
+  ];
+  return adminLayout(ctx, "Packages", `
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Offer builder</p>
+        <h1 style="color:var(--ink); font-size:52px;">Конструктор пакетов</h1>
+        <p>Создавайте коммерческие пакеты для Office, HoReCa и Retail: продукты, оборудование, сервис и регулярную поддержку в одном предложении.</p>
+      </div>
+      <button type="button" id="pkgNew">+ Новый пакет</button>
+    </div>
+    <div class="package-toolbar" id="pkgTabs">
+      <button type="button" class="segment-tab active" data-filter="all">Все пакеты</button>
+      <button type="button" class="segment-tab" data-filter="office">Office</button>
+      <button type="button" class="segment-tab" data-filter="horeca">HoReCa</button>
+      <button type="button" class="segment-tab" data-filter="retail">Retail</button>
+    </div>
+    <div class="package-builder">
+      <section class="builder-panel">
+        <form class="card card-body" id="pkgForm">
+          <input type="hidden" id="pkgId">
+          <div class="builder-grid">
+            <label>Сегмент<select id="pkgSegment"><option value="office">Office</option><option value="horeca">HoReCa</option><option value="retail">Retail</option></select></label>
+            <label>Статус<select id="pkgStatus"><option value="draft">Черновик</option><option value="active">Активен</option></select></label>
+          </div>
+          <label>Название пакета<input id="pkgName" placeholder="Office Coffee Core"></label>
+          <label>Коммерческое позиционирование<textarea id="pkgPositioning" placeholder="Например: предсказуемый месячный пакет для офисов без лишней операционной нагрузки."></textarea></label>
+          <div class="builder-grid">
+            <label>Кому подходит<input id="pkgRecommended" list="recommendedOptions" placeholder="Growing office"></label>
+            <label>Модель оплаты<select id="pkgBilling"><option value="monthly">Monthly</option><option value="one_time">One-time</option><option value="custom_quote">Custom quote</option><option value="from_price">From price</option></select></label>
+          </div>
+          <datalist id="recommendedOptions"><option>Small office</option><option>Growing office</option><option>Corporate</option><option>Café</option><option>Restaurant</option><option>Hotel</option><option>Store</option><option>Gas station</option><option>Retail chain</option></datalist>
+          <label>Цена в месяц, EUR<input id="pkgPrice" type="number" min="0" placeholder="890"></label>
+          <label>Краткое описание<textarea id="pkgShort" placeholder="Coffee, equipment and scheduled maintenance for stable daily office consumption."></textarea></label>
+          <div class="section-head" style="margin:0 0 10px;"><div><h3 style="font-size:22px;">Что входит в пакет</h3><p style="margin:4px 0 0;">Выберите позиции из каталога или добавьте вручную.</p></div><button type="button" class="ghost" id="pkgCustomToggle">+ Добавить вручную</button></div>
+          <div class="item-picker" id="pkgCatalog"></div>
+          <div class="card-body" id="pkgCustomBox" style="display:none; border:1px solid var(--line); border-radius:8px; background:#fffdfa;">
+            <div class="builder-grid">
+              <label>Позиция<input id="customName" placeholder="Replacement machine"></label>
+              <label>Категория<select id="customCategory"><option>Coffee</option><option>Equipment</option><option>Consumables</option><option>Service</option><option>Training</option><option>Delivery</option><option>Water</option><option>Cleaning</option><option>Retail POS</option><option>Other</option></select></label>
+            </div>
+            <label>Опциональная цена<input id="customPrice" type="number" min="0" placeholder="120"></label>
+            <button type="button" id="customAdd">Добавить позицию</button>
+          </div>
+          <div class="selected-items" id="pkgItems"></div>
+          <div class="builder-error" id="pkgError"></div>
+          <div class="builder-actions">
+            <button type="submit" id="pkgSave">Создать пакет</button>
+            <button type="button" class="ghost" id="pkgDuplicate" style="display:none;">Дублировать</button>
+            <button type="button" class="danger" id="pkgDelete" style="display:none;">Удалить</button>
+          </div>
+        </form>
+        <div class="package-preview" id="pkgPreview"></div>
+      </section>
+      <aside class="package-list" id="pkgList"></aside>
+    </div>
+    <script>
+      (() => {
+        const defaults = ${JSON.stringify(defaultPackages)};
+        const catalog = ${JSON.stringify(catalog)};
+        const key = "binova_admin_packages_v2";
+        const segmentLabels = { office: "Офис", horeca: "HoReCa", retail: "Ритейл" };
+        const statusLabels = { draft: "Черновик", active: "Активен" };
+        const billingLabels = { monthly: "EUR/mo", one_time: "one-time", custom_quote: "Custom quote", from_price: "from" };
+        let packages = JSON.parse(localStorage.getItem(key) || "null") || defaults;
+        let selectedId = packages[0]?.id || "";
+        let filter = "all";
+        let draftItems = [];
+        const q = (id) => document.getElementById(id);
+        const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+        const saveStore = () => localStorage.setItem(key, JSON.stringify(packages));
+        const activePackage = () => packages.find((item) => item.id === selectedId) || null;
+        const priceText = (pkg) => pkg.billingModel === "custom_quote" || pkg.monthlyPrice === null || pkg.monthlyPrice === "" ? "Custom quote" : (pkg.billingModel === "from_price" ? "from " : "") + Number(pkg.monthlyPrice || 0).toLocaleString("en-US") + " " + billingLabels[pkg.billingModel];
+        const currentFormPackage = () => ({ id: q("pkgId").value || "pkg-" + Date.now(), segment: q("pkgSegment").value, status: q("pkgStatus").value, name: q("pkgName").value.trim(), positioning: q("pkgPositioning").value.trim(), recommendedFor: q("pkgRecommended").value.trim(), billingModel: q("pkgBilling").value, monthlyPrice: q("pkgBilling").value === "custom_quote" ? null : Number(q("pkgPrice").value || 0), shortDescription: q("pkgShort").value.trim(), items: draftItems, updatedAt: new Date().toISOString() });
+        const setForm = (pkg) => {
+          q("pkgId").value = pkg?.id || "";
+          q("pkgSegment").value = pkg?.segment || (filter === "all" ? "office" : filter);
+          q("pkgStatus").value = pkg?.status || "draft";
+          q("pkgName").value = pkg?.name || "";
+          q("pkgPositioning").value = pkg?.positioning || "";
+          q("pkgRecommended").value = pkg?.recommendedFor || "";
+          q("pkgBilling").value = pkg?.billingModel || "monthly";
+          q("pkgPrice").value = pkg?.monthlyPrice ?? "";
+          q("pkgShort").value = pkg?.shortDescription || "";
+          draftItems = [...(pkg?.items || [])];
+          q("pkgSave").textContent = pkg ? "Сохранить изменения" : "Создать пакет";
+          q("pkgDuplicate").style.display = pkg ? "inline-flex" : "none";
+          q("pkgDelete").style.display = pkg ? "inline-flex" : "none";
+          q("pkgError").textContent = pkg ? "Выбран пакет для редактирования." : "Select a package to edit or create a new one.";
+          renderAll();
+        };
+        const renderCatalog = () => {
+          const segment = q("pkgSegment").value;
+          q("pkgCatalog").innerHTML = catalog.filter((item) => item.segments.includes(segment)).map((item) => '<button type="button" class="catalog-pick" data-item="' + item.id + '"><b>' + escape(item.name) + '</b><small>' + escape(item.category) + ' · ' + (item.basePrice ? item.basePrice + ' EUR' : 'no price') + '</small></button>').join("");
+          q("pkgCatalog").querySelectorAll("[data-item]").forEach((button) => button.addEventListener("click", () => { const item = catalog.find((entry) => entry.id === button.getAttribute("data-item")); if (!item || draftItems.some((entry) => entry.id === item.id)) return; draftItems.push({ id: item.id, name: item.name, category: item.category, basePrice: item.basePrice }); renderAll(); }));
+        };
+        const renderItems = () => {
+          q("pkgItems").innerHTML = draftItems.length ? draftItems.map((item, index) => '<div class="item-row"><span><b>' + escape(item.name) + '</b><br><small>' + escape(item.category) + (item.basePrice ? ' · ' + item.basePrice + ' EUR' : '') + '</small></span><button type="button" class="ghost" data-up="' + index + '">↑</button><button type="button" class="ghost" data-remove="' + index + '">Remove</button></div>').join("") : '<div class="empty-state">Позиции ещё не выбраны.</div>';
+          q("pkgItems").querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", () => { draftItems.splice(Number(button.getAttribute("data-remove")), 1); renderAll(); }));
+          q("pkgItems").querySelectorAll("[data-up]").forEach((button) => button.addEventListener("click", () => { const index = Number(button.getAttribute("data-up")); if (index <= 0) return; [draftItems[index - 1], draftItems[index]] = [draftItems[index], draftItems[index - 1]]; renderAll(); }));
+        };
+        const renderPreview = () => {
+          const pkg = currentFormPackage();
+          q("pkgPreview").innerHTML = '<div class="package-meta"><span class="badge">' + escape(segmentLabels[pkg.segment]) + '</span><span class="badge hot">' + escape(statusLabels[pkg.status]) + '</span></div><h3>' + escape(pkg.name || "Новый пакет") + '</h3><p>' + escape(pkg.shortDescription || "Краткое описание появится здесь.") + '</p><p><b style="font-size:26px;color:#fff;">' + escape(priceText(pkg)) + '</b></p><p>Кому подходит: <b style="color:#fff;">' + escape(pkg.recommendedFor || "не указано") + '</b></p><ul class="preview-items">' + (pkg.items.length ? pkg.items.map((item) => '<li>' + escape(item.name) + '</li>').join("") : '<li>Добавьте позиции в пакет</li>') + '</ul><a class="btn" href="/admin/proposals">Use in offer</a>';
+        };
+        const renderList = () => {
+          const visible = packages.filter((pkg) => filter === "all" || pkg.segment === filter);
+          q("pkgList").innerHTML = visible.length ? visible.map((pkg) => '<button type="button" class="package-card ' + (pkg.id === selectedId ? 'active' : '') + '" data-package="' + pkg.id + '"><div class="package-meta"><span class="badge">' + escape(segmentLabels[pkg.segment]) + '</span><span class="badge hot">' + escape(statusLabels[pkg.status]) + '</span></div><h3>' + escape(pkg.name) + '</h3><p>' + escape(pkg.shortDescription) + '</p><p><b>' + escape(priceText(pkg)) + '</b></p><p>' + escape(pkg.items.map((item) => item.name).join(" · ")) + '</p><small>Обновлено: ' + new Date(pkg.updatedAt).toLocaleDateString("ru-RU") + '</small></button>').join("") : '<div class="empty-state"><h3>No packages for this segment yet.</h3><p>Создайте первый пакет для выбранного направления.</p><button type="button" id="emptyCreate">Create first package</button></div>';
+          q("pkgList").querySelectorAll("[data-package]").forEach((button) => button.addEventListener("click", () => { selectedId = button.getAttribute("data-package"); setForm(activePackage()); }));
+          q("emptyCreate")?.addEventListener("click", () => setForm(null));
+        };
+        const renderAll = () => { renderCatalog(); renderItems(); renderPreview(); renderList(); };
+        const validate = (pkg) => !pkg.segment ? "Выберите сегмент." : !pkg.name ? "Введите название пакета." : !pkg.shortDescription ? "Добавьте краткое описание." : !pkg.items.length ? "Добавьте минимум одну позицию." : "";
+        q("pkgForm").addEventListener("submit", (event) => { event.preventDefault(); const pkg = currentFormPackage(); const error = validate(pkg); if (error) { q("pkgError").textContent = error; return; } const index = packages.findIndex((item) => item.id === pkg.id); if (index >= 0) packages[index] = pkg; else packages.unshift(pkg); selectedId = pkg.id; saveStore(); q("pkgError").textContent = "Пакет сохранён."; setForm(pkg); });
+        q("pkgNew").addEventListener("click", () => setForm(null));
+        q("pkgDuplicate").addEventListener("click", () => { const pkg = currentFormPackage(); pkg.id = "pkg-" + Date.now(); pkg.name = pkg.name + " copy"; pkg.status = "draft"; packages.unshift(pkg); selectedId = pkg.id; saveStore(); setForm(pkg); });
+        q("pkgDelete").addEventListener("click", () => { const pkg = activePackage(); if (!pkg || !confirm("Удалить пакет " + pkg.name + "?")) return; packages = packages.filter((item) => item.id !== pkg.id); selectedId = packages[0]?.id || ""; saveStore(); setForm(activePackage()); });
+        q("pkgCustomToggle").addEventListener("click", () => { q("pkgCustomBox").style.display = q("pkgCustomBox").style.display === "none" ? "block" : "none"; });
+        q("customAdd").addEventListener("click", () => { const name = q("customName").value.trim(); if (!name) { q("pkgError").textContent = "Введите название позиции."; return; } draftItems.push({ id: "custom-" + Date.now(), name, category: q("customCategory").value, basePrice: Number(q("customPrice").value || 0) || undefined }); q("customName").value = ""; q("customPrice").value = ""; renderAll(); });
+        ["pkgSegment", "pkgStatus", "pkgName", "pkgPositioning", "pkgRecommended", "pkgBilling", "pkgPrice", "pkgShort"].forEach((id) => q(id).addEventListener("input", renderAll));
+        q("pkgTabs").querySelectorAll("[data-filter]").forEach((button) => button.addEventListener("click", () => { filter = button.getAttribute("data-filter"); q("pkgTabs").querySelectorAll("[data-filter]").forEach((node) => node.classList.toggle("active", node === button)); const visible = packages.filter((pkg) => filter === "all" || pkg.segment === filter); selectedId = visible[0]?.id || ""; setForm(activePackage()); }));
+        setForm(activePackage());
+      })();
+    </script>
+  `);
+};
+
 const loginPage = (message = "") => page("Admin login", `
   <main>
     <section class="band" style="max-width:520px; margin:0 auto;">
@@ -2842,7 +3022,7 @@ const handleGet = (ctx: RequestContext) => {
     return;
   }
   if (pathname === "/admin/packages") {
-    const html = adminPackages(ctx);
+    const html = adminPackageBuilder(ctx);
     if (!ctx.response.headersSent) return send(ctx.response, 200, html);
     return;
   }
