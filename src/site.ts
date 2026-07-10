@@ -31,7 +31,7 @@ const businessLines = {
     title: "Coffee, equipment and service for an office without extra operations",
     short: "Predictable coffee, tea, equipment and service for teams of any size.",
     hero:
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=82",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=78",
     services: ["Coffee program", "Coffee machines", "Water service", "Cleaning supplies", "Office consumables", "Preventive maintenance"]
   },
   retail: {
@@ -39,7 +39,7 @@ const businessLines = {
     title: "Coffee solutions for stores and networks",
     short: "Standardized beverage systems for stores, networks and high-traffic locations.",
     hero:
-      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1800&q=82",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=900&q=78",
     services: ["Store consumables", "Shelf equipment", "Coffee corner", "POS supplies", "Cleaning supplies", "Scheduled replenishment"]
   },
   horeca: {
@@ -47,7 +47,7 @@ const businessLines = {
     title: "Stable coffee and service for HoReCa without downtime",
     short: "Professional coffee, equipment, training and service for cafes, hotels and restaurants.",
     hero:
-      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1800&q=82",
+      "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=900&q=78",
     services: ["Coffee beans", "Professional machines", "Machine service", "Tabletop supplies", "Kitchen hygiene", "Emergency replenishment"]
   }
 } as const;
@@ -1249,6 +1249,15 @@ Object.assign(translations.en = {}, {
 });
 
 Object.assign(translations.ru, {
+  "Skip to content": "Перейти к содержанию",
+  "Open menu": "Открыть меню",
+  "Close menu": "Закрыть меню",
+  "Primary navigation": "Основная навигация",
+  "Admin navigation": "Навигация админки",
+  "Language": "Язык",
+  "Coffee and beverage systems for business | Binova Group": "Кофейные и beverage-системы для бизнеса | Binova Group",
+  "About us | Binova Group": "О Binova Group | Binova Group",
+  "Terms | Binova Group": "Условия использования | Binova Group",
   "Operator of coffee, beverage and service systems": "Оператор систем для кофе, напитков и сервиса",
   "Binova Group is the evolution of Binonic Lux and 15 years of experience with business clients. We do not simply supply coffee or equipment. We build and maintain a system that helps offices, HoReCa and retail operate more reliably: product, equipment, replenishment, service, training and support in one process.": "Binova Group — это эволюция Binonic Lux и 15-летнего опыта работы с бизнес-клиентами. Мы не просто поставляем кофе или оборудование. Мы собираем и обслуживаем систему, которая помогает офисам, HoReCa и ритейлу работать стабильнее: продукт, техника, пополнение, сервис, обучение и поддержка в одном процессе.",
   "A system instead of fragmented supply": "Система вместо разрозненных поставок",
@@ -1265,6 +1274,15 @@ Object.assign(translations.ru, {
 });
 
 Object.assign(translations.ro, {
+  "Skip to content": "Sari la conținut",
+  "Open menu": "Deschide meniul",
+  "Close menu": "Închide meniul",
+  "Primary navigation": "Navigare principală",
+  "Admin navigation": "Navigare administrare",
+  "Language": "Limbă",
+  "Coffee and beverage systems for business | Binova Group": "Sisteme de cafea și băuturi pentru companii | Binova Group",
+  "About us | Binova Group": "Despre Binova Group | Binova Group",
+  "Terms | Binova Group": "Condiții de utilizare | Binova Group",
   "Админка Binova": "Admin Binova",
   "Центр управления": "Centru de control",
   "Обзор": "Prezentare",
@@ -1627,7 +1645,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
   <meta name="robots" content="${noIndex ? "noindex, nofollow" : "index, follow"}">
   ${canonicalUrl ? `<link rel="canonical" href="${escapeHtml(canonicalUrl)}">` : ""}
   ${alternateLinks}
-  <link rel="icon" type="image/png" href="/assets/coffee-bean.png">
+  <link rel="icon" type="image/webp" href="/assets/coffee-bean.webp">
   <meta property="og:site_name" content="Binova Group">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${escapeHtml(title)} | Binova Group">
@@ -1655,7 +1673,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
       --cream-subtle: rgba(232, 222, 205, .62);
       --shadow: 0 24px 70px rgba(38, 31, 22, .14);
       --soft-shadow: 0 10px 32px rgba(38, 31, 22, .08);
-      --bean-photo: url("/assets/coffee-bean.png");
+      --bean-photo: url("/assets/coffee-bean.webp");
     }
     @keyframes beanDrift {
       0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: .18; }
@@ -1690,6 +1708,25 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
         var(--paper);
     }
     a { color: inherit; }
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 12px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: 6px;
+      background: var(--dark);
+      color: var(--cream-text);
+      font-weight: 800;
+      text-decoration: none;
+      transform: translateY(-160%);
+      transition: transform .16s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
+    :where(a, button, [role="button"], input, select, textarea):focus-visible {
+      outline: 3px solid #b8733f;
+      outline-offset: 3px;
+    }
     .nav {
       position: fixed;
       top: 0;
@@ -2011,7 +2048,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
     }
     .card:hover { transform: translateY(-3px); box-shadow: var(--shadow); border-color: #cdbda9; }
     .card-body { padding: 18px; }
-    .card h3 { margin: 0 0 10px; font-size: 24px; line-height: 1.12; }
+    .card h2, .card h3 { margin: 0 0 10px; font-size: 24px; line-height: 1.12; }
     .card p { color: var(--muted); line-height: 1.5; }
     .card img, .tile-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: #e3dbce; }
     .metric-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 24px; position: relative; }
@@ -2113,6 +2150,10 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
       font-weight: 900;
     }
     .service-card input:checked + .service-shell em { color: rgba(255,255,255,.9); }
+    .service-card > input:focus-visible + .service-shell {
+      outline: 3px solid #b8733f;
+      outline-offset: 3px;
+    }
     .service-builder, .service-selection { display: contents; }
     .mobile-cup-preview { display: none; }
     .request-form-wrap {
@@ -2163,7 +2204,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
     .cup-frame {
       position: absolute;
       inset: 0;
-      background-image: url("/assets/latte-stages-v2-aligned.png");
+      background-image: url("/assets/latte-stages-v2-aligned.webp");
       background-repeat: no-repeat;
       background-size: 600% 100%;
       opacity: 0;
@@ -2481,7 +2522,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
       .section-head h2, h2 { font-size: 28px; line-height: 1.08; }
       .section-head p, .copy { font-size: 15px; max-width: 100%; }
       .card-body { padding: 15px; }
-      .card h3 { font-size: 21px; }
+      .card h2, .card h3 { font-size: 21px; }
       .metric { padding: 15px; }
       .metric b { font-size: 28px; }
       input, select, textarea { min-height: 44px; font-size: 16px; padding: 11px 12px; }
@@ -2549,6 +2590,14 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
       .table th, .table td { padding: 10px; }
       .footer { padding: 22px 12px; }
     }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
     @media print {
       @page { size: A4; margin: 14mm; }
       body { padding: 0 !important; background: #fff !important; color: #151713; }
@@ -2565,8 +2614,9 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
   </style>
 </head>
 <body class="${options.plain ? "plain-page" : options.admin ? "admin-page" : "public-page"}">
+  ${options.plain ? "" : `<a class="skip-link" href="#page-content">Skip to content</a>`}
   ${options.plain ? "" : options.admin ? adminNav() : publicNav()}
-  ${body}
+  <div id="page-content" tabindex="-1">${body}</div>
   ${options.plain || options.admin ? "" : footer()}
   <script>
     (() => {
@@ -2617,6 +2667,10 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
           const value = node.getAttribute("placeholder") || "";
           node.setAttribute("placeholder", translate(value));
         });
+        root.querySelectorAll?.("[aria-label]").forEach((node) => {
+          const value = node.getAttribute("aria-label") || "";
+          node.setAttribute("aria-label", translate(value));
+        });
         root.querySelectorAll?.("option").forEach((node) => {
           node.textContent = translate(node.textContent || "");
         });
@@ -2643,7 +2697,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
         if (!nav) return;
         const open = nav.classList.toggle("is-open");
         toggle.setAttribute("aria-expanded", String(open));
-        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        toggle.setAttribute("aria-label", window.binovaTranslate(open ? "Close menu" : "Open menu"));
       });
     });
 
@@ -2681,7 +2735,8 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
           input.checked = services.includes(input.value);
           input.dispatchEvent(new Event("change", { bubbles: true }));
         });
-        document.querySelector("#request")?.scrollIntoView({ behavior: "smooth", block: "start" });
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        document.querySelector("#request")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
       };
       card.addEventListener("click", applyPreset);
       card.addEventListener("keydown", (event) => {
@@ -2770,7 +2825,7 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
 };
 
 const publicNav = () => `
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <a class="logo" href="/">Binova Group</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Open menu">&#9776;</button>
     <div class="navlinks">
@@ -2779,7 +2834,7 @@ const publicNav = () => `
       <a href="/solutions/horeca">HoReCa Solutions</a>
       <a href="/about">About</a>
       <a class="admin-link" href="/#segments">Get Offer</a>
-      <span class="lang-switch" aria-label="Language">
+      <span class="lang-switch" role="group" aria-label="Language">
         <a href="?lang=en" data-lang="en">EN</a>
         <a href="?lang=ru" data-lang="ru">RU</a>
         <a href="?lang=ro" data-lang="ro">RO</a>
@@ -2788,12 +2843,12 @@ const publicNav = () => `
   </nav>`;
 
 const adminNav = () => `
-  <nav class="nav">
+  <nav class="nav" aria-label="Admin navigation">
     <a class="logo" href="/admin">Binova Admin</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Open menu">&#9776;</button>
     <div class="navlinks">
       <a href="/">Public site</a>
-      <span class="lang-switch" aria-label="Language">
+      <span class="lang-switch" role="group" aria-label="Language">
         <a href="?lang=en" data-lang="en">EN</a>
         <a href="?lang=ru" data-lang="ru">RU</a>
         <a href="?lang=ro" data-lang="ro">RO</a>
@@ -2815,7 +2870,7 @@ const beanField = () => `
   </div>`;
 
 const cupPreview = (stage = 1) => `
-  <div class="cup-preview" data-stage="${stage}" aria-label="AI generated latte stage preview">
+  <div class="cup-preview" data-stage="${stage}" aria-hidden="true">
     ${[1, 2, 3, 4, 5, 6].map((item) => `<span class="cup-frame stage-${item}"></span>`).join("")}
   </div>`;
 
@@ -2946,7 +3001,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
         </div>
         </div>
         <div class="hero-visual" aria-label="${escapeHtml(line.label)} visual">
-          <div class="visual-tile large"><img src="${line.hero}" alt="${escapeHtml(line.label)}"></div>
+          <div class="visual-tile large"><img src="${line.hero}" alt="${escapeHtml(line.label)}" width="900" height="600" decoding="async" fetchpriority="high"></div>
           <div class="proof-card"><span>${escapeHtml(line.label)}</span><b>${escapeHtml(copy.proofTitle)}</b></div>
         </div>
       </div>
@@ -3015,7 +3070,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
         <div class="grid-3">
           ${items.map((item) => `
             <article class="card">
-              ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}">` : ""}
+              ${item.imageUrl ? `<img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.name)}" width="700" height="525" loading="lazy" decoding="async">` : ""}
               <div class="card-body">
                 <span class="badge">${escapeHtml(item.category)}</span>
                 <h3>${escapeHtml(item.name)}</h3>
@@ -3050,9 +3105,9 @@ const aboutPage = () => page("About us", `
     </section>
     <section class="band">
       <div class="grid-3">
-        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=82" alt="Business meeting"><div class="card-body"><h3>A system instead of fragmented supply</h3><p>Binova combines product, equipment, replenishment and service into one managed process. The client gets one partner responsible for the result, not a list of disconnected suppliers.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=82" alt="Coffee service"><div class="card-body"><h3>Service as part of the product</h3><p>Coffee works only when the equipment works. Maintenance, prevention, calibration and replacement are not extras, but part of the Binova system itself.</p></div></article>
-        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=900&q=82" alt="Retail operations"><div class="card-body"><h3>Three segments, three growth logics</h3><p>Offices need team comfort and predictable budgets. HoReCa needs stable quality and no downtime. Retail needs one standard across points and additional sales. That is why each segment gets its own flow and offer.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=700&q=78" alt="Business meeting" width="700" height="525" loading="lazy" decoding="async"><div class="card-body"><h2>A system instead of fragmented supply</h2><p>Binova combines product, equipment, replenishment and service into one managed process. The client gets one partner responsible for the result, not a list of disconnected suppliers.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=700&q=78" alt="Coffee service" width="700" height="525" loading="lazy" decoding="async"><div class="card-body"><h2>Service as part of the product</h2><p>Coffee works only when the equipment works. Maintenance, prevention, calibration and replacement are not extras, but part of the Binova system itself.</p></div></article>
+        <article class="card"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=700&q=78" alt="Retail operations" width="700" height="525" loading="lazy" decoding="async"><div class="card-body"><h2>Three segments, three growth logics</h2><p>Offices need team comfort and predictable budgets. HoReCa needs stable quality and no downtime. Retail needs one standard across points and additional sales. That is why each segment gets its own flow and offer.</p></div></article>
       </div>
     </section>
     <section class="band grid-2">
@@ -3103,10 +3158,10 @@ const privacyPage = () => page("Privacy Policy", `
       <p class="copy">This website is intended for B2B enquiries. Information is processed to understand your request, prepare a relevant solution and contact you about the next commercial step.</p>
     </section>
     <section class="band grid-2">
-      <div class="card"><div class="card-body"><h3>Information you submit</h3><p>Company and contact details, business segment, company scale, locations, selected services and additional request notes.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Technical visit data</h3><p>Basic technical data such as IP address, approximate country or city, visited page, language and device type may be recorded for security and usage analysis.</p></div></div>
-      <div class="card"><div class="card-body"><h3>How information is used</h3><p>Data is used to respond to enquiries, prepare commercial proposals, improve service flows and protect the website from automated abuse.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Access and deletion</h3><p>Access is limited to people and providers involved in handling the request. You may request correction or deletion through the same Binova contact channel used for your enquiry.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Information you submit</h2><p>Company and contact details, business segment, company scale, locations, selected services and additional request notes.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Technical visit data</h2><p>Basic technical data such as IP address, approximate country or city, visited page, language and device type may be recorded for security and usage analysis.</p></div></div>
+      <div class="card"><div class="card-body"><h2>How information is used</h2><p>Data is used to respond to enquiries, prepare commercial proposals, improve service flows and protect the website from automated abuse.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Access and deletion</h2><p>Access is limited to people and providers involved in handling the request. You may request correction or deletion through the same Binova contact channel used for your enquiry.</p></div></div>
     </section>
   </main>
 `, {
@@ -3122,10 +3177,10 @@ const termsPage = () => page("Terms", `
       <p class="copy">The website helps business clients explore Binova solutions and submit a structured request. Website content is informational and does not by itself create a contractual commitment.</p>
     </section>
     <section class="band grid-2">
-      <div class="card"><div class="card-body"><h3>Commercial proposals</h3><p>Final scope, pricing, delivery schedule, service levels and payment conditions are confirmed in a separate commercial proposal or agreement.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Product and service information</h3><p>Availability, specifications and service configurations may change as Binova adapts the solution to the client and location.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Website content</h3><p>Text, visual materials, configurations and brand elements may not be reused commercially without permission.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Service availability</h3><p>Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Commercial proposals</h2><p>Final scope, pricing, delivery schedule, service levels and payment conditions are confirmed in a separate commercial proposal or agreement.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Product and service information</h2><p>Availability, specifications and service configurations may change as Binova adapts the solution to the client and location.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Website content</h2><p>Text, visual materials, configurations and brand elements may not be reused commercially without permission.</p></div></div>
+      <div class="card"><div class="card-body"><h2>Service availability</h2><p>Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.</p></div></div>
     </section>
   </main>
 `, {
