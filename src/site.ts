@@ -1521,6 +1521,10 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       --red: #b42318;
       --gold: #b7791f;
       --copper: #9f5d32;
+      --cream-text: #f3eadb;
+      --cream-soft: #eadfce;
+      --cream-muted: rgba(232, 222, 205, .78);
+      --cream-subtle: rgba(232, 222, 205, .62);
       --shadow: 0 24px 70px rgba(38, 31, 22, .14);
       --soft-shadow: 0 10px 32px rgba(38, 31, 22, .08);
       --bean-photo: url("/assets/coffee-bean.png");
@@ -1554,7 +1558,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       color: var(--ink);
       overflow-x: hidden;
       background:
-        linear-gradient(180deg, rgba(255,255,255,.52), rgba(255,255,255,0) 360px),
+        linear-gradient(180deg, rgba(250,245,237,.58), rgba(250,245,237,0) 360px),
         var(--paper);
     }
     a { color: inherit; }
@@ -1567,7 +1571,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       justify-content: space-between;
       gap: 24px;
       padding: 14px max(28px, calc((100vw - 1320px) / 2));
-      background: rgba(255, 253, 249, .88);
+      background: rgba(248, 243, 235, .9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(221, 212, 199, .82);
     }
@@ -1596,7 +1600,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       display: none;
     }
     .navlinks { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-    .navlinks a { text-decoration: none; color: #303030; font-weight: 700; font-size: 14px; }
+    .navlinks a { text-decoration: none; color: #38332c; font-weight: 700; font-size: 14px; }
     .navlinks .admin-link { color: var(--copper); }
     .lang-switch {
       display: inline-flex;
@@ -1617,13 +1621,13 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     }
     .lang-switch a.active {
       background: var(--dark);
-      color: #fff;
+      color: var(--cream-text);
     }
     .hero {
       min-height: min(760px, calc(100vh - 58px));
       display: grid;
       align-items: center;
-      color: #fff;
+      color: var(--cream-text);
       position: relative;
       overflow: hidden;
       background:
@@ -1635,8 +1639,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+        linear-gradient(rgba(243,234,219,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(243,234,219,.045) 1px, transparent 1px);
       background-size: 44px 44px;
       mask-image: linear-gradient(90deg, rgba(0,0,0,.9), rgba(0,0,0,.28));
       pointer-events: none;
@@ -1667,6 +1671,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       line-height: .94;
       letter-spacing: 0;
       overflow-wrap: anywhere;
+      color: var(--cream-text);
     }
     h1[style] { font-size: clamp(38px, 4.7vw, 54px) !important; line-height: 1 !important; }
     .hero p {
@@ -1674,13 +1679,13 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       margin: 22px 0 0;
       font-size: 20px;
       line-height: 1.55;
-      color: rgba(255,255,255,.82);
+      color: var(--cream-muted);
     }
     .hero-actions, .actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
     .btn, button {
       border: 1px solid var(--dark);
       background: var(--dark);
-      color: #fff;
+      color: var(--cream-text);
       border-radius: 999px;
       padding: 12px 16px;
       font-weight: 800;
@@ -1692,7 +1697,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     }
     .btn:hover, button:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(24, 32, 29, .24); }
     .btn.secondary, button.secondary { background: transparent; color: var(--dark); border-color: var(--line); }
-    .hero .btn.secondary { color: #fff; border-color: rgba(255,255,255,.42); }
+    .hero .btn.secondary { color: var(--cream-text); border-color: rgba(243,234,219,.44); }
     .hero-panel {
       display: grid;
       grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
@@ -1709,8 +1714,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       align-items: stretch;
     }
     .visual-tile, .proof-card {
-      border: 1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(243,234,219,.18);
+      background: rgba(232,222,205,.11);
       backdrop-filter: blur(14px);
       border-radius: 8px;
       box-shadow: 0 18px 60px rgba(0,0,0,.2);
@@ -1732,8 +1737,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       display: grid;
       align-content: end;
     }
-    .proof-card span { display: block; color: rgba(255,255,255,.68); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
-    .proof-card b { display: block; margin-top: 8px; font-size: 24px; }
+    .proof-card span { display: block; color: var(--cream-subtle); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .proof-card b { display: block; margin-top: 8px; font-size: 24px; color: var(--cream-text); }
     .bean-field {
       position: absolute;
       inset: 0;
@@ -1782,11 +1787,11 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       align-content: start;
       gap: 10px;
       padding: 22px;
-      border: 1px solid rgba(255,255,255,.16);
+      border: 1px solid rgba(243,234,219,.16);
       border-radius: 12px;
-      color: #fff;
+      color: var(--cream-text);
       text-decoration: none;
-      background: rgba(255,255,255,.1);
+      background: rgba(232,222,205,.1);
       backdrop-filter: blur(14px);
       overflow: hidden;
       transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
@@ -1795,7 +1800,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+      background: linear-gradient(135deg, rgba(243,234,219,.16), rgba(243,234,219,0));
       opacity: .7;
       pointer-events: none;
     }
@@ -1817,26 +1822,26 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     }
     .segment-choice:hover {
       transform: translateY(-8px);
-      background: rgba(255,255,255,.16);
-      border-color: rgba(255,255,255,.38);
+      background: rgba(232,222,205,.16);
+      border-color: rgba(243,234,219,.34);
       box-shadow: 0 28px 70px rgba(0,0,0,.28);
     }
     .segment-choice:hover::after { transform: rotate(18deg) scale(1.12); }
     .segment-choice strong { position: relative; max-width: 82%; font-size: 28px; line-height: 1.08; }
-    .segment-choice span { position: relative; color: rgba(255,255,255,.72); line-height: 1.4; }
+    .segment-choice span { position: relative; color: var(--cream-muted); line-height: 1.4; }
     .segment-choice em {
       position: relative;
       width: fit-content;
       align-self: end;
       margin-top: 6px;
       padding: 8px 11px;
-      border: 1px solid rgba(255,255,255,.22);
+      border: 1px solid rgba(243,234,219,.24);
       border-radius: 999px;
-      color: #fff;
+      color: var(--cream-text);
       font-style: normal;
       font-size: 12px;
       font-weight: 900;
-      background: rgba(255,255,255,.08);
+      background: rgba(232,222,205,.08);
     }
     main { padding: 26px 28px 82px; }
     .band { padding: 72px 0; border-top: 1px solid var(--line); }
