@@ -1566,7 +1566,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       align-items: center;
       justify-content: space-between;
       gap: 24px;
-      padding: 14px 28px;
+      padding: 14px max(28px, calc((100vw - 1320px) / 2));
       background: rgba(255, 253, 249, .88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(221, 212, 199, .82);
