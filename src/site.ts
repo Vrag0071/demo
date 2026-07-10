@@ -1561,7 +1561,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         linear-gradient(180deg, rgba(250,245,237,.58), rgba(250,245,237,0) 360px),
         var(--paper);
     }
-    body:has(.footer) { padding-bottom: 76px; }
+    body.public-page { padding-bottom: 76px; }
     a { color: inherit; }
     .nav {
       position: sticky;
@@ -2152,15 +2152,16 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       left: 0;
       right: 0;
       bottom: 0;
-      z-index: 19;
+      z-index: 90;
       border-top: 1px solid rgba(221, 212, 199, .86);
-      padding: 18px max(28px, calc((100vw - 1320px) / 2));
+      min-height: 58px;
+      padding: 14px max(28px, calc((100vw - 1320px) / 2));
       color: var(--muted);
-      background: rgba(248, 243, 235, .92);
+      background: rgba(248, 243, 235, .96);
       backdrop-filter: blur(14px);
       box-shadow: 0 -12px 34px rgba(38, 31, 22, .08);
     }
-    .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .footer-inner { min-height: 30px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
       .nav { gap: 12px; padding: 12px 16px; }
@@ -2281,12 +2282,12 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .calc-filters select, .calc-filters input { min-width: 78vw; }
       .table { min-width: 720px; font-size: 13px; }
       .table th, .table td { padding: 10px; }
-      body:has(.footer) { padding-bottom: 118px; }
-      .footer { padding: 14px 12px; }
+      body.public-page { padding-bottom: 112px; }
+      .footer { min-height: 82px; padding: 12px; }
     }
   </style>
 </head>
-<body>
+<body class="${options.plain ? "plain-page" : options.admin ? "admin-page" : "public-page"}">
   ${options.plain ? "" : options.admin ? adminNav() : publicNav()}
   ${body}
   ${options.plain || options.admin ? "" : footer()}
