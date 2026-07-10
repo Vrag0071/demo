@@ -1,3 +1,4 @@
+import "dotenv/config";
 import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
@@ -7,6 +8,9 @@ import querystring from "node:querystring";
 const { DatabaseSync } = require("node:sqlite") as { DatabaseSync: any };
 
 const port = Number(process.env.SITE_PORT ?? 3000);
+const visitsWebhookUrl = process.env.GOOGLE_VISITS_WEBHOOK_URL?.trim() ?? "";
+const ignoredVisitIps = new Set((process.env.VISIT_IGNORE_IPS ?? "").split(",").map((ip) => ip.trim()).filter(Boolean));
+const recentVisitKeys = new Map<string, number>();
 const dbPath = path.resolve(process.cwd(), "prisma", "dev.db");
 const assetsDir = path.resolve(process.cwd(), "public", "assets");
 const db = new DatabaseSync(dbPath);
@@ -3645,6 +3649,102 @@ const serveAsset = (response: http.ServerResponse, fileName: string) => {
   fs.createReadStream(assetPath).pipe(response);
 };
 
+const getClientIp = (request: http.IncomingMessage) => {
+  const forwarded = request.headers["x-forwarded-for"];
+  const raw = Array.isArray(forwarded) ? forwarded[0] : forwarded;
+  const firstForwardedIp = raw?.split(",")[0]?.trim();
+  const ip = firstForwardedIp || request.socket.remoteAddress || "";
+  return ip.replace(/^::ffff:/, "");
+};
+
+const isPublicPageVisit = (ctx: RequestContext) => {
+  const pathname = ctx.url.pathname;
+  if (ctx.request.method !== "GET") return false;
+  if (pathname.startsWith("/admin")) return false;
+  if (pathname.startsWith("/assets/")) return false;
+  if (pathname.startsWith("/media/")) return false;
+  return pathname === "/" ||
+    pathname === "/about" ||
+    pathname === "/privacy" ||
+    pathname === "/terms" ||
+    pathname === "/cup-lab" ||
+    pathname.startsWith("/solutions/") ||
+    pathname.startsWith("/proposal/");
+};
+
+const deviceFromUserAgent = (userAgent: string) => {
+  if (/mobile|android|iphone|ipod/i.test(userAgent)) return "mobile";
+  if (/ipad|tablet/i.test(userAgent)) return "tablet";
+  if (userAgent) return "desktop";
+  return "";
+};
+
+const lookupGeo = async (ip: string): Promise<{ country: string; city: string }> => {
+  if (!ip || ip === "::1" || ip === "127.0.0.1" || ip.startsWith("10.") || ip.startsWith("192.168.") || ip.startsWith("172.16.")) {
+    return { country: "", city: "" };
+  }
+
+  try {
+    const response = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}?fields=success,country,city`);
+    if (!response.ok) return { country: "", city: "" };
+    const data = await response.json() as { success?: boolean; country?: string; city?: string };
+    if (data.success === false) return { country: "", city: "" };
+    return { country: data.country ?? "", city: data.city ?? "" };
+  } catch (error) {
+    console.warn("Visit geo lookup failed:", error);
+    return { country: "", city: "" };
+  }
+};
+
+const pruneVisitKeys = (now: number) => {
+  const ttl = 24 * 60 * 60 * 1000;
+  for (const [key, timestamp] of recentVisitKeys.entries()) {
+    if (now - timestamp > ttl) recentVisitKeys.delete(key);
+  }
+};
+
+const trackPublicVisit = (ctx: RequestContext) => {
+  if (!visitsWebhookUrl || !isPublicPageVisit(ctx)) return;
+
+  const ip = getClientIp(ctx.request);
+  if (!ip || ignoredVisitIps.has(ip)) return;
+
+  const userAgent = ctx.request.headers["user-agent"] ?? "";
+  const userAgentText = Array.isArray(userAgent) ? userAgent.join(" ") : userAgent;
+  const day = new Date().toISOString().slice(0, 10);
+  const visitKey = `${day}:${ip}:${crypto.createHash("sha1").update(userAgentText).digest("hex")}`;
+  const now = Date.now();
+  pruneVisitKeys(now);
+  if (recentVisitKeys.has(visitKey)) return;
+  recentVisitKeys.set(visitKey, now);
+
+  void (async () => {
+    const geo = await lookupGeo(ip);
+    const referrer = ctx.request.headers.referer ?? ctx.request.headers.referrer ?? "";
+    const referrerText = Array.isArray(referrer) ? referrer[0] : referrer;
+    const acceptLanguage = ctx.request.headers["accept-language"] ?? "";
+    const lang = ctx.url.searchParams.get("lang") || (Array.isArray(acceptLanguage) ? acceptLanguage[0] : acceptLanguage).split(",")[0] || "";
+
+    const response = await fetch(visitsWebhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ip,
+        country: geo.country,
+        city: geo.city,
+        page: ctx.url.pathname,
+        referrer: referrerText,
+        lang,
+        userAgent: userAgentText,
+        device: deviceFromUserAgent(userAgentText),
+        isNewVisitor: true
+      })
+    });
+
+    if (!response.ok) console.warn(`Visit webhook failed: ${response.status} ${response.statusText}`);
+  })().catch((error) => console.warn("Visit tracking failed:", error));
+};
+
 const handlePost = async (ctx: RequestContext) => {
   const body = await getBody(ctx.request);
 
@@ -3813,6 +3913,8 @@ const handlePost = async (ctx: RequestContext) => {
 };
 
 const handleGet = (ctx: RequestContext) => {
+  trackPublicVisit(ctx);
+
   const pathname = ctx.url.pathname;
   if (pathname === "/") return send(ctx.response, 200, homePage());
   if (pathname === "/about") return send(ctx.response, 200, aboutPage());
