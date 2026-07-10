@@ -1609,6 +1609,20 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .navlinks { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
     .navlinks a { text-decoration: none; color: #38332c; font-weight: 700; font-size: 14px; }
     .navlinks .admin-link { color: var(--copper); }
+    .nav-toggle {
+      display: none;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border-color: var(--line);
+      background: rgba(255,255,255,.72);
+      color: var(--dark);
+      box-shadow: none;
+      font-size: 22px;
+      line-height: 1;
+    }
     .lang-switch {
       display: inline-flex;
       align-items: center;
@@ -1975,6 +1989,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       font-weight: 900;
     }
     .service-card input:checked + .service-shell em { color: rgba(255,255,255,.9); }
+    .service-builder, .service-selection { display: contents; }
+    .mobile-cup-preview { display: none; }
     .request-form-wrap {
       display: grid;
       grid-template-columns: minmax(0, .92fr) minmax(360px, .78fr);
@@ -2161,31 +2177,66 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       backdrop-filter: blur(14px);
     }
     .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    @media (min-width: 901px) and (max-width: 1180px) {
+      .nav { gap: 16px; padding: 12px 20px; }
+      .logo { font-size: 18px; }
+      .logo::before { width: 23px; height: 31px; }
+      .navlinks { gap: 10px; flex-wrap: nowrap; }
+      .navlinks a { font-size: 12px; white-space: nowrap; }
+      .lang-switch a { min-width: 29px; padding: 6px 7px; }
+      .hero { padding-inline: 20px; }
+      .hero-panel { grid-template-columns: minmax(0, 1.1fr) minmax(300px, .76fr); gap: 32px; }
+      .hero h1 { max-width: 820px; font-size: clamp(48px, 6vw, 68px); }
+      .hero p { max-width: 680px; font-size: 18px; }
+      .hero-visual { width: min(440px, 100%); }
+      .home-choice-grid { max-width: 100%; }
+      .segment-choice { padding: 18px; }
+      .segment-choice strong { font-size: 24px; }
+      main { padding-inline: 20px; }
+    }
     @media (max-width: 900px) {
-      .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
-      body:not(.plain-page) { padding-top: 116px; }
-      .nav { gap: 12px; padding: 12px 16px; }
-      .navlinks { width: 100%; gap: 8px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; scrollbar-width: thin; }
-      .navlinks a { white-space: nowrap; font-size: 13px; }
-      .lang-switch { flex: 0 0 auto; }
+      .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
+      body:not(.plain-page) { padding-top: 64px; }
+      .nav { min-height: 64px; gap: 12px; padding: 10px 16px; }
+      .nav-toggle { display: inline-flex; margin-left: auto; flex: 0 0 auto; }
+      .navlinks {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        padding: 10px 16px 14px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 8px;
+        background: rgba(248,243,235,.98);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 18px 40px rgba(38,31,22,.14);
+      }
+      .nav.is-open .navlinks { display: grid; }
+      .navlinks a { min-height: 42px; display: flex; align-items: center; justify-content: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.72); font-size: 12px; text-align: center; }
+      .lang-switch { grid-column: 1 / -1; width: 100%; justify-content: center; }
       .hero { min-height: auto; padding: 42px 18px 46px; }
       .hero-panel { gap: 28px; }
       .hero p { font-size: 17px; max-width: 100%; }
       .hero-actions, .actions { margin-top: 22px; }
       main { padding: 24px 16px 56px; }
       .band { padding: 46px 0; }
-      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .hero-visual, .home-choice-grid, .service-grid, .package-builder, .builder-grid, .item-picker, .layer-row { grid-template-columns: 1fr; }
+      .grid-3, .grid-2, .metric-row, .admin-shell, .hero-panel, .package-builder, .builder-grid, .item-picker, .layer-row { grid-template-columns: 1fr; }
       .request-form-wrap { grid-template-columns: 1fr; }
       .cup-lab { grid-template-columns: 1fr; }
       .cup-lab-stage { min-height: 420px; }
       .cup-preview-card { min-height: 420px; }
-      .hero-visual { justify-self: stretch; }
+      .hero-visual { justify-self: stretch; width: 100%; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .home-choice-grid { max-width: 100%; }
       .visual-tile.large img { min-height: 220px; }
       .metric-row { margin-top: 0; }
       .check-grid { grid-template-columns: 1fr; }
       .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .admin-shell { display: block; }
-      .admin-side { position: sticky; top: 0; z-index: 18; padding: 14px 16px; overflow-x: auto; white-space: nowrap; }
+      .admin-side { position: sticky; top: 64px; z-index: 18; padding: 14px 16px; overflow-x: auto; white-space: nowrap; }
       .admin-side h2 { display: inline-block; margin: 0 14px 0 0; vertical-align: middle; font-size: 18px !important; }
       .admin-side a { display: inline-block; padding: 9px 10px; margin-right: 4px; }
       .admin-main { padding: 22px 16px 48px; }
@@ -2196,13 +2247,37 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     }
     @media (max-width: 640px) {
       body { background: var(--paper); }
-      body:not(.plain-page) { padding-top: 108px; }
-      .nav { padding: 10px 12px; }
+      body:not(.plain-page) { padding-top: 64px; }
+      .nav {
+        min-height: 64px;
+        padding: 10px 12px;
+        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+      }
       .logo { font-size: 17px; }
       .logo::before { width: 22px; height: 30px; }
-      .navlinks { gap: 6px; }
-      .navlinks a { padding: 7px 9px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.64); font-size: 12px; }
+      .nav-toggle { display: inline-flex; margin-left: auto; flex: 0 0 auto; }
+      .navlinks {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        padding: 10px 12px 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        background: rgba(248,243,235,.98);
+        border-bottom: 1px solid var(--line);
+        box-shadow: 0 18px 40px rgba(38,31,22,.14);
+      }
+      .nav.is-open .navlinks { display: grid; }
+      .navlinks a { min-height: 42px; display: flex; align-items: center; justify-content: center; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.72); font-size: 12px; text-align: center; }
       .navlinks .admin-link { color: var(--dark); }
+      .lang-switch { grid-column: 1 / -1; width: 100%; justify-content: center; }
       .lang-switch a { min-width: 30px; padding: 6px 8px; }
       .hero { padding: 34px 14px 38px; }
       .hero::before { background-size: 34px 34px; }
@@ -2217,7 +2292,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .visual-tile.large img { min-height: 220px; }
       .proof-card { min-height: 110px; padding: 14px; }
       .proof-card b { font-size: 18px; }
-      .home-choice-grid { gap: 10px; margin-top: 24px; }
+      .home-choice-grid { grid-template-columns: 1fr; gap: 10px; margin-top: 24px; }
       .segment-choice { min-height: 148px; padding: 18px; }
       .segment-choice strong { font-size: 24px; max-width: 78%; }
       .segment-choice span { font-size: 14px; }
@@ -2236,33 +2311,38 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .service-shell { min-height: 110px; padding: 13px; }
       .request-form-wrap { gap: 14px; }
       .request-form-wrap { display: flex; flex-direction: column; align-items: stretch; }
-      .cup-preview-card {
-        order: -1;
-        min-height: 218px;
-        height: 218px;
-        border-radius: 12px;
+      .request-form-wrap > .cup-preview-card { display: none; }
+      .service-builder {
+        display: grid;
+        grid-template-columns: 88px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+      }
+      .service-selection { display: grid; gap: 8px; min-width: 0; }
+      .mobile-cup-preview {
+        display: grid;
+        place-items: center;
+        position: sticky;
         top: 74px;
-        z-index: 6;
-        margin-bottom: 6px;
+        height: 150px;
+        min-height: 150px;
+        overflow: hidden;
+        z-index: 4;
+        border: 1px solid rgba(255,255,255,.1);
+        border-radius: 12px;
+        background: radial-gradient(circle at 72% 12%, rgba(205,155,93,.2), transparent 25%), #111713;
+        box-shadow: 0 12px 32px rgba(24,32,29,.2);
       }
-      .cup-preview-card.is-docked {
-        position: fixed;
-        right: 12px;
-        bottom: 12px;
-        top: auto;
-        width: 138px;
-        height: 138px;
-        min-height: 138px;
-        z-index: 40;
-        border-radius: 16px;
-        box-shadow: 0 20px 54px rgba(0,0,0,.32);
-      }
-      .cup-preview-card.is-docked .cup-preview { width: 132px; }
-      .cup-preview { width: min(240px, 70%); }
+      .mobile-cup-preview .cup-preview { width: 112px; max-width: none; }
+      .service-builder .service-grid { grid-template-columns: 1fr; }
+      .service-builder .service-shell { min-height: 128px; padding: 12px; }
+      .service-builder .service-shell::before { width: 24px; height: 30px; }
+      .service-builder .service-shell span { font-size: 13px; line-height: 1.35; }
+      .service-builder .service-shell em { font-size: 12px; }
       .trust-strip { grid-template-columns: 1fr; }
       .feature-band { padding: 20px; }
       .admin-main { padding: 18px 12px 40px; }
-      .admin-side { top: 0; padding: 10px 12px; }
+      .admin-side { top: 64px; padding: 10px 12px; }
       .admin-side h2 { display: block; margin: 0 0 8px; }
       .admin-side a { font-size: 13px; padding: 8px 9px; }
       .package-toolbar { gap: 8px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; margin: 14px 0 18px; }
@@ -2360,9 +2440,19 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       observer.observe(document.body, { childList: true, subtree: true });
     })();
 
+    document.querySelectorAll(".nav-toggle").forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const nav = toggle.closest(".nav");
+        if (!nav) return;
+        const open = nav.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", String(open));
+        toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      });
+    });
+
     const setCupStage = (root, stage) => {
-      const preview = root?.querySelector?.(".cup-preview") || document.querySelector(".cup-preview");
-      if (preview) preview.setAttribute("data-stage", String(stage));
+      const previews = root?.querySelectorAll?.(".cup-preview") || document.querySelectorAll(".cup-preview");
+      previews.forEach((preview) => preview.setAttribute("data-stage", String(stage)));
     };
 
     const updateRequestCup = (input) => {
@@ -2464,18 +2554,6 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       form.addEventListener("submit", () => calculatePublicOffer(form));
     });
 
-    const updateDockedCup = () => {
-      const request = document.querySelector("#request");
-      const cup = request?.querySelector(".cup-preview-card");
-      if (!request || !cup) return;
-      const rect = request.getBoundingClientRect();
-      const shouldDock = window.innerWidth <= 640 && rect.top < 120 && rect.bottom > window.innerHeight * .55;
-      cup.classList.toggle("is-docked", shouldDock);
-    };
-    window.addEventListener("scroll", updateDockedCup, { passive: true });
-    window.addEventListener("resize", updateDockedCup);
-    updateDockedCup();
-
     document.querySelectorAll(".cup-stage-button").forEach((button) => {
       button.addEventListener("click", () => {
         const stage = button.getAttribute("data-cup-stage") || "1";
@@ -2492,6 +2570,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
 const publicNav = () => `
   <nav class="nav">
     <a class="logo" href="/">Binova Group</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Open menu">&#9776;</button>
     <div class="navlinks">
       <a href="/solutions/office">Office Solutions</a>
       <a href="/solutions/retail">Retail Solutions</a>
@@ -2509,6 +2588,7 @@ const publicNav = () => `
 const adminNav = () => `
   <nav class="nav">
     <a class="logo" href="/admin">Binova Admin</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-label="Open menu">&#9776;</button>
     <div class="navlinks">
       <a href="/">Public site</a>
       <span class="lang-switch" aria-label="Language">
@@ -2680,9 +2760,16 @@ const solutionPage = (segment: keyof typeof businessLines) => {
               <label>${escapeHtml(copy.employeeLabel)}<input required type="${employeeInputType}" ${employeeInputAttrs}></label>
             </div>
             <label>Locations<input required type="number" min="1" name="locationsCount" value="1"></label>
-            <label>${escapeHtml(copy.servicesTitle)}</label>
-            <div class="service-grid">
-              ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>${escapeHtml(serviceDescriptions[service] ?? "Tap to add this layer to the request.")}</span><em>${escapeHtml(copy.serviceCta)}</em></span></label>`).join("")}
+            <div class="service-builder">
+              <div class="mobile-cup-preview" aria-hidden="true">
+                ${cupPreview(1)}
+              </div>
+              <div class="service-selection">
+                <label>${escapeHtml(copy.servicesTitle)}</label>
+                <div class="service-grid">
+                  ${line.services.map((service) => `<label class="service-card"><input type="checkbox" name="services" value="${escapeHtml(service)}"><span class="service-shell"><strong>${escapeHtml(service)}</strong><span>${escapeHtml(serviceDescriptions[service] ?? "Tap to add this layer to the request.")}</span><em>${escapeHtml(copy.serviceCta)}</em></span></label>`).join("")}
+                </div>
+              </div>
             </div>
             <label>${escapeHtml(copy.contextLabel)}<textarea name="message" placeholder="${escapeHtml(copy.contextPlaceholder)}"></textarea></label>
             <button type="submit">${escapeHtml(copy.submitLabel)}</button>
