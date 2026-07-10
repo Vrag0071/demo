@@ -1561,11 +1561,12 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         linear-gradient(180deg, rgba(250,245,237,.58), rgba(250,245,237,0) 360px),
         var(--paper);
     }
-    body.public-page { padding-bottom: 76px; }
     a { color: inherit; }
     .nav {
-      position: sticky;
+      position: fixed;
       top: 0;
+      left: 0;
+      right: 0;
       z-index: 20;
       display: flex;
       align-items: center;
@@ -1576,6 +1577,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(221, 212, 199, .82);
     }
+    body:not(.plain-page) { padding-top: 66px; }
     .logo {
       display: inline-flex;
       align-items: center;
@@ -2148,22 +2150,16 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .table-wrap { overflow-x: auto; border-radius: 8px; }
     .table { min-width: 760px; }
     .footer {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 90;
       border-top: 1px solid rgba(221, 212, 199, .86);
-      min-height: 58px;
-      padding: 14px max(28px, calc((100vw - 1320px) / 2));
+      padding: 26px max(28px, calc((100vw - 1320px) / 2));
       color: var(--muted);
       background: rgba(248, 243, 235, .96);
       backdrop-filter: blur(14px);
-      box-shadow: 0 -12px 34px rgba(38, 31, 22, .08);
     }
-    .footer-inner { min-height: 30px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
+      body:not(.plain-page) { padding-top: 116px; }
       .nav { gap: 12px; padding: 12px 16px; }
       .navlinks { width: 100%; gap: 8px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; scrollbar-width: thin; }
       .navlinks a { white-space: nowrap; font-size: 13px; }
@@ -2196,7 +2192,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     }
     @media (max-width: 640px) {
       body { background: var(--paper); }
-      .nav { position: sticky; padding: 10px 12px; }
+      body:not(.plain-page) { padding-top: 108px; }
+      .nav { padding: 10px 12px; }
       .logo { font-size: 17px; }
       .logo::before { width: 22px; height: 30px; }
       .navlinks { gap: 6px; }
@@ -2282,8 +2279,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .calc-filters select, .calc-filters input { min-width: 78vw; }
       .table { min-width: 720px; font-size: 13px; }
       .table th, .table td { padding: 10px; }
-      body.public-page { padding-bottom: 112px; }
-      .footer { min-height: 82px; padding: 12px; }
+      .footer { padding: 22px 12px; }
     }
   </style>
 </head>
