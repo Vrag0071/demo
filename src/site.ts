@@ -1778,7 +1778,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       position: relative;
       min-height: 176px;
       display: grid;
-      align-content: end;
+      grid-template-rows: auto 1fr auto;
+      align-content: start;
       gap: 10px;
       padding: 22px;
       border: 1px solid rgba(255,255,255,.16);
@@ -1826,6 +1827,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .segment-choice em {
       position: relative;
       width: fit-content;
+      align-self: end;
       margin-top: 6px;
       padding: 8px 11px;
       border: 1px solid rgba(255,255,255,.22);
