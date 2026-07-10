@@ -8,6 +8,7 @@ import querystring from "node:querystring";
 const { DatabaseSync } = require("node:sqlite") as { DatabaseSync: any };
 
 const port = Number(process.env.SITE_PORT ?? 3000);
+const siteBaseUrl = (process.env.SITE_URL?.trim() || "https://demo.min4min.com").replace(/\/+$/, "");
 const visitsWebhookUrl = process.env.GOOGLE_VISITS_WEBHOOK_URL?.trim() ?? "";
 const ignoredVisitIps = new Set((process.env.VISIT_IGNORE_IPS ?? "").split(",").map((ip) => ip.trim()).filter(Boolean));
 const recentVisitKeys = new Map<string, number>();
@@ -401,6 +402,8 @@ const ensureSiteTables = () => {
   addClientLeadColumn(`"priceBreakdown" TEXT`);
   addClientLeadColumn(`"assignedManager" TEXT`);
   addClientLeadColumn(`"followUpDate" TEXT`);
+  addClientLeadColumn(`"language" TEXT DEFAULT 'en'`);
+  addClientLeadColumn(`"summaryToken" TEXT`);
 
   const insertRule = db.prepare(`
     INSERT OR IGNORE INTO "CalculatorRule" ("segment", "companySize", "basePrice", "perEmployeePrice", "perLocationPrice")
@@ -1506,12 +1509,133 @@ Object.assign(translations.ro, {
   "Причина отклонения": "Motivul respingerii"
 });
 
-const page = (title: string, body: string, options: { admin?: boolean; plain?: boolean } = {}) => `<!doctype html>
+Object.assign(translations.ru, {
+  "Managed coffee and beverage systems for business": "Управляемые системы кофе и напитков для бизнеса",
+  "How Binova works": "Как работает Binova",
+  "One partner from first brief to daily operation": "Один партнёр от первого запроса до ежедневной работы",
+  "Four clear stages turn a fragmented supply task into a managed beverage system.": "Четыре понятных этапа превращают разрозненные поставки в управляемую beverage-систему.",
+  "Understand the operation": "Понимаем вашу операционку",
+  "Segment, team size, locations, guest flow and current setup.": "Сегмент, размер команды, локации, поток гостей и текущая конфигурация.",
+  "Design the system": "Проектируем систему",
+  "Products, equipment and service level selected around real demand.": "Подбираем продукты, оборудование и уровень сервиса под реальную нагрузку.",
+  "Launch with control": "Запускаем под контролем",
+  "Installation, calibration and team onboarding in one coordinated start.": "Установка, настройка и обучение команды в рамках одного согласованного запуска.",
+  "Manage and improve": "Поддерживаем и улучшаем",
+  "Replenishment, maintenance and support keep the system working.": "Пополнение, обслуживание и поддержка обеспечивают стабильную работу системы.",
+  "Build your solution": "Собрать своё решение",
+  "One operating model, adapted to your business": "Одна операционная модель, адаптированная под ваш бизнес",
+  "Every project starts with understanding the operation, continues with a tailored system design, and becomes a managed service with clear ownership.": "Каждый проект начинается с понимания операционки, продолжается индивидуальной конфигурацией и превращается в управляемый сервис с понятной ответственностью.",
+  "Office, Retail and HoReCa clients receive different configurations, while Binova remains the single partner responsible for continuity.": "Клиенты Office, Retail и HoReCa получают разные конфигурации, а Binova остаётся единым партнёром, отвечающим за стабильную работу.",
+  "Privacy and business request data": "Конфиденциальность и данные бизнес-заявок",
+  "This website is intended for B2B enquiries. Information is processed to understand your request, prepare a relevant solution and contact you about the next commercial step.": "Сайт предназначен для B2B-запросов. Данные обрабатываются, чтобы понять вашу задачу, подготовить подходящее решение и связаться с вами по следующему коммерческому шагу.",
+  "Information you submit": "Информация, которую вы отправляете",
+  "Company and contact details, business segment, company scale, locations, selected services and additional request notes.": "Данные компании и контакта, сегмент бизнеса, размер, локации, выбранные услуги и дополнительные детали заявки.",
+  "Technical visit data": "Технические данные посещения",
+  "Basic technical data such as IP address, approximate country or city, visited page, language and device type may be recorded for security and usage analysis.": "Для безопасности и анализа использования могут сохраняться IP-адрес, примерная страна или город, посещённая страница, язык и тип устройства.",
+  "How information is used": "Как используются данные",
+  "Data is used to respond to enquiries, prepare commercial proposals, improve service flows and protect the website from automated abuse.": "Данные используются для ответа на запросы, подготовки коммерческих предложений, улучшения сервисных сценариев и защиты сайта от автоматических атак.",
+  "Access and deletion": "Доступ и удаление",
+  "Access is limited to people and providers involved in handling the request. You may request correction or deletion through the same Binova contact channel used for your enquiry.": "Доступ ограничен сотрудниками и поставщиками, участвующими в обработке заявки. Запросить исправление или удаление можно через тот же канал связи Binova, который использовался для обращения.",
+  "Website terms of use": "Условия использования сайта",
+  "The website helps business clients explore Binova solutions and submit a structured request. Website content is informational and does not by itself create a contractual commitment.": "Сайт помогает бизнес-клиентам изучить решения Binova и отправить структурированную заявку. Материалы сайта носят информационный характер и сами по себе не создают договорных обязательств.",
+  "Commercial proposals": "Коммерческие предложения",
+  "Final scope, pricing, delivery schedule, service levels and payment conditions are confirmed in a separate commercial proposal or agreement.": "Финальный состав, цены, график поставок, уровни сервиса и условия оплаты фиксируются в отдельном коммерческом предложении или договоре.",
+  "Product and service information": "Информация о продуктах и сервисах",
+  "Availability, specifications and service configurations may change as Binova adapts the solution to the client and location.": "Доступность, характеристики и конфигурация сервиса могут меняться при адаптации решения под клиента и локацию.",
+  "Website content": "Материалы сайта",
+  "Text, visual materials, configurations and brand elements may not be reused commercially without permission.": "Тексты, визуальные материалы, конфигурации и элементы бренда нельзя использовать в коммерческих целях без разрешения.",
+  "Service availability": "Доступность сайта",
+  "Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.": "Binova может обновлять сайт и временно ограничивать доступ для обслуживания, безопасности или по операционным причинам."
+});
+
+Object.assign(translations.ro, {
+  "Managed coffee and beverage systems for business": "Sisteme gestionate de cafea și băuturi pentru companii",
+  "How Binova works": "Cum lucrează Binova",
+  "One partner from first brief to daily operation": "Un singur partener, de la prima cerere la operarea zilnică",
+  "Four clear stages turn a fragmented supply task into a managed beverage system.": "Patru etape clare transformă aprovizionarea fragmentată într-un sistem de băuturi gestionat.",
+  "Understand the operation": "Înțelegem operațiunile",
+  "Segment, team size, locations, guest flow and current setup.": "Segmentul, dimensiunea echipei, locațiile, fluxul de oaspeți și configurația actuală.",
+  "Design the system": "Proiectăm sistemul",
+  "Products, equipment and service level selected around real demand.": "Produse, echipamente și nivel de service selectate în jurul cererii reale.",
+  "Launch with control": "Lansăm controlat",
+  "Installation, calibration and team onboarding in one coordinated start.": "Instalare, calibrare și instruirea echipei într-o singură lansare coordonată.",
+  "Manage and improve": "Gestionăm și îmbunătățim",
+  "Replenishment, maintenance and support keep the system working.": "Reaprovizionarea, mentenanța și suportul mențin sistemul funcțional.",
+  "Build your solution": "Construiește soluția",
+  "One operating model, adapted to your business": "Un singur model operațional, adaptat afacerii tale",
+  "Every project starts with understanding the operation, continues with a tailored system design, and becomes a managed service with clear ownership.": "Fiecare proiect începe prin înțelegerea operațiunilor, continuă cu proiectarea unei configurații personalizate și devine un serviciu gestionat cu responsabilitate clară.",
+  "Office, Retail and HoReCa clients receive different configurations, while Binova remains the single partner responsible for continuity.": "Clienții Office, Retail și HoReCa primesc configurații diferite, iar Binova rămâne partenerul unic responsabil pentru continuitate.",
+  "Privacy and business request data": "Confidențialitate și datele cererilor comerciale",
+  "This website is intended for B2B enquiries. Information is processed to understand your request, prepare a relevant solution and contact you about the next commercial step.": "Site-ul este destinat cererilor B2B. Informațiile sunt prelucrate pentru a înțelege solicitarea, a pregăti o soluție relevantă și a vă contacta pentru următorul pas comercial.",
+  "Information you submit": "Informațiile transmise",
+  "Company and contact details, business segment, company scale, locations, selected services and additional request notes.": "Date despre companie și contact, segmentul de business, dimensiunea companiei, locațiile, serviciile selectate și detaliile suplimentare.",
+  "Technical visit data": "Date tehnice despre vizită",
+  "Basic technical data such as IP address, approximate country or city, visited page, language and device type may be recorded for security and usage analysis.": "Pentru securitate și analiza utilizării pot fi înregistrate adresa IP, țara sau orașul aproximativ, pagina vizitată, limba și tipul dispozitivului.",
+  "How information is used": "Cum sunt utilizate informațiile",
+  "Data is used to respond to enquiries, prepare commercial proposals, improve service flows and protect the website from automated abuse.": "Datele sunt utilizate pentru răspunsul la cereri, pregătirea ofertelor comerciale, îmbunătățirea fluxurilor și protejarea site-ului împotriva abuzului automatizat.",
+  "Access and deletion": "Acces și ștergere",
+  "Access is limited to people and providers involved in handling the request. You may request correction or deletion through the same Binova contact channel used for your enquiry.": "Accesul este limitat la persoanele și furnizorii implicați în procesarea cererii. Corectarea sau ștergerea poate fi solicitată prin același canal Binova folosit pentru cerere.",
+  "Website terms of use": "Condiții de utilizare a site-ului",
+  "The website helps business clients explore Binova solutions and submit a structured request. Website content is informational and does not by itself create a contractual commitment.": "Site-ul ajută clienții business să exploreze soluțiile Binova și să trimită o cerere structurată. Conținutul este informativ și nu creează de unul singur obligații contractuale.",
+  "Commercial proposals": "Oferte comerciale",
+  "Final scope, pricing, delivery schedule, service levels and payment conditions are confirmed in a separate commercial proposal or agreement.": "Structura finală, prețurile, calendarul livrărilor, nivelurile de service și condițiile de plată sunt confirmate într-o ofertă comercială sau într-un acord separat.",
+  "Product and service information": "Informații despre produse și servicii",
+  "Availability, specifications and service configurations may change as Binova adapts the solution to the client and location.": "Disponibilitatea, specificațiile și configurațiile serviciilor se pot modifica pe măsură ce Binova adaptează soluția clientului și locației.",
+  "Website content": "Conținutul site-ului",
+  "Text, visual materials, configurations and brand elements may not be reused commercially without permission.": "Textele, materialele vizuale, configurațiile și elementele de brand nu pot fi reutilizate comercial fără permisiune.",
+  "Service availability": "Disponibilitatea site-ului",
+  "Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.": "Binova poate actualiza site-ul și poate restricționa temporar accesul pentru mentenanță, securitate sau motive operaționale."
+});
+
+type PageOptions = {
+  admin?: boolean;
+  plain?: boolean;
+  description?: string;
+  canonicalPath?: string;
+  noIndex?: boolean;
+  jsonLd?: Record<string, unknown> | Array<Record<string, unknown>>;
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": `${siteBaseUrl}/#organization`,
+  name: "Binova Group",
+  url: siteBaseUrl,
+  description: "Managed coffee and beverage systems for offices, retail and HoReCa.",
+  areaServed: "Moldova",
+  knowsAbout: ["Business coffee systems", "Beverage equipment", "Equipment maintenance", "B2B replenishment"]
+};
+
+const page = (title: string, body: string, options: PageOptions = {}) => {
+  const description = options.description || "Binova Group builds managed coffee and beverage systems for offices, retail and HoReCa.";
+  const canonicalUrl = options.canonicalPath ? new URL(options.canonicalPath, `${siteBaseUrl}/`).toString() : "";
+  const noIndex = options.noIndex || options.admin || options.plain;
+  const extraSchemas = options.jsonLd ? (Array.isArray(options.jsonLd) ? options.jsonLd : [options.jsonLd]) : [];
+  const schemas = noIndex ? extraSchemas : [organizationSchema, ...extraSchemas];
+  const alternateLinks = canonicalUrl
+    ? ["en", "ru", "ro"].map((lang) => `<link rel="alternate" hreflang="${lang}" href="${escapeHtml(`${canonicalUrl}?lang=${lang}`)}">`).join("\n  ")
+    : "";
+
+  return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${escapeHtml(title)} · Binova Group</title>
+  <title>${escapeHtml(title)} | Binova Group</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="robots" content="${noIndex ? "noindex, nofollow" : "index, follow"}">
+  ${canonicalUrl ? `<link rel="canonical" href="${escapeHtml(canonicalUrl)}">` : ""}
+  ${alternateLinks}
+  <link rel="icon" type="image/png" href="/assets/coffee-bean.png">
+  <meta property="og:site_name" content="Binova Group">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="${escapeHtml(title)} | Binova Group">
+  <meta property="og:description" content="${escapeHtml(description)}">
+  ${canonicalUrl ? `<meta property="og:url" content="${escapeHtml(canonicalUrl)}">` : ""}
+  <meta property="og:image" content="${escapeHtml(`${siteBaseUrl}/assets/coffee-bean.png`)}">
+  <meta name="twitter:card" content="summary">
+  ${schemas.map((schema) => `<script type="application/ld+json">${JSON.stringify(schema).replace(/</g, "\\u003c")}</script>`).join("\n  ")}
   <style>
     :root {
       --ink: #151713;
@@ -2103,6 +2227,59 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .trust-item { background: var(--panel); padding: 18px; }
     .trust-item b { display: block; font-size: 20px; margin-bottom: 4px; }
     .trust-item span { color: var(--muted); font-size: 13px; line-height: 1.4; }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: process;
+    }
+    .process-step {
+      min-height: 230px;
+      display: grid;
+      align-content: space-between;
+      gap: 22px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow);
+      counter-increment: process;
+    }
+    .process-step::before {
+      content: "0" counter(process);
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--dark);
+      color: var(--cream-text);
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .process-step h3 { margin: 0 0 10px; font-size: 23px; line-height: 1.1; }
+    .process-step p { margin: 0; color: var(--muted); line-height: 1.5; }
+    .summary-shell { max-width: 980px; margin: 0 auto; }
+    .summary-hero {
+      padding: 42px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #101713, #253029);
+      color: var(--cream-text);
+      box-shadow: var(--shadow);
+    }
+    .summary-hero h1 { max-width: 760px; font-size: clamp(40px, 6vw, 68px); }
+    .summary-hero p { max-width: 700px; color: var(--cream-muted); font-size: 18px; line-height: 1.55; }
+    .summary-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 24px; }
+    .summary-meta span { padding: 8px 11px; border: 1px solid rgba(243,234,219,.2); border-radius: 999px; color: var(--cream-soft); font-weight: 800; font-size: 12px; }
+    .summary-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 16px; }
+    .summary-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+    .summary-list li { padding: 13px 14px; border: 1px solid var(--line); border-radius: 8px; background: #fff; font-weight: 800; }
+    .summary-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .summary-fact { padding: 14px; border-top: 1px solid var(--line); }
+    .summary-fact span { display: block; color: var(--muted); font-size: 12px; margin-bottom: 5px; }
+    .summary-fact b { display: block; overflow-wrap: anywhere; }
+    .summary-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+    .print-note { color: var(--muted); font-size: 13px; line-height: 1.45; }
     .feature-band {
       background: var(--dark);
       color: #fff;
@@ -2235,6 +2412,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .metric-row { margin-top: 0; }
       .check-grid { grid-template-columns: 1fr; }
       .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .summary-grid { grid-template-columns: 1fr; }
       .admin-shell { display: block; }
       .admin-side { position: sticky; top: 64px; z-index: 18; padding: 14px 16px; overflow-x: auto; white-space: nowrap; }
       .admin-side h2 { display: inline-block; margin: 0 14px 0 0; vertical-align: middle; font-size: 18px !important; }
@@ -2340,6 +2519,11 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .service-builder .service-shell span { font-size: 13px; line-height: 1.35; }
       .service-builder .service-shell em { font-size: 12px; }
       .trust-strip { grid-template-columns: 1fr; }
+      .process-grid { grid-template-columns: 1fr; }
+      .process-step { min-height: auto; }
+      .summary-hero { padding: 28px 20px; }
+      .summary-facts { grid-template-columns: 1fr; }
+      .summary-actions .btn { width: 100%; text-align: center; }
       .feature-band { padding: 20px; }
       .admin-main { padding: 18px 12px 40px; }
       .admin-side { top: 64px; padding: 10px 12px; }
@@ -2364,6 +2548,19 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .table { min-width: 720px; font-size: 13px; }
       .table th, .table td { padding: 10px; }
       .footer { padding: 22px 12px; }
+    }
+    @media print {
+      @page { size: A4; margin: 14mm; }
+      body { padding: 0 !important; background: #fff !important; color: #151713; }
+      .nav, .footer, .summary-actions, .print-note { display: none !important; }
+      main { max-width: none; padding: 0 !important; }
+      .summary-shell { max-width: none; }
+      .summary-hero { padding: 24px; border-radius: 0; box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .summary-hero h1 { font-size: 38px !important; }
+      .summary-hero p { font-size: 14px; }
+      .band { padding: 24px 0; break-inside: avoid; }
+      .card, .process-step { box-shadow: none; break-inside: avoid; }
+      .summary-list li { break-inside: avoid; }
     }
   </style>
 </head>
@@ -2551,7 +2748,11 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     };
 
     document.querySelectorAll('form[action="/lead"]').forEach((form) => {
-      form.addEventListener("submit", () => calculatePublicOffer(form));
+      form.addEventListener("submit", () => {
+        const language = form.querySelector('[name="language"]');
+        if (language) language.value = document.documentElement.lang || "en";
+        calculatePublicOffer(form);
+      });
     });
 
     document.querySelectorAll(".cup-stage-button").forEach((button) => {
@@ -2566,6 +2767,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
   </script>
 </body>
 </html>`;
+};
 
 const publicNav = () => `
   <nav class="nav">
@@ -2602,8 +2804,8 @@ const adminNav = () => `
 const footer = () => `
   <footer class="footer">
     <div class="footer-inner">
-      <span>Binova Group demo · local MVP</span>
-      <span><a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a> · <a href="/about">About us</a> · <a href="/admin">Admin</a></span>
+      <span>Binova Group | Managed coffee and beverage systems for business</span>
+      <span><a href="/solutions/office">Office</a> · <a href="/solutions/retail">Retail</a> · <a href="/solutions/horeca">HoReCa</a> · <a href="/about">About us</a> · <a href="/privacy">Privacy Policy</a> · <a href="/terms">Terms</a></span>
     </div>
   </footer>`;
 
@@ -2618,7 +2820,7 @@ const cupPreview = (stage = 1) => `
   </div>`;
 
 const homePage = () => {
-  return page("Business supply platform", `
+  return page("Coffee and beverage systems for business", `
     <header class="hero">
       ${beanField()}
       <div class="hero-inner hero-panel">
@@ -2653,8 +2855,33 @@ const homePage = () => {
           <article class="card"><div class="card-body"><span class="badge">Control</span><h3>One partner, one clear process</h3><p>Every Office, HoReCa or Retail request starts structured and continues with a dedicated Binova team.</p></div></article>
         </div>
       </section>
+      <section class="band" id="process">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">How Binova works</p>
+            <h2>One partner from first brief to daily operation</h2>
+          </div>
+          <p>Four clear stages turn a fragmented supply task into a managed beverage system.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-step"><div><h3>Understand the operation</h3><p>Segment, team size, locations, guest flow and current setup.</p></div></article>
+          <article class="process-step"><div><h3>Design the system</h3><p>Products, equipment and service level selected around real demand.</p></div></article>
+          <article class="process-step"><div><h3>Launch with control</h3><p>Installation, calibration and team onboarding in one coordinated start.</p></div></article>
+          <article class="process-step"><div><h3>Manage and improve</h3><p>Replenishment, maintenance and support keep the system working.</p></div></article>
+        </div>
+        <div class="actions"><a class="btn" href="#segments">Build your solution</a></div>
+      </section>
     </main>
-  `);
+  `, {
+    canonicalPath: "/",
+    description: "Binova Group designs and manages coffee and beverage systems for offices, retail networks and HoReCa businesses.",
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      name: "Binova Group",
+      url: siteBaseUrl
+    }
+  });
 };
 
 const solutionPage = (segment: keyof typeof businessLines) => {
@@ -2749,6 +2976,7 @@ const solutionPage = (segment: keyof typeof businessLines) => {
             <input type="hidden" name="pricingRuleId">
             <input type="hidden" name="selectedServiceLayers">
             <input type="hidden" name="priceBreakdown">
+            <input type="hidden" name="language" value="en">
             <label>Company name<input required name="companyName" placeholder="Example SRL"></label>
             <label>Contact name<input required name="contactName" placeholder="Decision maker"></label>
             <label>Email<input required type="email" name="email" placeholder="name@company.com"></label>
@@ -2798,7 +3026,19 @@ const solutionPage = (segment: keyof typeof businessLines) => {
         </div>
       </section>
     </main>
-  `);
+  `, {
+    canonicalPath: `/solutions/${segment}`,
+    description: `${line.title}. ${copy.heroDescription}`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: line.title,
+      description: copy.heroDescription,
+      provider: { "@id": `${siteBaseUrl}/#organization` },
+      areaServed: "Moldova",
+      serviceType: `${line.label} beverage system`
+    }
+  });
 };
 
 const aboutPage = () => page("About us", `
@@ -2822,18 +3062,21 @@ const aboutPage = () => page("About us", `
         <p class="copy">For offices, coffee becomes part of culture and care for the team. For HoReCa, it becomes a product that affects repeat visits and average check. For retail, it becomes a point of additional sales and a way to turn traffic into revenue. Binova takes responsibility for the system behind the cup: equipment, supply, maintenance, training and support.</p>
       </div>
       <div class="card"><div class="card-body">
-        <h3>Why this digital demo exists</h3>
-        <p>This demo shows the path from interest to a structured request: the client chooses a segment, marks the required services, and Binova receives the data needed to prepare an accurate commercial offer.</p>
-        <p>Later the request can be passed to Bitrix24 with the segment, selected services, client size, number of locations, and needs for equipment, service and replenishment.</p>
+        <h3>One operating model, adapted to your business</h3>
+        <p>Every project starts with understanding the operation, continues with a tailored system design, and becomes a managed service with clear ownership.</p>
+        <p>Office, Retail and HoReCa clients receive different configurations, while Binova remains the single partner responsible for continuity.</p>
       </div></div>
     </section>
   </main>
-`);
+`, {
+  canonicalPath: "/about",
+  description: "Meet Binova Group, an operator of managed coffee, beverage, equipment, replenishment and service systems for B2B clients."
+});
 
 const cupLabPage = () => page("Cup lab", `
   <main>
     <section class="band">
-      <p class="eyebrow">Prototype lab</p>
+      <p class="eyebrow">Service configurator</p>
       <h1 style="color:var(--ink); font-size:64px;">AI cup stages</h1>
       <p class="copy">Separate visual test. If this direction works, the same staged image logic can be connected back to service selection.</p>
     </section>
@@ -2850,53 +3093,180 @@ const cupLabPage = () => page("Cup lab", `
       </div>
     </section>
   </main>
-`);
+`, { noIndex: true });
 
 const privacyPage = () => page("Privacy Policy", `
   <main>
     <section class="band">
       <p class="eyebrow">Privacy Policy</p>
-      <h1 style="color:var(--ink); font-size:58px;">Local demo privacy statement</h1>
-      <p class="copy">This MVP stores demo request data locally on this machine in SQLite. It is not connected to a production CRM, payment provider or public hosting environment.</p>
+      <h1 style="color:var(--ink); font-size:58px;">Privacy and business request data</h1>
+      <p class="copy">This website is intended for B2B enquiries. Information is processed to understand your request, prepare a relevant solution and contact you about the next commercial step.</p>
     </section>
     <section class="band grid-2">
-      <div class="card"><div class="card-body"><h3>Data collected</h3><p>Company name, contact name, email, phone, company size, selected services and request notes.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Storage</h3><p>Data is stored in <b>prisma/dev.db</b> and product photos are stored in <b>uploads/products</b>.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Usage</h3><p>Data is used only to demonstrate request capture, admin review, calculator rules and package preparation.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Deletion</h3><p>For the demo, records can be removed directly from SQLite or reset by replacing the local database.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Information you submit</h3><p>Company and contact details, business segment, company scale, locations, selected services and additional request notes.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Technical visit data</h3><p>Basic technical data such as IP address, approximate country or city, visited page, language and device type may be recorded for security and usage analysis.</p></div></div>
+      <div class="card"><div class="card-body"><h3>How information is used</h3><p>Data is used to respond to enquiries, prepare commercial proposals, improve service flows and protect the website from automated abuse.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Access and deletion</h3><p>Access is limited to people and providers involved in handling the request. You may request correction or deletion through the same Binova contact channel used for your enquiry.</p></div></div>
     </section>
   </main>
-`);
+`, {
+  canonicalPath: "/privacy",
+  description: "How Binova Group processes business enquiry and technical website data."
+});
 
 const termsPage = () => page("Terms", `
   <main>
     <section class="band">
       <p class="eyebrow">Terms</p>
-      <h1 style="color:var(--ink); font-size:58px;">Demo terms of use</h1>
-      <p class="copy">This local site is a clickable commercial MVP for meetings and internal validation. Prices, packages and calculations are configurable demo values, not final contractual offers.</p>
+      <h1 style="color:var(--ink); font-size:58px;">Website terms of use</h1>
+      <p class="copy">The website helps business clients explore Binova solutions and submit a structured request. Website content is informational and does not by itself create a contractual commitment.</p>
     </section>
     <section class="band grid-2">
-      <div class="card"><div class="card-body"><h3>Commercial terms</h3><p>Commercial conditions are prepared by a Binova manager after reviewing the request.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Local operation</h3><p>The demo runs locally on this machine through Telegram long polling and a localhost website.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Admin responsibility</h3><p>Admins manage calculator rules, packages and lead review in the private admin area.</p></div></div>
-      <div class="card"><div class="card-body"><h3>Phase 2</h3><p>Production deployment should add real authentication, hosting, backups, audit logs and CRM integration.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Commercial proposals</h3><p>Final scope, pricing, delivery schedule, service levels and payment conditions are confirmed in a separate commercial proposal or agreement.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Product and service information</h3><p>Availability, specifications and service configurations may change as Binova adapts the solution to the client and location.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Website content</h3><p>Text, visual materials, configurations and brand elements may not be reused commercially without permission.</p></div></div>
+      <div class="card"><div class="card-body"><h3>Service availability</h3><p>Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.</p></div></div>
     </section>
   </main>
-`);
+`, {
+  canonicalPath: "/terms",
+  description: "Terms for using the Binova Group website and submitting a business solution request."
+});
 
-const thankYouPage = (leadId: number, estimate: number) => page("Request received", `
-  <main>
-    <section class="band">
-      <p class="eyebrow">Request created</p>
-      <h1 style="color:var(--ink); font-size:64px;">Proposal request #${leadId} is in the admin pipeline.</h1>
-      <p class="copy">The Binova team has enough context to prepare the next step. Commercial details stay inside the admin workspace.</p>
-      <div class="actions">
-        <a class="btn" href="/">Back to site</a>
-        <a class="btn secondary" href="/admin/leads">Open admin leads</a>
+type SupportedLanguage = "en" | "ru" | "ro";
+
+const normalizeLanguage = (value: unknown): SupportedLanguage =>
+  value === "ru" || value === "ro" ? value : "en";
+
+const summaryCopy: Record<SupportedLanguage, Record<string, string>> = {
+  en: {
+    eyebrow: "Request received",
+    title: "Your Binova solution brief is ready",
+    intro: "We captured the operating context and selected services. A Binova manager can now turn this brief into a tailored commercial proposal.",
+    request: "Request",
+    company: "Company",
+    segment: "Business segment",
+    profile: "Company profile",
+    locations: "Locations",
+    contact: "Contact",
+    services: "Selected services",
+    details: "Additional details",
+    noDetails: "No additional details were provided.",
+    next: "What happens next",
+    step1: "Binova reviews the request and validates the operating context.",
+    step2: "Products, equipment and service levels are matched to the real demand.",
+    step3: "A manager prepares the commercial scope and implementation plan.",
+    step4: "The final configuration is aligned directly with your team.",
+    save: "Save as PDF",
+    back: "Back to site",
+    print: "Use the browser print dialog and choose Save as PDF."
+  },
+  ru: {
+    eyebrow: "Заявка получена",
+    title: "Краткое описание вашего решения Binova готово",
+    intro: "Мы сохранили параметры бизнеса и выбранные сервисы. Теперь менеджер Binova сможет превратить этот brief в персональное коммерческое предложение.",
+    request: "Заявка",
+    company: "Компания",
+    segment: "Направление бизнеса",
+    profile: "Профиль компании",
+    locations: "Локации",
+    contact: "Контакт",
+    services: "Выбранные услуги",
+    details: "Дополнительные детали",
+    noDetails: "Дополнительные детали не указаны.",
+    next: "Что произойдёт дальше",
+    step1: "Binova проверит заявку и уточнит операционный контекст.",
+    step2: "Продукты, оборудование и уровень сервиса будут подобраны под реальную нагрузку.",
+    step3: "Менеджер подготовит коммерческий состав и план запуска.",
+    step4: "Финальная конфигурация будет согласована напрямую с вашей командой.",
+    save: "Сохранить PDF",
+    back: "Вернуться на сайт",
+    print: "В окне печати браузера выберите Сохранить как PDF."
+  },
+  ro: {
+    eyebrow: "Cerere primită",
+    title: "Rezumatul soluției Binova este pregătit",
+    intro: "Am salvat contextul operațional și serviciile selectate. Un manager Binova poate transforma acum acest rezumat într-o ofertă comercială personalizată.",
+    request: "Cerere",
+    company: "Companie",
+    segment: "Segment de business",
+    profile: "Profilul companiei",
+    locations: "Locații",
+    contact: "Contact",
+    services: "Servicii selectate",
+    details: "Detalii suplimentare",
+    noDetails: "Nu au fost oferite detalii suplimentare.",
+    next: "Ce urmează",
+    step1: "Binova verifică cererea și validează contextul operațional.",
+    step2: "Produsele, echipamentele și nivelul de service sunt adaptate cererii reale.",
+    step3: "Managerul pregătește structura comercială și planul de implementare.",
+    step4: "Configurația finală este coordonată direct cu echipa dumneavoastră.",
+    save: "Salvează PDF",
+    back: "Înapoi la site",
+    print: "În fereastra de imprimare selectați Salvare ca PDF."
+  }
+};
+
+const summaryPage = (token: string, requestedLanguage?: string | null, autoPrint = false) => {
+  const lead = statementGet(`SELECT * FROM "ClientLead" WHERE "summaryToken" = ?`, token);
+  if (!lead) {
+    return page("Summary not found", `<main><section class="band"><h1 style="color:var(--ink);">Summary not found</h1></section></main>`, { noIndex: true });
+  }
+
+  const lang = normalizeLanguage(requestedLanguage || lead.language);
+  const copy = summaryCopy[lang];
+  const services = String(lead.services || "").split(",").map((item) => item.trim()).filter(Boolean);
+  const translatedServices = services.map((service) => translations[lang]?.[service] || service);
+  const profile = companySizes.find((size) => size.value === lead.companySize);
+  const profileLabel = profile ? `${profile.label} - ${profile.hint}` : String(lead.companySize || "-");
+  const contact = [lead.contactName, lead.email, lead.phone].filter(Boolean).join(" · ");
+  const printUrl = `/summary/${token}/print?lang=${lang}`;
+
+  return page(copy.title, `
+    <main>
+      <div class="summary-shell">
+        <section class="band">
+          <div class="summary-hero">
+            <p class="eyebrow">${escapeHtml(copy.eyebrow)}</p>
+            <h1>${escapeHtml(copy.title)}</h1>
+            <p>${escapeHtml(copy.intro)}</p>
+            <div class="summary-meta">
+              <span>${escapeHtml(copy.request)} #${escapeHtml(lead.id)}</span>
+              <span>${escapeHtml(formatDate(lead.createdAt))}</span>
+              <span>${escapeHtml(slugLabel(lead.segment))}</span>
+            </div>
+          </div>
+        </section>
+        <section class="band summary-grid">
+          <article class="card"><div class="card-body">
+            <h2>${escapeHtml(copy.company)}</h2>
+            <div class="summary-facts">
+              <div class="summary-fact"><span>${escapeHtml(copy.company)}</span><b>${escapeHtml(lead.companyName)}</b></div>
+              <div class="summary-fact"><span>${escapeHtml(copy.segment)}</span><b>${escapeHtml(slugLabel(lead.segment))}</b></div>
+              <div class="summary-fact"><span>${escapeHtml(copy.profile)}</span><b>${escapeHtml(profileLabel)}</b></div>
+              <div class="summary-fact"><span>${escapeHtml(copy.locations)}</span><b>${escapeHtml(lead.locationsCount)}</b></div>
+              <div class="summary-fact" style="grid-column:1/-1"><span>${escapeHtml(copy.contact)}</span><b>${escapeHtml(contact)}</b></div>
+            </div>
+          </div></article>
+          <article class="card"><div class="card-body">
+            <h2>${escapeHtml(copy.services)}</h2>
+            <ul class="summary-list">${translatedServices.length ? translatedServices.map((service) => `<li>${escapeHtml(service)}</li>`).join("") : `<li>-</li>`}</ul>
+          </div></article>
+        </section>
+        <section class="band grid-2">
+          <article class="card"><div class="card-body"><h2>${escapeHtml(copy.details)}</h2><p>${escapeHtml(lead.message || copy.noDetails)}</p></div></article>
+          <article class="card"><div class="card-body"><h2>${escapeHtml(copy.next)}</h2><ol><li>${escapeHtml(copy.step1)}</li><li>${escapeHtml(copy.step2)}</li><li>${escapeHtml(copy.step3)}</li><li>${escapeHtml(copy.step4)}</li></ol></div></article>
+        </section>
+        <div class="summary-actions">
+          <a class="btn" href="${escapeHtml(printUrl)}" target="_blank" rel="noopener">${escapeHtml(copy.save)}</a>
+          <a class="btn secondary" href="/?lang=${lang}">${escapeHtml(copy.back)}</a>
+        </div>
+        <p class="print-note">${escapeHtml(copy.print)}</p>
       </div>
-    </section>
-  </main>
-`);
+    </main>
+    ${autoPrint ? `<script>window.addEventListener("load", () => setTimeout(() => window.print(), 250));</script>` : ""}
+  `, { noIndex: true, description: copy.intro });
+};
 
 const adminLayout = (ctx: RequestContext, title: string, content: string) => page(title, `
   <div class="admin-shell">
@@ -3674,7 +4044,7 @@ const proposalPage = (token: string) => {
         <div class="trust-item"><b>Scope</b><span>Services selected around the client's operating context.</span></div>
         <div class="trust-item"><b>Service</b><span>Equipment, replenishment and response logic in one proposal.</span></div>
         <div class="trust-item"><b>Next step</b><span>Binova manager aligns commercial terms directly with the client.</span></div>
-        <div class="trust-item"><b>Validity</b><span>Demo proposal prepared for discussion.</span></div>
+        <div class="trust-item"><b>Validity</b><span>Proposal scope is confirmed during the commercial review.</span></div>
       </section>
       <section class="band">
         <div class="section-head">
@@ -3695,7 +4065,7 @@ const proposalPage = (token: string) => {
         <div class="card"><div class="card-body"><h3>Commercial notes</h3><p>${escapeHtml(proposal.notes || "Final scope, delivery calendar and SLA are aligned after the discovery call.")}</p></div></div>
       </section>
     </main>
-  `);
+  `, { noIndex: true });
 };
 
 const send = (response: http.ServerResponse, statusCode: number, body: string, contentType = "text/html") => {
@@ -3846,6 +4216,8 @@ const handlePost = async (ctx: RequestContext) => {
     const setupFee = asNumber(body.setupFee, 0);
     const yearlyValue = asNumber(body.yearlyValue, estimate * 12 + setupFee);
     const servicesPayload = services.join(",");
+    const language = normalizeLanguage(asString(body.language));
+    const summaryToken = crypto.randomBytes(16).toString("hex");
     const result = db.prepare(`
       INSERT INTO "ClientLead" (
         "segment",
@@ -3914,7 +4286,9 @@ const handlePost = async (ctx: RequestContext) => {
       asString(body.assignedManager),
       asString(body.followUpDate)
     );
-    send(ctx.response, 200, thankYouPage(Number(result.lastInsertRowid), estimate));
+    const leadId = Number(result.lastInsertRowid);
+    db.prepare(`UPDATE "ClientLead" SET "language" = ?, "summaryToken" = ? WHERE "id" = ?`).run(language, summaryToken, leadId);
+    redirect(ctx.response, `/summary/${summaryToken}?lang=${language}`);
     return;
   }
 
@@ -3999,10 +4373,34 @@ const handlePost = async (ctx: RequestContext) => {
   send(ctx.response, 404, "Not found", "text/plain");
 };
 
+const sitemapPaths = ["/", "/solutions/office", "/solutions/retail", "/solutions/horeca", "/about", "/privacy", "/terms"];
+
+const sitemapXml = () => `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${sitemapPaths.map((pathname) => {
+  const url = new URL(pathname, `${siteBaseUrl}/`).toString();
+  const alternates = ["en", "ru", "ro"].map((lang) => `    <xhtml:link rel="alternate" hreflang="${lang}" href="${escapeHtml(`${url}?lang=${lang}`)}" />`).join("\n");
+  return `  <url>\n    <loc>${escapeHtml(url)}</loc>\n${alternates}\n  </url>`;
+}).join("\n")}
+</urlset>`;
+
+const robotsTxt = () => `User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /proposal/
+Disallow: /summary/
+Disallow: /cup-lab
+
+Sitemap: ${siteBaseUrl}/sitemap.xml
+`;
+
 const handleGet = (ctx: RequestContext) => {
+  const pathname = ctx.url.pathname;
+  if (pathname === "/robots.txt") return send(ctx.response, 200, robotsTxt(), "text/plain");
+  if (pathname === "/sitemap.xml") return send(ctx.response, 200, sitemapXml(), "application/xml");
+
   trackPublicVisit(ctx);
 
-  const pathname = ctx.url.pathname;
   if (pathname === "/") return send(ctx.response, 200, homePage());
   if (pathname === "/about") return send(ctx.response, 200, aboutPage());
   if (pathname === "/cup-lab") return send(ctx.response, 200, cupLabPage());
@@ -4049,13 +4447,18 @@ const handleGet = (ctx: RequestContext) => {
   }
   if (pathname.startsWith("/assets/")) return serveAsset(ctx.response, pathname.replace("/assets/", ""));
   if (pathname.startsWith("/media/")) return servePhoto(ctx.response, pathname.replace("/media/", ""));
+  const summaryMatch = pathname.match(/^\/summary\/([a-f0-9]{32})(\/print)?$/);
+  if (summaryMatch) {
+    const summaryExists = Boolean(statementGet(`SELECT "id" FROM "ClientLead" WHERE "summaryToken" = ?`, summaryMatch[1]));
+    return send(ctx.response, summaryExists ? 200 : 404, summaryPage(summaryMatch[1], ctx.url.searchParams.get("lang"), Boolean(summaryMatch[2])));
+  }
   const proposalMatch = pathname.match(/^\/proposal\/([a-f0-9]{32})$/);
   if (proposalMatch) return send(ctx.response, 200, proposalPage(proposalMatch[1]));
 
   const solutionMatch = pathname.match(/^\/solutions\/(office|retail|horeca)$/);
   if (solutionMatch) return send(ctx.response, 200, solutionPage(solutionMatch[1] as keyof typeof businessLines));
 
-  return send(ctx.response, 404, page("Not found", `<main><section class="band"><h1 style="color:var(--ink);">Page not found</h1><a class="btn" href="/">Back home</a></section></main>`));
+  return send(ctx.response, 404, page("Not found", `<main><section class="band"><h1 style="color:var(--ink);">Page not found</h1><a class="btn" href="/">Back home</a></section></main>`, { noIndex: true }));
 };
 
 const server = http.createServer(async (request, response) => {
