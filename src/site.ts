@@ -1561,6 +1561,7 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
         linear-gradient(180deg, rgba(250,245,237,.58), rgba(250,245,237,0) 360px),
         var(--paper);
     }
+    body:has(.footer) { padding-bottom: 76px; }
     a { color: inherit; }
     .nav {
       position: sticky;
@@ -2146,7 +2147,19 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
     .calc-filters select, .calc-filters input { width: auto; min-width: 170px; }
     .table-wrap { overflow-x: auto; border-radius: 8px; }
     .table { min-width: 760px; }
-    .footer { border-top: 1px solid var(--line); padding: 26px 28px; color: var(--muted); }
+    .footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 19;
+      border-top: 1px solid rgba(221, 212, 199, .86);
+      padding: 18px max(28px, calc((100vw - 1320px) / 2));
+      color: var(--muted);
+      background: rgba(248, 243, 235, .92);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 -12px 34px rgba(38, 31, 22, .08);
+    }
     .footer-inner { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
     @media (max-width: 900px) {
       .nav, .section-head, .footer-inner { align-items: flex-start; flex-direction: column; }
@@ -2268,7 +2281,8 @@ const page = (title: string, body: string, options: { admin?: boolean; plain?: b
       .calc-filters select, .calc-filters input { min-width: 78vw; }
       .table { min-width: 720px; font-size: 13px; }
       .table th, .table td { padding: 10px; }
-      .footer { padding: 22px 12px; }
+      body:has(.footer) { padding-bottom: 118px; }
+      .footer { padding: 14px 12px; }
     }
   </style>
 </head>
