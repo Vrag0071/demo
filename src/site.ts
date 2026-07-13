@@ -1605,6 +1605,246 @@ Object.assign(translations.ro, {
   "Binova may update the website and temporarily restrict access for maintenance, security or operational reasons.": "Binova poate actualiza site-ul și poate restricționa temporar accesul pentru mentenanță, securitate sau motive operaționale."
 });
 
+Object.assign(translations.en, {
+  "Расчёт из заявки": "Calculation from request",
+  "КП": "Proposals",
+  "На доработку": "Needs changes",
+  "Удалить позицию": "Delete item",
+  "Удалить пакет": "Delete package",
+  "Комментарий для сотрудника": "Comment for employee",
+  "Причина отклонения": "Rejection reason",
+  "Кофейные зёрна для ресторанов, кафе и отелей, рассчитанные на стабильный вкус и интенсивную ежедневную работу.": "Coffee beans for restaurants, cafes and hotels, selected for consistent taste and intensive daily service.",
+  "Стартовое обучение команды для стабильного качества напитков, настройки оборудования и повторяемого сервиса.": "Team launch training for consistent beverage quality, equipment setup and repeatable service.",
+  "Кофемашина для офиса с установкой, настройкой и плановым обслуживанием.": "Office coffee machine with installation, setup and scheduled maintenance.",
+  "Стаканы, сахар, мешалки, салфетки и другие позиции для ежедневного офисного потребления.": "Cups, sugar, stirrers, napkins and other items for daily office consumption.",
+  "Готовое решение для магазинов, АЗС и локаций с трафиком: оборудование, напитки, расходники и пополнение.": "A ready solution for stores, gas stations and high-traffic locations: equipment, beverages, consumables and replenishment.",
+  "Чайный набор для офисов и переговорных комнат.": "Tea selection for offices and meeting rooms.",
+  "Стаканы и крышки для ежедневной продажи напитков в retail-точках.": "Cups and lids for daily beverage sales at retail locations.",
+  "Срочный сервис кофейного оборудования для HoReCa.": "Urgent coffee equipment service for HoReCa.",
+  "Стабильный espresso blend для интенсивной HoReCa эксплуатации.": "A stable espresso blend for intensive HoReCa operations.",
+  "Предсказуемый месячный пакет для офисов без лишней операционной нагрузки.": "A predictable monthly package for offices without extra operational workload.",
+  "Полный beverage-набор для команды: напитки, расходники и сервис в одном процессе.": "A complete beverage setup for the team: drinks, consumables and service in one process.",
+  "Система для заведений, где качество чашки и отсутствие простоев влияют на выручку.": "A system for venues where cup quality and uptime affect revenue.",
+  "Сервисный пакет для заведений, где простой оборудования означает потерянную выручку.": "A service package for venues where equipment downtime means lost revenue.",
+  "Операционный пакет для точки с трафиком: self-service, расходники и регулярное пополнение.": "An operating package for a high-traffic point: self-service, consumables and regular replenishment.",
+  "Единый стандарт напитков, поставок и сервиса для сети локаций.": "One beverage, supply and service standard for a location network."
+});
+
+Object.assign(translations.ru, {
+  "Dashboard | Binova Group": "Панель управления | Binova Group",
+  "Leads | Binova Group": "Заявки | Binova Group",
+  "Calculator | Binova Group": "Калькулятор предложений | Binova Group",
+  "Catalog | Binova Group": "Каталог | Binova Group",
+  "Packages | Binova Group": "Пакеты | Binova Group",
+  "Bot catalog updates | Binova Group": "Обновления каталога из бота | Binova Group",
+  "Bitrix24 integration | Binova Group": "Интеграция Bitrix24 | Binova Group",
+  "Lead": "Заявка",
+  "Proposal title": "Название предложения",
+  "Catalog items": "Позиции каталога",
+  "Discount percent": "Скидка, %",
+  "Commercial notes": "Коммерческие примечания",
+  "Create commercial proposal": "Создать коммерческое предложение",
+  "Open proposal": "Открыть предложение",
+  "No proposals yet": "Предложений пока нет",
+  "Create one from a lead.": "Создайте предложение из заявки.",
+  "Calculation from request": "Расчёт из заявки",
+  "Edit": "Редактировать",
+  "Use in package": "Добавить в пакет",
+  "Use in offer": "Добавить в предложение",
+  "Remove": "Убрать",
+  "Create first package": "Создать первый пакет",
+  "All": "Все",
+  "Manual": "Вручную",
+  "Imported": "Импорт",
+  "In stock": "В наличии",
+  "Limited": "Ограниченный остаток",
+  "On request": "Под заказ",
+  "Unavailable": "Недоступно",
+  "Custom": "По запросу",
+  "Custom quote": "Индивидуальный расчёт",
+  "Draft": "Черновик",
+  "Pending review": "На модерации",
+  "Rejected": "Отклонён",
+  "Archived": "В архиве",
+  "Needs changes": "На доработке",
+  "Active": "Активен",
+  "Small": "Малый",
+  "Medium": "Средний",
+  "Large": "Крупный",
+  "Monthly": "Ежемесячно",
+  "Weekly": "Еженедельно",
+  "Standard": "Стандартный",
+  "Priority": "Приоритетный",
+  "Starter": "Стартовый",
+  "All segments": "Все сегменты",
+  "All statuses": "Все статусы",
+  "All sizes": "Все размеры",
+  "All billing models": "Все модели оплаты",
+  "One-time": "Разово",
+  "From price": "Цена от",
+  "Search": "Поиск",
+  "no price": "без цены",
+  "Delete item": "Удалить позицию",
+  "Delete package": "Удалить пакет",
+  "Coffee": "Кофе",
+  "Tea": "Чай",
+  "Equipment": "Оборудование",
+  "Consumables": "Расходники",
+  "Service": "Сервис",
+  "Training": "Обучение",
+  "Delivery": "Доставка",
+  "Water": "Вода",
+  "Cleaning": "Клининг",
+  "Other": "Другое",
+  "Coffee beans": "Кофейные зёрна",
+  "Coffee machine": "Кофемашина",
+  "Monthly service": "Ежемесячный сервис",
+  "Water starter pack": "Стартовый набор воды",
+  "Sugar": "Сахар",
+  "Cups": "Стаканы",
+  "Professional machine": "Профессиональная кофемашина",
+  "Grinder": "Кофемолка",
+  "Barista training": "Обучение бариста",
+  "Priority service": "Приоритетный сервис",
+  "Preventive maintenance": "Профилактическое обслуживание",
+  "Urgent service": "Срочный сервис",
+  "Replacement machine": "Подменная кофемашина",
+  "Coffee supply": "Поставка кофе",
+  "Self-service equipment": "Оборудование self-service",
+  "POS supplies": "POS-расходники",
+  "Monthly delivery route": "Ежемесячная поставка",
+  "Multi-location setup": "Настройка нескольких локаций",
+  "Centralized maintenance": "Централизованный сервис",
+  "Replenishment plan": "План пополнения",
+  "Reporting by location": "Отчётность по локациям",
+  "Reporting": "Отчётность",
+  "Kitchen hygiene starter": "Стартовый набор для гигиены",
+  "Submitted by:": "Отправил:",
+  "Coffee, equipment and scheduled maintenance for stable daily office consumption.": "Кофе, оборудование и плановое обслуживание для стабильной ежедневной работы офиса.",
+  "Coffee, tea, consumables and service for teams that need a complete office beverage setup.": "Кофе, чай, расходники и сервис для команд, которым нужна полноценная офисная beverage-система.",
+  "Professional coffee setup for cafés, restaurants and hotels with equipment, training and service.": "Профессиональная кофейная система для кафе, ресторанов и отелей: оборудование, обучение и сервис.",
+  "Maintenance, urgent support and replenishment logic for venues where downtime means lost revenue.": "Обслуживание, срочная поддержка и пополнение для заведений, где простой означает потерю выручки.",
+  "Self-service coffee corner and replenishment routine for stores and high-traffic locations.": "Self-service кофейная точка и регулярное пополнение для магазинов и локаций с трафиком.",
+  "Standardized beverage solution for several locations with centralized supply and service.": "Стандартизированная beverage-система для нескольких локаций с централизованными поставками и сервисом."
+});
+
+Object.assign(translations.ro, {
+  "Dashboard | Binova Group": "Panou de control | Binova Group",
+  "Leads | Binova Group": "Cereri | Binova Group",
+  "Calculator | Binova Group": "Calculator de oferte | Binova Group",
+  "Catalog | Binova Group": "Catalog | Binova Group",
+  "Packages | Binova Group": "Pachete | Binova Group",
+  "Bot catalog updates | Binova Group": "Actualizări de catalog din bot | Binova Group",
+  "Bitrix24 integration | Binova Group": "Integrare Bitrix24 | Binova Group",
+  "Lead": "Cerere",
+  "Proposal title": "Titlul ofertei",
+  "Catalog items": "Poziții din catalog",
+  "Discount percent": "Reducere, %",
+  "Commercial notes": "Note comerciale",
+  "Create commercial proposal": "Creează oferta comercială",
+  "Open proposal": "Deschide oferta",
+  "No proposals yet": "Nu există oferte încă",
+  "Create one from a lead.": "Creează o ofertă dintr-o cerere.",
+  "Расчёт из заявки": "Calcul din cerere",
+  "Edit": "Editează",
+  "Use in package": "Adaugă în pachet",
+  "Use in offer": "Adaugă în ofertă",
+  "Remove": "Elimină",
+  "Create first package": "Creează primul pachet",
+  "All": "Toate",
+  "Manual": "Manual",
+  "Imported": "Importat",
+  "In stock": "În stoc",
+  "Limited": "Stoc limitat",
+  "On request": "La cerere",
+  "Unavailable": "Indisponibil",
+  "Custom": "La cerere",
+  "Custom quote": "Ofertă personalizată",
+  "Draft": "Ciornă",
+  "Pending review": "La moderare",
+  "Rejected": "Respins",
+  "Archived": "Arhivat",
+  "Needs changes": "Necesită modificări",
+  "Active": "Activ",
+  "Small": "Mic",
+  "Medium": "Mediu",
+  "Large": "Mare",
+  "Monthly": "Lunar",
+  "Weekly": "Săptămânal",
+  "Standard": "Standard",
+  "Priority": "Prioritar",
+  "Starter": "Starter",
+  "All segments": "Toate segmentele",
+  "All statuses": "Toate statusurile",
+  "All sizes": "Toate dimensiunile",
+  "All billing models": "Toate modelele de plată",
+  "One-time": "O singură dată",
+  "From price": "Preț de la",
+  "Search": "Căutare",
+  "no price": "fără preț",
+  "Удалить позицию": "Șterge poziția",
+  "Удалить пакет": "Șterge pachetul",
+  "Комментарий для сотрудника": "Comentariu pentru angajat",
+  "Причина отклонения": "Motivul respingerii",
+  "Coffee": "Cafea",
+  "Tea": "Ceai",
+  "Equipment": "Echipamente",
+  "Consumables": "Consumabile",
+  "Service": "Service",
+  "Training": "Instruire",
+  "Delivery": "Livrare",
+  "Water": "Apă",
+  "Cleaning": "Curățenie",
+  "Other": "Altele",
+  "Coffee beans": "Boabe de cafea",
+  "Coffee machine": "Espressor",
+  "Monthly service": "Service lunar",
+  "Water starter pack": "Pachet inițial de apă",
+  "Sugar": "Zahăr",
+  "Cups": "Pahare",
+  "Professional machine": "Espressor profesional",
+  "Grinder": "Râșniță",
+  "Barista training": "Instruire barista",
+  "Priority service": "Service prioritar",
+  "Preventive maintenance": "Mentenanță preventivă",
+  "Urgent service": "Service urgent",
+  "Replacement machine": "Espressor de schimb",
+  "Coffee supply": "Livrare de cafea",
+  "Self-service equipment": "Echipament self-service",
+  "POS supplies": "Consumabile POS",
+  "Monthly delivery route": "Rută lunară de livrare",
+  "Multi-location setup": "Configurare pentru mai multe locații",
+  "Centralized maintenance": "Mentenanță centralizată",
+  "Replenishment plan": "Plan de reaprovizionare",
+  "Reporting by location": "Raportare pe locații",
+  "Reporting": "Raportare",
+  "Kitchen hygiene starter": "Pachet inițial de igienă",
+  "Submitted by:": "Trimis de:",
+  "КП": "Oferte",
+  "На доработку": "Necesită modificări",
+  "Кофейные зёрна для ресторанов, кафе и отелей, рассчитанные на стабильный вкус и интенсивную ежедневную работу.": "Boabe de cafea pentru restaurante, cafenele și hoteluri, selectate pentru gust constant și utilizare zilnică intensă.",
+  "Стартовое обучение команды для стабильного качества напитков, настройки оборудования и повторяемого сервиса.": "Instruirea inițială a echipei pentru calitatea constantă a băuturilor, configurarea echipamentului și un service repetabil.",
+  "Кофемашина для офиса с установкой, настройкой и плановым обслуживанием.": "Espressor pentru birou cu instalare, configurare și mentenanță planificată.",
+  "Стаканы, сахар, мешалки, салфетки и другие позиции для ежедневного офисного потребления.": "Pahare, zahăr, palete, șervețele și alte poziții pentru consumul zilnic la birou.",
+  "Готовое решение для магазинов, АЗС и локаций с трафиком: оборудование, напитки, расходники и пополнение.": "Soluție completă pentru magazine, benzinării și locații cu trafic: echipamente, băuturi, consumabile și reaprovizionare.",
+  "Чайный набор для офисов и переговорных комнат.": "Selecție de ceai pentru birouri și săli de ședințe.",
+  "Стаканы и крышки для ежедневной продажи напитков в retail-точках.": "Pahare și capace pentru vânzarea zilnică a băuturilor în locații retail.",
+  "Срочный сервис кофейного оборудования для HoReCa.": "Service urgent pentru echipamentele de cafea HoReCa.",
+  "Стабильный espresso blend для интенсивной HoReCa эксплуатации.": "Blend espresso stabil pentru operare HoReCa intensivă.",
+  "Предсказуемый месячный пакет для офисов без лишней операционной нагрузки.": "Pachet lunar predictibil pentru birouri, fără sarcină operațională suplimentară.",
+  "Полный beverage-набор для команды: напитки, расходники и сервис в одном процессе.": "Sistem complet de băuturi pentru echipă: băuturi, consumabile și service într-un singur proces.",
+  "Система для заведений, где качество чашки и отсутствие простоев влияют на выручку.": "Sistem pentru localuri unde calitatea ceștii și lipsa întreruperilor influențează veniturile.",
+  "Сервисный пакет для заведений, где простой оборудования означает потерянную выручку.": "Pachet de service pentru localuri unde oprirea echipamentului înseamnă venit pierdut.",
+  "Операционный пакет для точки с трафиком: self-service, расходники и регулярное пополнение.": "Pachet operațional pentru o locație cu trafic: self-service, consumabile și reaprovizionare regulată.",
+  "Единый стандарт напитков, поставок и сервиса для сети локаций.": "Un singur standard de băuturi, livrare și service pentru o rețea de locații.",
+  "Coffee, equipment and scheduled maintenance for stable daily office consumption.": "Cafea, echipamente și mentenanță planificată pentru funcționarea zilnică stabilă a biroului.",
+  "Coffee, tea, consumables and service for teams that need a complete office beverage setup.": "Cafea, ceai, consumabile și service pentru echipe care au nevoie de un sistem complet de băuturi la birou.",
+  "Professional coffee setup for cafés, restaurants and hotels with equipment, training and service.": "Sistem profesional de cafea pentru cafenele, restaurante și hoteluri, cu echipamente, instruire și service.",
+  "Maintenance, urgent support and replenishment logic for venues where downtime means lost revenue.": "Mentenanță, suport urgent și reaprovizionare pentru localuri unde întreruperile înseamnă venit pierdut.",
+  "Self-service coffee corner and replenishment routine for stores and high-traffic locations.": "Colț de cafea self-service și reaprovizionare regulată pentru magazine și locații cu trafic.",
+  "Standardized beverage solution for several locations with centralized supply and service.": "Sistem standardizat de băuturi pentru mai multe locații, cu aprovizionare și service centralizate."
+});
+
 type PageOptions = {
   admin?: boolean;
   plain?: boolean;
@@ -1654,6 +1894,37 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
   <meta property="og:image" content="${escapeHtml(`${siteBaseUrl}/assets/coffee-bean.png`)}">
   <meta name="twitter:card" content="summary">
   ${schemas.map((schema) => `<script type="application/ld+json">${JSON.stringify(schema).replace(/</g, "\\u003c")}</script>`).join("\n  ")}
+  <script>
+    (() => {
+      const supported = ["en", "ru", "ro"];
+      const requested = new URLSearchParams(window.location.search).get("lang");
+      const stored = localStorage.getItem("binova_lang");
+      const lang = requested && supported.includes(requested) ? requested : supported.includes(stored) ? stored : "en";
+      localStorage.setItem("binova_lang", lang);
+      document.documentElement.lang = lang;
+      window.binovaLang = lang;
+      const dictionaries = ${JSON.stringify(translations)};
+      const dict = dictionaries[lang] || {};
+      const entries = Object.entries(dict).sort((a, b) => b[0].length - a[0].length);
+      const normalize = (value) => String(value ?? "").replace(/\\s+/g, " ").trim();
+      window.binovaDictionaries = dictionaries;
+      window.binovaTranslate = (value) => {
+        const original = String(value ?? "");
+        const normalized = normalize(original);
+        if (!normalized) return original;
+        if (dict[normalized]) {
+          const leading = original.match(/^\\s*/)?.[0] || "";
+          const trailing = original.match(/\\s*$/)?.[0] || "";
+          return leading + dict[normalized] + trailing;
+        }
+        let next = original;
+        for (const [source, translated] of entries) {
+          if (source.length > 12 && next.includes(source)) next = next.split(source).join(translated);
+        }
+        return next;
+      };
+    })();
+  </script>
   <style>
     :root {
       --ink: #151713;
@@ -2620,35 +2891,19 @@ const page = (title: string, body: string, options: PageOptions = {}) => {
   ${options.plain || options.admin ? "" : footer()}
   <script>
     (() => {
-      const dictionaries = ${JSON.stringify(translations)};
+      const dictionaries = window.binovaDictionaries || {};
       const supported = ["en", "ru", "ro"];
       const params = new URLSearchParams(window.location.search);
       const requested = params.get("lang");
       if (requested && supported.includes(requested)) localStorage.setItem("binova_lang", requested);
-      const lang = localStorage.getItem("binova_lang") || "en";
+      const lang = window.binovaLang || localStorage.getItem("binova_lang") || "en";
       document.documentElement.lang = lang;
       document.querySelectorAll(".lang-switch a").forEach((link) => {
         link.classList.toggle("active", link.getAttribute("data-lang") === lang);
       });
-      window.binovaTranslate = (value) => value;
       const dict = dictionaries[lang] || {};
-      const entries = Object.entries(dict).sort((a, b) => b[0].length - a[0].length);
       const normalize = (value) => value.replace(/\\s+/g, " ").trim();
-      const translate = (value) => {
-        const normalized = normalize(value);
-        if (!normalized) return value;
-        if (dict[normalized]) {
-          const leading = value.match(/^\\s*/)?.[0] || "";
-          const trailing = value.match(/\\s*$/)?.[0] || "";
-          return leading + dict[normalized] + trailing;
-        }
-        let next = value;
-        for (const [source, translated] of entries) {
-          if (source.length > 12 && next.includes(source)) next = next.split(source).join(translated);
-        }
-        return next;
-      };
-      window.binovaTranslate = translate;
+      const translate = window.binovaTranslate || ((value) => value);
       const applyTranslations = (root) => {
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
           acceptNode(node) {
@@ -3453,7 +3708,7 @@ const adminLeadsEnhanced = (ctx: RequestContext) => {
           <tr>
             <td>#${lead.id}<br><span class="badge new">${escapeHtml(statusLabel(lead.status))}</span><br>${formatDate(lead.createdAt)}</td>
             <td><b>${escapeHtml(lead.companyName)}</b><br>${escapeHtml(lead.contactName)}<br>${escapeHtml(lead.email)}<br>${escapeHtml(lead.phone)}</td>
-            <td><b>${escapeHtml(slugLabel(lead.segment))}</b><br>${escapeHtml(lead.businessFormat || lead.companySize)}<br>${lead.employeesCount ?? lead.employeeCount} / ${lead.locationsCount} локац.<br><span style="color:var(--muted);">Ответственный: ${escapeHtml(lead.assignedManager || "не назначен")}</span></td>
+            <td><b>${escapeHtml(slugLabel(lead.segment))}</b><br>${escapeHtml(lead.businessFormat || lead.companySize)}<br>${lead.employeesCount ?? lead.employeeCount} / ${lead.locationsCount} <span>локац.</span><br><span style="color:var(--muted);">Ответственный: ${escapeHtml(lead.assignedManager || "не назначен")}</span></td>
             <td>${escapeHtml(String(lead.selectedServices || lead.services).split(",").filter(Boolean).join(", "))}<br><span style="color:var(--muted);">${escapeHtml(lead.additionalDetails || lead.message)}</span></td>
             <td><b>${money(lead.estimatedDealValue ?? lead.estimatedMonthlyPrice)}</b><br><span style="color:var(--muted);">Bitrix24: не отправлено</span></td>
             <td><a href="/admin/proposals?leadId=${lead.id}">Создать КП</a><br><a href="/admin/bitrix24">Отправить в Bitrix24</a></td>
@@ -3495,9 +3750,11 @@ const adminCatalog = (ctx: RequestContext) => {
         let tab = "all";
         const q = (id) => document.getElementById(id);
         const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+        const tr = (value) => window.binovaTranslate ? window.binovaTranslate(String(value ?? "")) : String(value ?? "");
+        const locale = () => (window.binovaLang === "ro" ? "ro-RO" : window.binovaLang === "ru" ? "ru-RU" : "en-US");
         const labels = { active:"Активен", draft:"Черновик", pending_review:"На модерации", rejected:"Отклонён", archived:"Архив", needs_changes:"На доработку", manual:"Manual", telegram_bot:"Из Telegram-бота", imported:"Imported", in_stock:"In stock", limited:"Limited", on_request:"On request", unavailable:"Unavailable", office:"Office", horeca:"HoReCa", retail:"Retail", all:"All" };
         const save = () => localStorage.setItem(key, JSON.stringify(items));
-        const price = (item) => item.price === null || item.price === undefined || item.priceUnit === "custom" ? "Custom" : Number(item.price).toLocaleString("en-US") + " " + item.priceUnit;
+        const price = (item) => item.price === null || item.price === undefined || item.priceUnit === "custom" ? tr("Custom") : Number(item.price).toLocaleString(locale()) + " " + item.priceUnit;
         const current = () => items.find((item) => item.id === selectedId) || null;
         const filtered = () => items.filter((item) => {
           const search = q("filterSearch").value.toLowerCase();
@@ -3510,7 +3767,7 @@ const adminCatalog = (ctx: RequestContext) => {
         const metrics = () => { q("metricActive").textContent = items.filter((i) => i.status === "active").length; q("metricPending").textContent = items.filter((i) => i.source === "telegram_bot" && i.status === "pending_review").length; q("metricDraft").textContent = items.filter((i) => i.status === "draft").length; q("metricNeeds").textContent = items.filter((i) => i.status === "needs_changes").length; q("botCounter").textContent = items.filter((i) => i.source === "telegram_bot" && i.status === "pending_review").length; };
         const renderList = () => {
           const data = filtered();
-          q("catList").innerHTML = data.length ? data.map((item) => '<button type="button" class="package-card '+(item.id===selectedId?'active':'')+'" data-id="'+item.id+'"><div class="package-meta"><span class="badge">'+esc(labels[item.segment])+'</span><span class="badge">'+esc(item.category)+'</span><span class="badge hot">'+esc(labels[item.status])+'</span><span class="badge">'+esc(labels[item.source])+'</span></div>'+(item.imageUrl?'<img class="tile-image" style="margin:12px 0;border-radius:8px;" src="'+esc(item.imageUrl)+'" alt="'+esc(item.name)+'">':'')+'<h3>'+esc(item.name)+'</h3><p>'+esc(item.shortDescription)+'</p><p><b>'+esc(price(item))+'</b> · '+esc(labels[item.availability])+'</p><small>Обновлено: '+new Date(item.updatedAt).toLocaleDateString("ru-RU")+'</small><div class="builder-actions" style="margin-top:12px;"><span class="btn ghost">Edit</span><span class="btn ghost">Use in package</span></div></button>').join("") : '<div class="empty-state"><h3>'+(tab==="telegram_bot"||tab==="pending_review"?"Нет новых отправок из бота":"Каталог пока пуст")+'</h3><p>'+(tab==="telegram_bot"||tab==="pending_review"?"Когда сотрудник отправит продукт через Telegram-бот, он появится здесь на проверку.":"Добавьте позицию вручную или примите первую отправку из Telegram-бота.")+'</p></div>';
+          q("catList").innerHTML = data.length ? data.map((item) => '<button type="button" class="package-card '+(item.id===selectedId?'active':'')+'" data-id="'+item.id+'"><div class="package-meta"><span class="badge">'+esc(tr(labels[item.segment]))+'</span><span class="badge">'+esc(tr(item.category))+'</span><span class="badge hot">'+esc(tr(labels[item.status]))+'</span><span class="badge">'+esc(tr(labels[item.source]))+'</span></div>'+(item.imageUrl?'<img class="tile-image" style="margin:12px 0;border-radius:8px;" src="'+esc(item.imageUrl)+'" alt="'+esc(item.name)+'">':'')+'<h3>'+esc(tr(item.name))+'</h3><p>'+esc(tr(item.shortDescription))+'</p><p><b>'+esc(price(item))+'</b> · <span>'+esc(tr(labels[item.availability]))+'</span></p><small>'+esc(tr("Обновлено:"))+' '+new Date(item.updatedAt).toLocaleDateString(locale())+'</small><div class="builder-actions" style="margin-top:12px;"><span class="btn ghost">'+esc(tr("Edit"))+'</span><span class="btn ghost">'+esc(tr("Use in package"))+'</span></div></button>').join("") : '<div class="empty-state"><h3>'+esc(tr(tab==="telegram_bot"||tab==="pending_review"?"Нет новых отправок из бота":"Каталог пока пуст"))+'</h3><p>'+esc(tr(tab==="telegram_bot"||tab==="pending_review"?"Когда сотрудник отправит продукт через Telegram-бот, он появится здесь на проверку.":"Добавьте позицию вручную или примите первую отправку из Telegram-бота."))+'</p></div>';
           q("catList").querySelectorAll("[data-id]").forEach((node) => node.addEventListener("click", () => { selectedId = node.getAttribute("data-id"); render(); }));
         };
         const renderEditor = () => {
@@ -3521,10 +3778,10 @@ const adminCatalog = (ctx: RequestContext) => {
           q("catForm").addEventListener("submit",(e)=>{e.preventDefault(); Object.assign(item,{name:q("editName").value.trim(),segment:q("editSegment").value,category:q("editCategory").value,status:q("editStatus").value,shortDescription:q("editShort").value.trim(),fullDescription:q("editFull").value.trim(),price:q("editUnit").value==="custom"?null:Number(q("editPrice").value||0),priceUnit:q("editUnit").value,availability:q("editAvailability").value,source:q("editSource").value,tags:q("editTags").value.split(",").map(t=>t.trim()).filter(Boolean),imageUrl:q("editImage").value.trim(),adminComment:q("editComment").value.trim(),updatedAt:new Date().toISOString()}); save(); render();});
           q("publishItem").addEventListener("click",()=>{item.status="active";item.updatedAt=new Date().toISOString();save();render();});
           q("archiveItem").addEventListener("click",()=>{item.status="archived";item.updatedAt=new Date().toISOString();save();render();});
-          q("deleteItem").addEventListener("click",()=>{if(!confirm("Удалить позицию "+item.name+"?"))return;items=items.filter(e=>e.id!==item.id);selectedId=items[0]?.id||"";save();render();});
+          q("deleteItem").addEventListener("click",()=>{if(!confirm(tr("Удалить позицию")+" "+item.name+"?"))return;items=items.filter(e=>e.id!==item.id);selectedId=items[0]?.id||"";save();render();});
           q("approveBot")?.addEventListener("click",()=>{item.status="active";item.reviewedBy="Admin";item.reviewedAt=new Date().toISOString();item.updatedAt=new Date().toISOString();save();render();});
-          q("changesBot")?.addEventListener("click",()=>{const c=prompt("Комментарий для сотрудника",item.adminComment||"");if(c===null)return;item.status="needs_changes";item.adminComment=c;item.updatedAt=new Date().toISOString();save();render();});
-          q("rejectBot")?.addEventListener("click",()=>{const r=prompt("Причина отклонения");if(!r)return;item.status="rejected";item.rejectionReason=r;item.updatedAt=new Date().toISOString();save();render();});
+          q("changesBot")?.addEventListener("click",()=>{const c=prompt(tr("Комментарий для сотрудника"),item.adminComment||"");if(c===null)return;item.status="needs_changes";item.adminComment=c;item.updatedAt=new Date().toISOString();save();render();});
+          q("rejectBot")?.addEventListener("click",()=>{const r=prompt(tr("Причина отклонения"));if(!r)return;item.status="rejected";item.rejectionReason=r;item.updatedAt=new Date().toISOString();save();render();});
         };
         const render = () => { metrics(); renderList(); renderEditor(); };
         q("catNew").addEventListener("click",()=>{const item={id:"cat-"+Date.now(),source:"manual",status:"draft",segment:"office",category:"Coffee",name:"Новая позиция",shortDescription:"",fullDescription:"",price:null,priceUnit:"custom",availability:"on_request",imageUrl:"",tags:[],updatedAt:new Date().toISOString()};items.unshift(item);selectedId=item.id;save();render();});
@@ -3694,7 +3951,7 @@ const adminCalculator = (ctx: RequestContext) => {
     </section>
     <script>
       (() => {
-        const lang = localStorage.getItem("binova_lang") || "ru";
+        const lang = window.binovaLang || new URLSearchParams(window.location.search).get("lang") || localStorage.getItem("binova_lang") || "ru";
         const i18n = {
           ru: {
             pricingEngine:"PRICING ENGINE", title:"Калькулятор предложений", subtitle:"Настраивайте правила расчёта для Office, HoReCa и Retail: базовая цена, размер клиента, локации, сервисные слои, скидки и доплаты.", newRule:"+ Новое правило", exportRules:"Экспорт правил", resetDemo:"Сбросить демо-данные", status:"Статус", segment:"Сегмент", clientSize:"Размер клиента", ruleName:"Название правила", baseMonthly:"Базовая цена в месяц EUR", minMonthly:"Минимальная цена в месяц EUR", setupFee:"Разовый setup fee EUR", perEmployee:"Цена за сотрудника EUR", perLocation:"Цена за локацию EUR", billingModel:"Модель оплаты", deliveryFrequency:"Частота поставок", serviceLevel:"Уровень сервиса", serviceMultiplier:"Множитель сервиса", packageMultiplier:"Множитель пакета", discount:"Скидка", discountValue:"Значение скидки", markup:"Наценка", markupValue:"Значение наценки", internalNote:"Внутренняя заметка", saveRule:"Сохранить правило", duplicate:"Дублировать", archive:"Архивировать", delete:"Удалить", serviceLayers:"Сервисные слои", serviceLayerPrices:"Цены по сервисным слоям", addLayer:"Добавить сервисный слой", livePreview:"Предпросмотр расчёта", employeesCount:"Сотрудники", locationsCount:"Локации", selectedPackage:"Выбранный пакет", simServiceLevel:"Уровень сервиса", calculateExample:"Рассчитать пример", rulesTable:"Таблица правил", savedRules:"Сохранённые правила", rulesHint:"Фильтруйте правила, открывайте строку для редактирования, дублируйте или архивируйте устаревшую логику.", offerBuilderLink:"Связь с заявками и КП", offerBuilderText:"Публичная форма читает эти правила в браузере, считает предварительную цену и сохраняет breakdown в заявку. При создании КП менеджер видит расчёт как стартовую точку и может вручную скорректировать финальную цену.", bitrixPayload:"Поля для CRM", affected:"Что повлияло на цену", monthly:"Месячная цена", yearly:"Годовая оценка", oneTime:"Разовый setup fee", noRules:"Правил по фильтру нет.", validation:"Заполните сегмент, размер клиента, название, базовую цену и модель оплаты.", layerName:"Название слоя", category:"Категория", pricingType:"Тип цены", price:"Цена", enabled:"Включён", remove:"Убрать"
@@ -3707,6 +3964,18 @@ const adminCalculator = (ctx: RequestContext) => {
           }
         };
         const t = (key) => (i18n[lang] && i18n[lang][key]) || i18n.ru[key] || key;
+        const tableI18n = {
+          ru: { size:"Размер", base:"Базовая цена", min:"Минимальная цена", updated:"Обновлено", actions:"Действия", edit:"Редактировать", noLayers:"Для этого сегмента нет сервисных слоёв.", baseLine:"Базовая цена", employeesLine:"Сотрудники", locationsLine:"Локации", layersLine:"Сервисные слои", serviceMultiplierLine:"Множитель сервиса", packageMultiplierLine:"Множитель пакета", markupLine:"Наценка", discountLine:"Скидка", minimumLine:"Минимальная цена в месяц" },
+          en: { size:"Size", base:"Base price", min:"Minimum price", updated:"Updated", actions:"Actions", edit:"Edit", noLayers:"No service layers for this segment.", baseLine:"Base price", employeesLine:"Employees", locationsLine:"Locations", layersLine:"Service layers", serviceMultiplierLine:"Service level multiplier", packageMultiplierLine:"Package multiplier", markupLine:"Markup", discountLine:"Discount", minimumLine:"Minimum monthly price" },
+          ro: { size:"Dimensiune", base:"Preț de bază", min:"Preț minim", updated:"Actualizat", actions:"Acțiuni", edit:"Editează", noLayers:"Nu există straturi de servicii pentru acest segment.", baseLine:"Preț de bază", employeesLine:"Angajați", locationsLine:"Locații", layersLine:"Straturi de servicii", serviceMultiplierLine:"Multiplicator service", packageMultiplierLine:"Multiplicator pachet", markupLine:"Adaos", discountLine:"Reducere", minimumLine:"Preț lunar minim" }
+        };
+        const valueI18n = {
+          ru: { active:"Активен", draft:"Черновик", archived:"В архиве", office:"Офис", retail:"Ритейл", small:"Малый", medium:"Средний", large:"Крупный", standard:"Стандартный", priority:"Приоритетный", urgent:"Срочный", monthly:"Ежемесячно", one_time:"Разово", custom_quote:"Индивидуально", from_price:"Цена от" },
+          en: { active:"Active", draft:"Draft", archived:"Archived", office:"Office", retail:"Retail", small:"Small", medium:"Medium", large:"Large", standard:"Standard", priority:"Priority", urgent:"Urgent", monthly:"Monthly", one_time:"One-time", custom_quote:"Custom quote", from_price:"From price" },
+          ro: { active:"Activ", draft:"Ciornă", archived:"Arhivat", office:"Birouri", retail:"Retail", small:"Mic", medium:"Mediu", large:"Mare", standard:"Standard", priority:"Prioritar", urgent:"Urgent", monthly:"Lunar", one_time:"O singură dată", custom_quote:"Ofertă personalizată", from_price:"Preț de la" }
+        };
+        const tt = (key) => tableI18n[lang]?.[key] || tableI18n.en[key] || key;
+        const tv = (value) => valueI18n[lang]?.[value] || value;
         document.querySelectorAll("[data-calc-i18n]").forEach((node) => { node.textContent = t(node.getAttribute("data-calc-i18n")); });
         const q = (id) => document.getElementById(id);
         const key = "binova_pricing_rules_v1";
@@ -3749,12 +4018,12 @@ const adminCalculator = (ctx: RequestContext) => {
           const discount = rule.discountType === "percent" ? subtotal * rule.discountValue / 100 : rule.discountType === "fixed" ? rule.discountValue : 0;
           subtotal -= discount;
           const monthlyPrice = Math.max(rule.minimumMonthlyPrice || 0, Math.round(subtotal));
-          return { monthlyPrice, setupFee: Math.round((rule.setupFee || 0) + oneTimeLayers), yearlyValue: Math.round(monthlyPrice * 12 + (rule.setupFee || 0) + oneTimeLayers), layerMonthly: Math.round(layerMonthly), markup: Math.round(markup), discount: Math.round(discount), breakdown:["Base price: " + eur(rule.baseMonthlyPrice), "Employees: " + employees + " × " + eur(rule.perEmployee) + " = " + eur(employees * rule.perEmployee), "Locations: " + locations + " × " + eur(rule.perLocation) + " = " + eur(locations * rule.perLocation), "Service layers: " + eur(layerMonthly), "Service level multiplier: × " + rule.serviceLevelMultiplier, "Package multiplier: × " + rule.packageMultiplier, "Markup: " + eur(markup), "Discount: " + eur(discount), "Minimum monthly price: " + eur(rule.minimumMonthlyPrice)] };
+          return { monthlyPrice, setupFee: Math.round((rule.setupFee || 0) + oneTimeLayers), yearlyValue: Math.round(monthlyPrice * 12 + (rule.setupFee || 0) + oneTimeLayers), layerMonthly: Math.round(layerMonthly), markup: Math.round(markup), discount: Math.round(discount), breakdown:[tt("baseLine") + ": " + eur(rule.baseMonthlyPrice), tt("employeesLine") + ": " + employees + " × " + eur(rule.perEmployee) + " = " + eur(employees * rule.perEmployee), tt("locationsLine") + ": " + locations + " × " + eur(rule.perLocation) + " = " + eur(locations * rule.perLocation), tt("layersLine") + ": " + eur(layerMonthly), tt("serviceMultiplierLine") + ": × " + rule.serviceLevelMultiplier, tt("packageMultiplierLine") + ": × " + rule.packageMultiplier, tt("markupLine") + ": " + eur(markup), tt("discountLine") + ": " + eur(discount), tt("minimumLine") + ": " + eur(rule.minimumMonthlyPrice)] };
         };
         const segmentLayers = () => layers.filter((layer) => layer.segment === q("calcSegment").value || q("calcSegment").value === "all");
         const selectedLayers = () => Array.from(document.querySelectorAll(".sim-layer input:checked")).map((input) => layers.find((layer) => layer.id === input.value)).filter(Boolean);
         const renderLayers = () => {
-          q("layerEditor").innerHTML = segmentLayers().map((layer) => '<div class="layer-row" data-layer-id="' + layer.id + '"><input value="' + layer.name + '" data-field="name" placeholder="' + t("layerName") + '"><input value="' + layer.category + '" data-field="category" placeholder="' + t("category") + '"><select data-field="pricingType"><option value="fixed_monthly">fixed monthly</option><option value="per_employee">per employee</option><option value="per_location">per location</option><option value="one_time">one-time</option><option value="custom_quote">custom quote</option></select><input type="number" value="' + layer.price + '" data-field="price" placeholder="' + t("price") + '"><label class="check"><input type="checkbox" data-field="enabledByDefault" ' + (layer.enabledByDefault ? "checked" : "") + '> ' + t("enabled") + '</label><button type="button" class="danger layer-remove">' + t("remove") + '</button></div>').join("") || '<div class="empty-state">No layers for this segment.</div>';
+          q("layerEditor").innerHTML = segmentLayers().map((layer) => '<div class="layer-row" data-layer-id="' + layer.id + '"><input value="' + layer.name + '" data-field="name" placeholder="' + t("layerName") + '"><input value="' + layer.category + '" data-field="category" placeholder="' + t("category") + '"><select data-field="pricingType"><option value="fixed_monthly">fixed monthly</option><option value="per_employee">per employee</option><option value="per_location">per location</option><option value="one_time">one-time</option><option value="custom_quote">custom quote</option></select><input type="number" value="' + layer.price + '" data-field="price" placeholder="' + t("price") + '"><label class="check"><input type="checkbox" data-field="enabledByDefault" ' + (layer.enabledByDefault ? "checked" : "") + '> ' + t("enabled") + '</label><button type="button" class="danger layer-remove">' + t("remove") + '</button></div>').join("") || '<div class="empty-state">' + tt("noLayers") + '</div>';
           document.querySelectorAll(".layer-row").forEach((row) => { const layer = layers.find((item) => item.id === row.dataset.layerId); if (!layer) return; row.querySelector('[data-field="pricingType"]').value = layer.pricingType; row.querySelectorAll("input,select").forEach((input) => input.addEventListener("change", () => { const field = input.dataset.field; layer[field] = field === "price" ? Number(input.value || 0) : field === "enabledByDefault" ? input.checked : input.value; save(); renderPreview(); })); row.querySelector(".layer-remove").addEventListener("click", () => { layers = layers.filter((item) => item.id !== layer.id); save(); renderLayers(); renderPreview(); }); });
           renderPreview();
         };
@@ -3783,7 +4052,7 @@ const adminCalculator = (ctx: RequestContext) => {
         const renderTable = () => {
           const fs = q("filterSegment").value, st = q("filterStatus").value, sz = q("filterSize").value, bill = q("filterBilling").value, search = q("filterSearch").value.toLowerCase();
           const list = rules.filter((rule) => (fs === "all" || rule.segment === fs || rule.segment === "all") && (st === "all" || rule.status === st) && (sz === "all" || rule.clientSize === sz) && (bill === "all" || rule.billingModel === bill) && (!search || rule.name.toLowerCase().includes(search)));
-          q("rulesTable").innerHTML = '<thead><tr><th>Status</th><th>Segment</th><th>Size</th><th>Rule name</th><th>Base price</th><th>Min price</th><th>Per employee</th><th>Per location</th><th>Service level</th><th>Billing model</th><th>Updated</th><th>Actions</th></tr></thead><tbody>' + (list.length ? list.map((rule) => '<tr data-rule-id="' + rule.id + '"><td><span class="badge">' + rule.status + '</span></td><td>' + rule.segment + '</td><td>' + rule.clientSize + '</td><td><b>' + rule.name + '</b></td><td>' + eur(rule.baseMonthlyPrice) + '</td><td>' + eur(rule.minimumMonthlyPrice) + '</td><td>' + eur(rule.perEmployee) + '</td><td>' + eur(rule.perLocation) + '</td><td>' + rule.serviceLevel + '</td><td>' + rule.billingModel + '</td><td>' + new Date(rule.updatedAt).toLocaleDateString() + '</td><td><button type="button" data-action="edit">' + t("saveRule").replace("Сохранить правило","Edit") + '</button><button type="button" data-action="dup">' + t("duplicate") + '</button><button type="button" data-action="archive">' + t("archive") + '</button><button type="button" data-action="del" class="danger">' + t("delete") + '</button></td></tr>').join("") : '<tr><td colspan="12">' + t("noRules") + '</td></tr>') + '</tbody>';
+          q("rulesTable").innerHTML = '<thead><tr><th>' + t("status") + '</th><th>' + t("segment") + '</th><th>' + tt("size") + '</th><th>' + t("ruleName") + '</th><th>' + tt("base") + '</th><th>' + tt("min") + '</th><th>' + t("perEmployee") + '</th><th>' + t("perLocation") + '</th><th>' + t("serviceLevel") + '</th><th>' + t("billingModel") + '</th><th>' + tt("updated") + '</th><th>' + tt("actions") + '</th></tr></thead><tbody>' + (list.length ? list.map((rule) => '<tr data-rule-id="' + rule.id + '"><td><span class="badge">' + tv(rule.status) + '</span></td><td>' + tv(rule.segment) + '</td><td>' + tv(rule.clientSize) + '</td><td><b>' + rule.name + '</b></td><td>' + eur(rule.baseMonthlyPrice) + '</td><td>' + eur(rule.minimumMonthlyPrice) + '</td><td>' + eur(rule.perEmployee) + '</td><td>' + eur(rule.perLocation) + '</td><td>' + tv(rule.serviceLevel) + '</td><td>' + tv(rule.billingModel) + '</td><td>' + new Date(rule.updatedAt).toLocaleDateString(lang === "ro" ? "ro-RO" : lang === "ru" ? "ru-RU" : "en-US") + '</td><td><button type="button" data-action="edit">' + tt("edit") + '</button><button type="button" data-action="dup">' + t("duplicate") + '</button><button type="button" data-action="archive">' + t("archive") + '</button><button type="button" data-action="del" class="danger">' + t("delete") + '</button></td></tr>').join("") : '<tr><td colspan="12">' + t("noRules") + '</td></tr>') + '</tbody>';
           q("rulesTable").querySelectorAll("tr[data-rule-id]").forEach((row) => row.addEventListener("click", (event) => { const rule = rules.find((item) => item.id === row.dataset.ruleId); if (!rule) return; const action = event.target.dataset.action; if (action === "dup") { rules.unshift({...rule,id:"rule-"+Date.now(),name:rule.name+" copy",status:"draft",updatedAt:new Date().toISOString()}); save(); renderTable(); return; } if (action === "archive") { rule.status = "archived"; rule.updatedAt = new Date().toISOString(); save(); renderTable(); return; } if (action === "del") { rules = rules.filter((item) => item.id !== rule.id); selectedId = rules[0]?.id; save(); fill(current()); return; } fill(rule); }));
         };
         q("calcForm").addEventListener("submit", (event) => { event.preventDefault(); const rule = readRule(); if (!rule.segment || !rule.clientSize || !rule.name || !rule.baseMonthlyPrice || !rule.billingModel) { q("calcError").textContent = t("validation"); return; } q("calcError").textContent = ""; const index = rules.findIndex((item) => item.id === rule.id); if (index >= 0) rules[index] = rule; else rules.unshift(rule); selectedId = rule.id; save(); fill(rule); });
@@ -3841,7 +4110,7 @@ const adminBitrix = (ctx: RequestContext) => {
     <section class="band grid-2">
       <div class="card"><div class="card-body">
         <h3>Что будет передаваться</h3>
-        <p>companyName, contactPerson, email, phone, businessSegment, businessFormat, companySize, employeesCount, locationsCount, city, currentSupplier, currentEquipment, desiredStartDate, budgetRange, deliveryFrequency, selectedServices, additionalDetails, estimatedDealValue, assignedManager и followUpDate.</p>
+        <p>companyName, contactPerson, email, phone, businessSegment, businessFormat, companySize, employeesCount, locationsCount, city, currentSupplier, currentEquipment, desiredStartDate, budgetRange, deliveryFrequency, selectedServices, additionalDetails, estimatedDealValue, assignedManager, followUpDate.</p>
       </div></div>
       <div class="card"><div class="card-body">
         <h3>Следующий шаг</h3>
@@ -3988,6 +4257,8 @@ const adminPackageBuilder = (ctx: RequestContext) => {
         let draftItems = [];
         const q = (id) => document.getElementById(id);
         const escape = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+        const tr = (value) => window.binovaTranslate ? window.binovaTranslate(String(value ?? "")) : String(value ?? "");
+        const locale = () => (window.binovaLang === "ro" ? "ro-RO" : window.binovaLang === "ru" ? "ru-RU" : "en-US");
         const saveStore = () => localStorage.setItem(key, JSON.stringify(packages));
         const activePackage = () => packages.find((item) => item.id === selectedId) || null;
         const priceText = (pkg) => pkg.billingModel === "custom_quote" || pkg.monthlyPrice === null || pkg.monthlyPrice === "" ? "Custom quote" : (pkg.billingModel === "from_price" ? "from " : "") + Number(pkg.monthlyPrice || 0).toLocaleString("en-US") + " " + billingLabels[pkg.billingModel];
@@ -4003,29 +4274,29 @@ const adminPackageBuilder = (ctx: RequestContext) => {
           q("pkgPrice").value = pkg?.monthlyPrice ?? "";
           q("pkgShort").value = pkg?.shortDescription || "";
           draftItems = [...(pkg?.items || [])];
-          q("pkgSave").textContent = pkg ? "Сохранить изменения" : "Создать пакет";
+          q("pkgSave").textContent = tr(pkg ? "Сохранить изменения" : "Создать пакет");
           q("pkgDuplicate").style.display = pkg ? "inline-flex" : "none";
           q("pkgDelete").style.display = pkg ? "inline-flex" : "none";
-          q("pkgError").textContent = pkg ? "Выбран пакет для редактирования." : "Select a package to edit or create a new one.";
+          q("pkgError").textContent = tr(pkg ? "Выбран пакет для редактирования." : "Select a package to edit or create a new one.");
           renderAll();
         };
         const renderCatalog = () => {
           const segment = q("pkgSegment").value;
-          q("pkgCatalog").innerHTML = catalog.filter((item) => item.segments.includes(segment)).map((item) => '<button type="button" class="catalog-pick" data-item="' + item.id + '"><b>' + escape(item.name) + '</b><small>' + escape(item.category) + ' · ' + (item.basePrice ? item.basePrice + ' EUR' : 'no price') + '</small></button>').join("");
+          q("pkgCatalog").innerHTML = catalog.filter((item) => item.segments.includes(segment)).map((item) => '<button type="button" class="catalog-pick" data-item="' + item.id + '"><b>' + escape(tr(item.name)) + '</b><small><span>' + escape(tr(item.category)) + '</span> · ' + (item.basePrice ? item.basePrice + ' EUR' : tr('no price')) + '</small></button>').join("");
           q("pkgCatalog").querySelectorAll("[data-item]").forEach((button) => button.addEventListener("click", () => { const item = catalog.find((entry) => entry.id === button.getAttribute("data-item")); if (!item || draftItems.some((entry) => entry.id === item.id)) return; draftItems.push({ id: item.id, name: item.name, category: item.category, basePrice: item.basePrice }); renderAll(); }));
         };
         const renderItems = () => {
-          q("pkgItems").innerHTML = draftItems.length ? draftItems.map((item, index) => '<div class="item-row"><span><b>' + escape(item.name) + '</b><br><small>' + escape(item.category) + (item.basePrice ? ' · ' + item.basePrice + ' EUR' : '') + '</small></span><button type="button" class="ghost" data-up="' + index + '">↑</button><button type="button" class="ghost" data-remove="' + index + '">Remove</button></div>').join("") : '<div class="empty-state">Позиции ещё не выбраны.</div>';
+          q("pkgItems").innerHTML = draftItems.length ? draftItems.map((item, index) => '<div class="item-row"><span><b>' + escape(tr(item.name)) + '</b><br><small><span>' + escape(tr(item.category)) + '</span>' + (item.basePrice ? ' · ' + item.basePrice + ' EUR' : '') + '</small></span><button type="button" class="ghost" data-up="' + index + '">↑</button><button type="button" class="ghost" data-remove="' + index + '">' + escape(tr('Remove')) + '</button></div>').join("") : '<div class="empty-state">' + escape(tr('Позиции ещё не выбраны.')) + '</div>';
           q("pkgItems").querySelectorAll("[data-remove]").forEach((button) => button.addEventListener("click", () => { draftItems.splice(Number(button.getAttribute("data-remove")), 1); renderAll(); }));
           q("pkgItems").querySelectorAll("[data-up]").forEach((button) => button.addEventListener("click", () => { const index = Number(button.getAttribute("data-up")); if (index <= 0) return; [draftItems[index - 1], draftItems[index]] = [draftItems[index], draftItems[index - 1]]; renderAll(); }));
         };
         const renderPreview = () => {
           const pkg = currentFormPackage();
-          q("pkgPreview").innerHTML = '<div class="package-meta"><span class="badge">' + escape(segmentLabels[pkg.segment]) + '</span><span class="badge hot">' + escape(statusLabels[pkg.status]) + '</span></div><h3>' + escape(pkg.name || "Новый пакет") + '</h3><p>' + escape(pkg.shortDescription || "Краткое описание появится здесь.") + '</p><p><b style="font-size:26px;color:#fff;">' + escape(priceText(pkg)) + '</b></p><p>Кому подходит: <b style="color:#fff;">' + escape(pkg.recommendedFor || "не указано") + '</b></p><ul class="preview-items">' + (pkg.items.length ? pkg.items.map((item) => '<li>' + escape(item.name) + '</li>').join("") : '<li>Добавьте позиции в пакет</li>') + '</ul><a class="btn" href="/admin/proposals">Use in offer</a>';
+          q("pkgPreview").innerHTML = '<div class="package-meta"><span class="badge">' + escape(tr(segmentLabels[pkg.segment])) + '</span><span class="badge hot">' + escape(tr(statusLabels[pkg.status])) + '</span></div><h3>' + escape(tr(pkg.name || "Новый пакет")) + '</h3><p>' + escape(tr(pkg.shortDescription || "Краткое описание появится здесь.")) + '</p><p><b style="font-size:26px;color:#fff;">' + escape(tr(priceText(pkg))) + '</b></p><p>' + escape(tr('Кому подходит:')) + ' <b style="color:#fff;">' + escape(tr(pkg.recommendedFor || "не указано")) + '</b></p><ul class="preview-items">' + (pkg.items.length ? pkg.items.map((item) => '<li>' + escape(tr(item.name)) + '</li>').join("") : '<li>' + escape(tr('Добавьте позиции в пакет')) + '</li>') + '</ul><a class="btn" href="/admin/proposals">' + escape(tr('Use in offer')) + '</a>';
         };
         const renderList = () => {
           const visible = packages.filter((pkg) => filter === "all" || pkg.segment === filter);
-          q("pkgList").innerHTML = visible.length ? visible.map((pkg) => '<button type="button" class="package-card ' + (pkg.id === selectedId ? 'active' : '') + '" data-package="' + pkg.id + '"><div class="package-meta"><span class="badge">' + escape(segmentLabels[pkg.segment]) + '</span><span class="badge hot">' + escape(statusLabels[pkg.status]) + '</span></div><h3>' + escape(pkg.name) + '</h3><p>' + escape(pkg.shortDescription) + '</p><p><b>' + escape(priceText(pkg)) + '</b></p><p>' + escape(pkg.items.map((item) => item.name).join(" · ")) + '</p><small>Обновлено: ' + new Date(pkg.updatedAt).toLocaleDateString("ru-RU") + '</small></button>').join("") : '<div class="empty-state"><h3>No packages for this segment yet.</h3><p>Создайте первый пакет для выбранного направления.</p><button type="button" id="emptyCreate">Create first package</button></div>';
+          q("pkgList").innerHTML = visible.length ? visible.map((pkg) => '<button type="button" class="package-card ' + (pkg.id === selectedId ? 'active' : '') + '" data-package="' + pkg.id + '"><div class="package-meta"><span class="badge">' + escape(tr(segmentLabels[pkg.segment])) + '</span><span class="badge hot">' + escape(tr(statusLabels[pkg.status])) + '</span></div><h3>' + escape(tr(pkg.name)) + '</h3><p>' + escape(tr(pkg.shortDescription)) + '</p><p><b>' + escape(tr(priceText(pkg))) + '</b></p><p>' + pkg.items.map((item) => '<span>' + escape(tr(item.name)) + '</span>').join(' · ') + '</p><small>' + escape(tr('Обновлено:')) + ' ' + new Date(pkg.updatedAt).toLocaleDateString(locale()) + '</small></button>').join("") : '<div class="empty-state"><h3>' + escape(tr('No packages for this segment yet.')) + '</h3><p>' + escape(tr('Создайте первый пакет для выбранного направления.')) + '</p><button type="button" id="emptyCreate">' + escape(tr('Create first package')) + '</button></div>';
           q("pkgList").querySelectorAll("[data-package]").forEach((button) => button.addEventListener("click", () => { selectedId = button.getAttribute("data-package"); setForm(activePackage()); }));
           q("emptyCreate")?.addEventListener("click", () => setForm(null));
         };
@@ -4034,7 +4305,7 @@ const adminPackageBuilder = (ctx: RequestContext) => {
         q("pkgForm").addEventListener("submit", (event) => { event.preventDefault(); const pkg = currentFormPackage(); const error = validate(pkg); if (error) { q("pkgError").textContent = error; return; } const index = packages.findIndex((item) => item.id === pkg.id); if (index >= 0) packages[index] = pkg; else packages.unshift(pkg); selectedId = pkg.id; saveStore(); q("pkgError").textContent = "Пакет сохранён."; setForm(pkg); });
         q("pkgNew").addEventListener("click", () => setForm(null));
         q("pkgDuplicate").addEventListener("click", () => { const pkg = currentFormPackage(); pkg.id = "pkg-" + Date.now(); pkg.name = pkg.name + " copy"; pkg.status = "draft"; packages.unshift(pkg); selectedId = pkg.id; saveStore(); setForm(pkg); });
-        q("pkgDelete").addEventListener("click", () => { const pkg = activePackage(); if (!pkg || !confirm("Удалить пакет " + pkg.name + "?")) return; packages = packages.filter((item) => item.id !== pkg.id); selectedId = packages[0]?.id || ""; saveStore(); setForm(activePackage()); });
+        q("pkgDelete").addEventListener("click", () => { const pkg = activePackage(); if (!pkg || !confirm(tr("Удалить пакет") + " " + pkg.name + "?")) return; packages = packages.filter((item) => item.id !== pkg.id); selectedId = packages[0]?.id || ""; saveStore(); setForm(activePackage()); });
         q("pkgCustomToggle").addEventListener("click", () => { q("pkgCustomBox").style.display = q("pkgCustomBox").style.display === "none" ? "block" : "none"; });
         q("customAdd").addEventListener("click", () => { const name = q("customName").value.trim(); if (!name) { q("pkgError").textContent = "Введите название позиции."; return; } draftItems.push({ id: "custom-" + Date.now(), name, category: q("customCategory").value, basePrice: Number(q("customPrice").value || 0) || undefined }); q("customName").value = ""; q("customPrice").value = ""; renderAll(); });
         ["pkgSegment", "pkgStatus", "pkgName", "pkgPositioning", "pkgRecommended", "pkgBilling", "pkgPrice", "pkgShort"].forEach((id) => q(id).addEventListener("input", renderAll));
